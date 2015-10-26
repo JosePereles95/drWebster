@@ -18,7 +18,6 @@ Scene* HelloWorld::createScene()
 
 	//prueba GitHub
 	//prueba2
-	//cambio Migue
 }
 
 // on "init" you need to initialize your instance
