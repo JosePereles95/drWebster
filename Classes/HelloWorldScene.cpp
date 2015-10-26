@@ -17,6 +17,7 @@ Scene* HelloWorld::createScene()
     return scene;
 
 	//prueba GitHub
+	//prueba2
 }
 
 // on "init" you need to initialize your instance
