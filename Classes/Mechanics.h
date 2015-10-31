@@ -1,5 +1,5 @@
-#ifndef __MECHANICS_SCENE_H__
-#define __MECHANICS_SCENE_H__
+#ifndef __MECHANICS_H__
+#define __MECHANICS_H__
 
 #include "cocos2d.h"
 
@@ -10,11 +10,8 @@ public:
 
     virtual bool init();
     
-    // a selector callback
-    void menuCloseCallback(cocos2d::Ref* pSender);
-    
     // implement the "static create()" method manually
     CREATE_FUNC(Mechanics);
 };
 
-#endif // __MECHANICS_SCENE_H__
+#endif // __MECHANICS_H__
