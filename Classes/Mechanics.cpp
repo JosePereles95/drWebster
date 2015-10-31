@@ -32,6 +32,33 @@ bool Mechanics::init()
     }
     
     Size visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+
+	// add a "close" icon to exit the progress. it's an autorelease object
+	auto closeItem = MenuItemImage::create("medicine1.png","medicine1.png",
+		CC_CALLBACK_1(Mechanics::menuCloseCallback, this));
+
+	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width / 2,
+		origin.y + closeItem->getContentSize().height / 2));
+
+	// create menu, it's an autorelease object
+	auto menu = Menu::create(closeItem, NULL);
+	menu->setPosition(Vec2::ZERO);
+	this->addChild(menu, 1);
+
+	//Imagen
+	auto background = Sprite::create("abraham_formateo.jpg");
+	background->setPosition(Point((visibleSize.width / 2), (visibleSize.height / 2)));
+	addChild(background, 0);
 
     return true;
+}
+
+void Mechanics::menuCloseCallback(Ref* pSender)
+{
+	Director::getInstance()->end();
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	exit(0);
+#endif
 }
