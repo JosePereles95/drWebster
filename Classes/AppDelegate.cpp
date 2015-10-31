@@ -40,12 +40,16 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto glview = director->getOpenGLView();
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-        glview = GLViewImpl::createWithRect("drWebster", Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+        //glview = GLViewImpl::createWithRect("drWebster", Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+		glview = GLViewImpl::createWithFullScreen("drWebster");
 #else
         glview = GLViewImpl::create("drWebster");
 #endif
         director->setOpenGLView(glview);
     }
+
+	glview->setFrameSize(1000, 650);
+	glview->setDesignResolutionSize(700, 439, ResolutionPolicy::EXACT_FIT);
 
     // turn on display FPS
     director->setDisplayStats(true);
