@@ -38,9 +38,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
+	//glfwSetInputMode(glview->getWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
     if(!glview) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
         //glview = GLViewImpl::createWithRect("drWebster", Rect(0, 0, designResolutionSize.width, designResolutionSize.height));
+
+		//Pantalla completa
 		glview = GLViewImpl::createWithFullScreen("drWebster");
 #else
         glview = GLViewImpl::create("drWebster");
@@ -52,7 +56,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	glview->setDesignResolutionSize(1366, 768, ResolutionPolicy::EXACT_FIT);
 
     // turn on display FPS
-    director->setDisplayStats(true);
+    director->setDisplayStats(false);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
@@ -83,6 +87,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // run
     director->runWithScene(scene);
+
+	//glview->setCursorVisible(false);
 
     return true;
 }
