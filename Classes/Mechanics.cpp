@@ -46,6 +46,8 @@ bool Mechanics::init()
 	_playerSprite->setPosition(50, 50);
 	addChild(_playerSprite, 1);
 
+	this->scheduleUpdate();
+
 	//Imagen
 	auto background = Sprite::create("abraham_formateo.jpg");
 	background->setPosition(Point((visibleSize.width / 2), (visibleSize.height / 2)));

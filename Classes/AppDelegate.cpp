@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "Mechanics.h"
+#include "Webster.h"
 
 USING_NS_CC;
 
@@ -52,7 +53,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         director->setOpenGLView(glview);
     }
 
-	//glview->setFrameSize(1366, 768);
+	glview->setFrameSize(1366, 768);
 	glview->setDesignResolutionSize(1366, 768, ResolutionPolicy::EXACT_FIT);
 
     // turn on display FPS
@@ -83,7 +84,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-    auto scene = Mechanics::createScene();
+	auto scene = Webster::createScene();
 
     // run
     director->runWithScene(scene);

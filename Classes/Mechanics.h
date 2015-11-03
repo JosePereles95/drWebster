@@ -13,7 +13,7 @@ private:
 	Sprite *_playerSprite;
 
 public:
-    static cocos2d::Scene* createScene();
+   static cocos2d::Scene* createScene();
 
 	bool _isMovingByMouse;
 	void update(float dt);
