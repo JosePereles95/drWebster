@@ -8,18 +8,25 @@ USING_NS_CC;
 class Carpeta
 {
 public:
-	Carpeta::Carpeta(Sprite*);
+	Carpeta::Carpeta(Vector<Sprite*>);
 
-	//int numero;
-	//Sprite* _imagen;
 	MenuItemImage* imagen;
-	Sprite* contenido;
+	Menu* botones;
+
+	MenuItemImage* pasar;
+	//Menu* botonNext;
+
+	int elegido;
+	Vector<Sprite*> contenido;
 	Sprite* abierta;
-	Menu* botonCarpeta;
+	//CCSprite* abierta;
+	//CCSprite* cerrada;
 
 	void abreCierraCarpeta(cocos2d::Ref* pSender);
 
 	void eliminaCarpeta(void);
+
+	void pasaSiguiente(Ref* pSender);
 };
 
 #endif // __CARPETA_H__

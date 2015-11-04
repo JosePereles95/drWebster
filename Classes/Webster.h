@@ -9,10 +9,24 @@ USING_NS_CC;
 class Webster : public cocos2d::Layer
 {
 public:
-	Sprite* archivo1;
-	Carpeta* carpeta1;
+	Sprite* arch1_1;
+	Sprite* arch1_2;
+	Sprite* arch1_3;
+	Sprite* arch1_4;
+	int posXarchs1;
+	int posYarchs1;
 
-	Sprite* archivo2;
+	Sprite* arch2_1;
+	Sprite* arch2_2;
+	Sprite* arch2_3;
+	Sprite* arch2_4;
+	int posXarchs2;
+	int posYarchs2;
+
+	Vector<Sprite*> archivos1;
+	Vector<Sprite*> archivos2;
+
+	Carpeta* carpeta1;
 	Carpeta* carpeta2;
 
 	static cocos2d::Scene* createScene();

@@ -42,36 +42,82 @@ bool Webster::init()
 	this->addChild(menu, 1);
 
 	//Carpeta1
-	archivo1 = Sprite::create("Chica1.jpg");
-	archivo1->setPosition(300, 150);
-	addChild(archivo1, 1);
+	posXarchs1 = 300;
+	posYarchs1 = 160;
+	arch1_1 = Sprite::create("Chica1.jpg");
+	arch1_1->setPosition(posXarchs1, posYarchs1);
+	archivos1.insert(0, arch1_1);
+	addChild(arch1_1, 1);
+	
+	arch1_2 = Sprite::create("gato1.jpg");
+	arch1_2->setPosition(posXarchs1, posYarchs1);
+	archivos1.insert(1, arch1_2);
+	addChild(arch1_2, 1);
+	
+	arch1_3 = Sprite::create("gato2.jpg");
+	arch1_3->setPosition(posXarchs1, posYarchs1);
+	archivos1.insert(2, arch1_3);
+	addChild(arch1_3, 1);
 
-	carpeta1 = new Carpeta(archivo1);
-	carpeta1->botonCarpeta->setPosition(100, 120);
+	arch1_4 = Sprite::create("gato3.jpg");
+	arch1_4->setPosition(posXarchs1, posYarchs1);
+	archivos1.insert(3, arch1_4);
+	addChild(arch1_4, 1);
+
+	carpeta1 = new Carpeta(archivos1);
+	carpeta1->imagen->setPosition(100, 120);
+	carpeta1->pasar->setPosition(posXarchs1-75, posYarchs1+80);
 	carpeta1->abierta->setPosition(100, 120);
-	addChild(carpeta1->botonCarpeta, 1);
-	addChild(carpeta1->abierta, 2);
+	addChild(carpeta1->botones, 1);
+	addChild(carpeta1->abierta, 2);	
 
-	
 	//Carpeta2
-	archivo2 = Sprite::create("Camarera.jpg");
-	archivo2->setPosition(300, 120);
-	addChild(archivo2, 1);
+	posXarchs2 = 310;
+	posYarchs2 = 180;
+	arch2_1 = Sprite::create("perro1.jpg");
+	arch2_1->setPosition(posXarchs2, posYarchs2);
+	archivos2.insert(0, arch2_1);
+	addChild(arch2_1, 1);
 
-	carpeta2 = new Carpeta(archivo2);
-	carpeta2->botonCarpeta->setPosition(100, 100);
+	arch2_2 = Sprite::create("perro2.jpg");
+	arch2_2->setPosition(posXarchs2, posYarchs2);
+	archivos2.insert(1, arch2_2);
+	addChild(arch2_2, 1);
+
+	arch2_3 = Sprite::create("perro3.jpg");
+	arch2_3->setPosition(posXarchs2, posYarchs2);
+	archivos2.insert(2, arch2_3);
+	addChild(arch2_3, 1);
+
+	arch2_4 = Sprite::create("perro4.jpg");
+	arch2_4->setPosition(posXarchs2, posYarchs2);
+	archivos2.insert(3, arch2_4);
+	addChild(arch2_4, 1);
+
+	carpeta2 = new Carpeta(archivos2);
+	carpeta2->imagen->setPosition(100, 100);
+	carpeta2->pasar->setPosition(posXarchs2-75, posYarchs2+80);
 	carpeta2->abierta->setPosition(100, 100);
-	addChild(carpeta2->botonCarpeta, 1);
+	addChild(carpeta2->botones, 1);
 	addChild(carpeta2->abierta, 2);
-	
 
 	//Imagen fondo
 	auto background = Sprite::create("fondo_prueba.png");
 	background->setPosition(Point((visibleSize.width / 2), (visibleSize.height / 2)));
 	addChild(background, 0);
 
+	/*auto tocarPantalla = EventListenerTouchOneByOne::create();
+	tocarPantalla->setSwallowTouches(true);
+	tocarPantalla->onTouchBegan = CC_CALLBACK_2(Webster::onTouchBegan, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(tocarPantalla, this);*/
+
 	return true;
 }
+
+/*void tocarPantalla()
+{
+	
+}*/
 
 void Webster::menuCloseCallback(Ref* pSender)
 {
