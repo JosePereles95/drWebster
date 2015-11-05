@@ -19,7 +19,6 @@ Carpeta::Carpeta(Vector<Sprite*> archivos, int valido)
 	
 	contenido = archivos;
 	archivoValido = valido;
-	validoEscaneado = false;
 
 	for (int i = 0; i < contenido.size(); i++)
 		contenido.at(i)->setVisible(false);

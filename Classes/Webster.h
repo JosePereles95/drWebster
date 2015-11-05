@@ -35,7 +35,9 @@ public:
 	int validosEscaneados;
 	int validosTotales;
 	Label* archivosEncontrados;
-	void update(float);
+
+	/*virtual bool onTouchBegan(cocos2d::Touch*, cocos2d::Event*);*/
+	void clickado(cocos2d::Ref* pSender);
 
 	// a selector callback
 	void menuCloseCallback(cocos2d::Ref* pSender);

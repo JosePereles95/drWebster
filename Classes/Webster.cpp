@@ -120,22 +120,34 @@ bool Webster::init()
 	auto background = Sprite::create("fondo_prueba.png");
 	background->setPosition(Point((visibleSize.width / 2), (visibleSize.height / 2)));
 	addChild(background, 0);
-
-	this->scheduleUpdate();
+	
+	auto touchListener = EventListenerTouchOneByOne::create();
+	//touchListener->onTouchBegan = CC_CALLBACK_2(Webster::onTouchBegan, this);
+	touchListener->onTouchBegan = CC_CALLBACK_2(clickado, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+	//this->scheduleUpdate();
 
 	return true;
 }
 
-void Webster::update(float dt)
+void Webster::clickado(cocos2d::Ref * pSender)
+{
+	validosEscaneados = 6/*carpeta1->validoEscaneado + carpeta2->validoEscaneado*/;
+	__String *text = __String::createWithFormat("%d de %d", validosEscaneados, validosTotales);
+	archivosEncontrados->setString(text->getCString());
+}
+
+/*
+bool Webster::onTouchBegan(Touch* touch, Event* event)
 {
 	validosEscaneados = carpeta1->validoEscaneado + carpeta2->validoEscaneado;
-	/*if (_score > GameScene::_maxScore)
-		GameScene::_maxScore = _score;
-		*/
-	__String *text = __String::createWithFormat("Score %d MAX %d", validosEscaneados, validosEscaneados);
+
+	__String *text = __String::createWithFormat("%d de %d", validosEscaneados, validosTotales);
+
 	archivosEncontrados->setString(text->getCString());
 
-}
+	return true;
+}*/
 
 void Webster::menuCloseCallback(Ref* pSender)
 {
