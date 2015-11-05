@@ -32,6 +32,10 @@ public:
 	static cocos2d::Scene* createScene();
 
 	virtual bool init();
+	int validosEscaneados;
+	int validosTotales;
+	Label* archivosEncontrados;
+	void update(float);
 
 	// a selector callback
 	void menuCloseCallback(cocos2d::Ref* pSender);

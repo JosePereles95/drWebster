@@ -3,7 +3,7 @@
 
 USING_NS_CC;
 
-Carpeta::Carpeta(Vector<Sprite*> archivos)
+Carpeta::Carpeta(Vector<Sprite*> archivos, int valido)
 {
 	imagen = MenuItemImage::create("carpeta1.png", "carpeta1.png",
 		CC_CALLBACK_1(Carpeta::abreCierraCarpeta, this));
@@ -11,21 +11,26 @@ Carpeta::Carpeta(Vector<Sprite*> archivos)
 	pasar = MenuItemImage::create("flecha.png", "flecha.png",
 		CC_CALLBACK_1(Carpeta::pasaSiguiente, this));
 
-	botones = Menu::create(imagen, pasar, NULL);
+	escanear = MenuItemImage::create("scan.jpg", "scan.jpg",
+		CC_CALLBACK_1(Carpeta::escanearArchivo, this));
+
+	botones = Menu::create(imagen, pasar, escanear, NULL);
 	botones->setPosition(Vec2::ZERO);
 	
-	contenido = archivos; //copia global
+	contenido = archivos;
+	archivoValido = valido;
+	validoEscaneado = false;
 
 	for (int i = 0; i < contenido.size(); i++)
-	{
 		contenido.at(i)->setVisible(false);
-	}
 
 	abierta = Sprite::create("carpeta2.png");
 
 	elegido = 0;
 	abierta->setVisible(false);
 	pasar->setVisible(false);
+	escanear->setVisible(false);
+	validoEscaneado = 0;
 }
 
 void Carpeta::abreCierraCarpeta(Ref* pSender)
@@ -38,6 +43,8 @@ void Carpeta::abreCierraCarpeta(Ref* pSender)
 		contenido.at(elegido)->setVisible(true);
 		abierta->setVisible(true);
 		pasar->setVisible(true);
+		escanear->setVisible(true);
+
 		//imagen->setNormalImage(abierta);
 	}
 	else
@@ -45,6 +52,8 @@ void Carpeta::abreCierraCarpeta(Ref* pSender)
 		contenido.at(elegido)->setVisible(false);
 		abierta->setVisible(false);
 		pasar->setVisible(false);
+		escanear->setVisible(false);
+
 		//imagen->setNormalImage(cerrada);
 		//elegido = 0;
 	}
@@ -65,4 +74,10 @@ void Carpeta::pasaSiguiente(Ref* pSender)
 			elegido = 0;
 		contenido.at(elegido)->setVisible(true);
 	}
+}
+
+void Carpeta::escanearArchivo(Ref * pSender)
+{
+	if (elegido == archivoValido && validoEscaneado != 1)
+		validoEscaneado++;
 }

@@ -41,6 +41,19 @@ bool Webster::init()
 	menu->setPosition(Vec2::ZERO);
 	this->addChild(menu, 1);
 
+	//Archivos encontrados
+	validosEscaneados = 0;
+	validosTotales = 2;
+
+	__String *text = __String::createWithFormat("%d de %d", validosEscaneados, validosTotales);
+	archivosEncontrados = Label::createWithTTF(text->getCString(), "fonts/MArker Felt.ttf", 20);
+
+	archivosEncontrados->setPosition(Vec2(100, 250));
+	addChild(archivosEncontrados, 3);
+
+	archivosEncontrados = Label::createWithSystemFont(text->getCString(), "arial", 24); //Poner fuente
+
+
 	//Carpeta1
 	posXarchs1 = 300;
 	posYarchs1 = 160;
@@ -64,9 +77,10 @@ bool Webster::init()
 	archivos1.insert(3, arch1_4);
 	addChild(arch1_4, 1);
 
-	carpeta1 = new Carpeta(archivos1);
+	carpeta1 = new Carpeta(archivos1, 0);
 	carpeta1->imagen->setPosition(100, 120);
 	carpeta1->pasar->setPosition(posXarchs1-75, posYarchs1+80);
+	carpeta1->escanear->setPosition(posXarchs1 - 75, posYarchs1 + 60);
 	carpeta1->abierta->setPosition(100, 120);
 	addChild(carpeta1->botones, 1);
 	addChild(carpeta1->abierta, 2);	
@@ -94,9 +108,10 @@ bool Webster::init()
 	archivos2.insert(3, arch2_4);
 	addChild(arch2_4, 1);
 
-	carpeta2 = new Carpeta(archivos2);
+	carpeta2 = new Carpeta(archivos2, 2);
 	carpeta2->imagen->setPosition(100, 100);
 	carpeta2->pasar->setPosition(posXarchs2-75, posYarchs2+80);
+	carpeta2->escanear->setPosition(posXarchs2 - 75, posYarchs2 + 60);
 	carpeta2->abierta->setPosition(100, 100);
 	addChild(carpeta2->botones, 1);
 	addChild(carpeta2->abierta, 2);
@@ -106,18 +121,21 @@ bool Webster::init()
 	background->setPosition(Point((visibleSize.width / 2), (visibleSize.height / 2)));
 	addChild(background, 0);
 
-	/*auto tocarPantalla = EventListenerTouchOneByOne::create();
-	tocarPantalla->setSwallowTouches(true);
-	tocarPantalla->onTouchBegan = CC_CALLBACK_2(Webster::onTouchBegan, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(tocarPantalla, this);*/
+	this->scheduleUpdate();
 
 	return true;
 }
 
-/*void tocarPantalla()
+void Webster::update(float dt)
 {
-	
-}*/
+	validosEscaneados = carpeta1->validoEscaneado + carpeta2->validoEscaneado;
+	/*if (_score > GameScene::_maxScore)
+		GameScene::_maxScore = _score;
+		*/
+	__String *text = __String::createWithFormat("Score %d MAX %d", validosEscaneados, validosEscaneados);
+	archivosEncontrados->setString(text->getCString());
+
+}
 
 void Webster::menuCloseCallback(Ref* pSender)
 {

@@ -8,17 +8,20 @@ USING_NS_CC;
 class Carpeta
 {
 public:
-	Carpeta::Carpeta(Vector<Sprite*>);
+	Carpeta::Carpeta(Vector<Sprite*>, int);
 
 	MenuItemImage* imagen;
-	Menu* botones;
-
 	MenuItemImage* pasar;
+	MenuItemImage* escanear;
+
+	Menu* botones;
 	//Menu* botonNext;
 
 	int elegido;
+	int archivoValido;
 	Vector<Sprite*> contenido;
 	Sprite* abierta;
+	int validoEscaneado;
 	//CCSprite* abierta;
 	//CCSprite* cerrada;
 
@@ -27,6 +30,8 @@ public:
 	void eliminaCarpeta(void);
 
 	void pasaSiguiente(Ref* pSender);
+
+	void escanearArchivo(Ref* pSender);
 };
 
 #endif // __CARPETA_H__
