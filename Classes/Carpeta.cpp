@@ -15,10 +15,6 @@ Carpeta::Carpeta(Vector<Sprite*> archivos)
 	botones->setPosition(Vec2::ZERO);
 	
 	contenido = archivos; //copia global
-	//a
-	//b
-	//c
-	//d
 
 	for (int i = 0; i < contenido.size(); i++)
 	{
