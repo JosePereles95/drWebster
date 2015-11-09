@@ -23,6 +23,8 @@ public:
 	int posXarchs2;
 	int posYarchs2;
 
+	Sprite* prueba;
+
 	Vector<Sprite*> archivos1;
 	Vector<Sprite*> archivos2;
 
@@ -40,6 +42,8 @@ public:
 
 	// a selector callback
 	void menuCloseCallback(cocos2d::Ref* pSender);
+
+	void update(float dt);
 
 	// implement the "static create()" method manually
 	CREATE_FUNC(Webster);

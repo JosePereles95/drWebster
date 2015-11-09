@@ -53,6 +53,13 @@ bool Webster::init()
 
 	archivosEncontrados = Label::createWithSystemFont(text->getCString(), "arial", 24); //Poner fuente
 
+	//Imagen click prueba
+
+	prueba = Sprite::create("Camarera.jpg");
+	prueba->setPosition(170, 50);
+	prueba->setVisible(false);
+	addChild(prueba, 3);
+
 
 	//Carpeta1
 	posXarchs1 = 300;
@@ -124,11 +131,24 @@ bool Webster::init()
 	auto listener = EventListenerMouse::create();
 	//touchListener->onTouchBegan = CC_CALLBACK_2(Webster::onTouchBegan, this);
 	listener->onMouseDown = CC_CALLBACK_1(Webster::clickado, this);
-	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
-	//this->scheduleUpdate();
-	*/
+	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);*/
+	this->scheduleUpdate();
+	
 	return true;
 }
+
+void Webster::update(float dt) {
+
+	if (carpeta1->validoEscaneado == 1) {
+
+		/*__String *text = __String::createWithFormat("1");
+		archivosEncontrados->setString(text->getCString());
+		carpeta1->validoEscaneado = 2;*/
+
+		prueba->setVisible(true);
+	}
+}
+
 /*
 void Webster::clickado(Event* event)
 {
