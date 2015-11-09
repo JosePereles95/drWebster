@@ -23,7 +23,10 @@ public:
 	int posXarchs2;
 	int posYarchs2;
 
-	Sprite* prueba;
+	Sprite* noChecked1;
+	Sprite* Checked1;
+	Sprite* noChecked2;
+	Sprite* Checked2;
 
 	Vector<Sprite*> archivos1;
 	Vector<Sprite*> archivos2;

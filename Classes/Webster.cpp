@@ -53,12 +53,26 @@ bool Webster::init()
 
 	archivosEncontrados = Label::createWithSystemFont(text->getCString(), "arial", 24); //Poner fuente
 
-	//Imagen click prueba
+	//Checks de archivos
+	noChecked1 = Sprite::create("noCheck.png");
+	noChecked1->setPosition(170, 50);
+	noChecked1->setVisible(true);
+	addChild(noChecked1, 3);
 
-	prueba = Sprite::create("Camarera.jpg");
-	prueba->setPosition(170, 50);
-	prueba->setVisible(false);
-	addChild(prueba, 3);
+	Checked1 = Sprite::create("Check.png");
+	Checked1->setPosition(170, 50);
+	Checked1->setVisible(false);
+	addChild(Checked1, 3);
+
+	noChecked2 = Sprite::create("noCheck.png");
+	noChecked2->setPosition(170, 60);
+	noChecked2->setVisible(true);
+	addChild(noChecked2, 3);
+
+	Checked2 = Sprite::create("Check.png");
+	Checked2->setPosition(170, 60);
+	Checked2->setVisible(false);
+	addChild(Checked2, 3);
 
 
 	//Carpeta1
@@ -140,12 +154,10 @@ bool Webster::init()
 void Webster::update(float dt) {
 
 	if (carpeta1->validoEscaneado == 1) {
-
-		/*__String *text = __String::createWithFormat("1");
-		archivosEncontrados->setString(text->getCString());
-		carpeta1->validoEscaneado = 2;*/
-
-		prueba->setVisible(true);
+		Checked1->setVisible(true);
+	}
+	if (carpeta2->validoEscaneado == 1) {
+		Checked2->setVisible(true);
 	}
 }
 
