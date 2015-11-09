@@ -41,6 +41,7 @@ bool Webster::init()
 	menu->setPosition(Vec2::ZERO);
 	this->addChild(menu, 1);
 
+	/*
 	//Archivos encontrados
 	validosEscaneados = 0;
 	validosTotales = 2;
@@ -52,25 +53,26 @@ bool Webster::init()
 	addChild(archivosEncontrados, 3);
 
 	archivosEncontrados = Label::createWithSystemFont(text->getCString(), "arial", 24); //Poner fuente
+	*/
 
 	//Checks de archivos
 	noChecked1 = Sprite::create("noCheck.png");
-	noChecked1->setPosition(170, 50);
+	noChecked1->setPosition(20, 150);
 	noChecked1->setVisible(true);
 	addChild(noChecked1, 3);
 
 	Checked1 = Sprite::create("Check.png");
-	Checked1->setPosition(170, 50);
+	Checked1->setPosition(20, 150);
 	Checked1->setVisible(false);
 	addChild(Checked1, 3);
 
 	noChecked2 = Sprite::create("noCheck.png");
-	noChecked2->setPosition(170, 60);
+	noChecked2->setPosition(35, 150);
 	noChecked2->setVisible(true);
 	addChild(noChecked2, 3);
 
 	Checked2 = Sprite::create("Check.png");
-	Checked2->setPosition(170, 60);
+	Checked2->setPosition(35, 150);
 	Checked2->setVisible(false);
 	addChild(Checked2, 3);
 

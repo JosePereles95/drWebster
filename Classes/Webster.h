@@ -37,9 +37,12 @@ public:
 	static cocos2d::Scene* createScene();
 
 	virtual bool init();
+
+	/*
 	int validosEscaneados;
 	int validosTotales;
 	Label* archivosEncontrados;
+	*/
 
 	//void clickado(Event*);
 
