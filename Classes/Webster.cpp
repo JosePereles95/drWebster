@@ -61,12 +61,12 @@ bool Webster::init()
 	arch1_1->setPosition(posXarchs1, posYarchs1);
 	archivos1.insert(0, arch1_1);
 	addChild(arch1_1, 1);
-	
+
 	arch1_2 = Sprite::create("gato1.jpg");
 	arch1_2->setPosition(posXarchs1, posYarchs1);
 	archivos1.insert(1, arch1_2);
 	addChild(arch1_2, 1);
-	
+
 	arch1_3 = Sprite::create("gato2.jpg");
 	arch1_3->setPosition(posXarchs1, posYarchs1);
 	archivos1.insert(2, arch1_3);
@@ -79,11 +79,11 @@ bool Webster::init()
 
 	carpeta1 = new Carpeta(archivos1, 0);
 	carpeta1->imagen->setPosition(100, 120);
-	carpeta1->pasar->setPosition(posXarchs1-75, posYarchs1+80);
+	carpeta1->pasar->setPosition(posXarchs1 - 75, posYarchs1 + 80);
 	carpeta1->escanear->setPosition(posXarchs1 - 75, posYarchs1 + 60);
 	carpeta1->abierta->setPosition(100, 120);
 	addChild(carpeta1->botones, 1);
-	addChild(carpeta1->abierta, 2);	
+	addChild(carpeta1->abierta, 2);
 
 	//Carpeta2
 	posXarchs2 = 310;
@@ -110,7 +110,7 @@ bool Webster::init()
 
 	carpeta2 = new Carpeta(archivos2, 2);
 	carpeta2->imagen->setPosition(100, 100);
-	carpeta2->pasar->setPosition(posXarchs2-75, posYarchs2+80);
+	carpeta2->pasar->setPosition(posXarchs2 - 75, posYarchs2 + 80);
 	carpeta2->escanear->setPosition(posXarchs2 - 75, posYarchs2 + 60);
 	carpeta2->abierta->setPosition(100, 100);
 	addChild(carpeta2->botones, 1);
@@ -120,35 +120,25 @@ bool Webster::init()
 	auto background = Sprite::create("fondo_prueba.png");
 	background->setPosition(Point((visibleSize.width / 2), (visibleSize.height / 2)));
 	addChild(background, 0);
-	
-	auto touchListener = EventListenerTouchOneByOne::create();
+	/*
+	auto listener = EventListenerMouse::create();
 	//touchListener->onTouchBegan = CC_CALLBACK_2(Webster::onTouchBegan, this);
-	touchListener->onTouchBegan = CC_CALLBACK_2(clickado, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+	listener->onMouseDown = CC_CALLBACK_1(Webster::clickado, this);
+	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 	//this->scheduleUpdate();
-
+	*/
 	return true;
 }
-
-void Webster::clickado(cocos2d::Ref * pSender)
-{
-	validosEscaneados = 6/*carpeta1->validoEscaneado + carpeta2->validoEscaneado*/;
-	__String *text = __String::createWithFormat("%d de %d", validosEscaneados, validosTotales);
-	archivosEncontrados->setString(text->getCString());
-}
-
 /*
-bool Webster::onTouchBegan(Touch* touch, Event* event)
+void Webster::clickado(Event* event)
 {
-	validosEscaneados = carpeta1->validoEscaneado + carpeta2->validoEscaneado;
-
+	validosEscaneados = 6;//carpeta1->validoEscaneado + carpeta2->validoEscaneado;
 	__String *text = __String::createWithFormat("%d de %d", validosEscaneados, validosTotales);
-
 	archivosEncontrados->setString(text->getCString());
-
-	return true;
-}*/
-
+	
+	//return true;
+}
+*/
 void Webster::menuCloseCallback(Ref* pSender)
 {
 	Director::getInstance()->end();
