@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "Carpeta.h"
+#include "Virus.h"
 
 USING_NS_CC;
 
@@ -33,6 +34,10 @@ public:
 
 	Carpeta* carpeta1;
 	Carpeta* carpeta2;
+	
+	Virus* virus1;
+	//Vector<Carpeta*> allCarpetas;
+	
 
 	static cocos2d::Scene* createScene();
 

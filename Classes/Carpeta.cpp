@@ -2,6 +2,9 @@
 #include "Webster.h"
 
 USING_NS_CC;
+Carpeta::Carpeta()
+{
+}
 
 Carpeta::Carpeta(Vector<Sprite*> archivos, int valido)
 {

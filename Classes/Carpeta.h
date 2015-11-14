@@ -8,7 +8,8 @@ USING_NS_CC;
 class Carpeta
 {
 public:
-	Carpeta::Carpeta(Vector<Sprite*>, int);
+	Carpeta();
+	Carpeta(Vector<Sprite*>, int);
 
 	MenuItemImage* imagen;
 	MenuItemImage* pasar;

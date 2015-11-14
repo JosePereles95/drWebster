@@ -1,4 +1,6 @@
 #include "Webster.h"
+#include "Carpeta.h"
+#include "Virus.h"
 
 USING_NS_CC;
 
@@ -139,6 +141,14 @@ bool Webster::init()
 	addChild(carpeta2->botones, 1);
 	addChild(carpeta2->abierta, 2);
 
+	//Virus
+	Vector<Carpeta*> allCarpetas;
+    allCarpetas.insert(0, carpeta1);
+
+	virus1 = new Virus(allCarpetas);
+	virus1->imagen->setPosition(100, 250);
+	addChild(virus1->boton, 4);
+	
 	//Imagen fondo
 	auto background = Sprite::create("fondo_prueba.png");
 	background->setPosition(Point((visibleSize.width / 2), (visibleSize.height / 2)));

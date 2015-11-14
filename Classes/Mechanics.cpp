@@ -43,7 +43,7 @@ bool Mechanics::init()
 
 	_playerSprite = Sprite::create("cursor.png");
 	//_playerSprite->setPosition(Point(visibleSize.width / 2,	_playerSprite->getContentSize().height * 0.75));
-	_playerSprite->setPosition(50, 50);
+	//_playerSprite->setPosition(50, 50);
 	addChild(_playerSprite, 1);
 
 	this->scheduleUpdate();
@@ -65,25 +65,30 @@ bool Mechanics::init()
 }
 
 void Mechanics::onMouseMove(Event *event) {
-	static Vec2 *oldPosition;
+	//static Vec2 *oldPosition;
 	auto *e = dynamic_cast<EventMouse *>(event);
-	if (oldPosition == NULL) {
+	/*if (oldPosition == NULL) {
 		oldPosition = new Vec2(e->getCursorX(), e->getCursorY());
 	}
-	else {
-		_podVector = Vec2(e->getCursorX() - oldPosition->x,
-			e->getCursorY() - oldPosition->y);
+	else {*/
 
+		//_podVector = Vec2(e->getCursorX() - oldPosition->x, e->getCursorY() - oldPosition->y);
+		_podVector = Vec2(e->getCursorX(), e->getCursorY());
+
+		/*
 		if (!_isMovingByMouse) {
 			_isMovingByMouse = true;
 			oldPosition->x = e->getCursorX();
 			oldPosition->y = e->getCursorY();
 		}
-	}
+	}*/
 }
 
 void Mechanics::update(float dt) {
-	Size visibleSize = Director::getInstance()->getVisibleSize();
+	auto move = MoveTo::create(0, _podVector);
+	_playerSprite->runAction(move);
+
+	/*Size visibleSize = Director::getInstance()->getVisibleSize();
 
 	if (_isMovingByMouse) {
 		Vec2 newPos = Vec2(_playerSprite->getPosition().x + _podVector.x, _playerSprite->getPosition().y + _podVector.y);
@@ -97,7 +102,7 @@ void Mechanics::update(float dt) {
 		}
 		_playerSprite->setPosition(newPos);
 		_isMovingByMouse = false;
-	}
+	}*/
 }
 
 
