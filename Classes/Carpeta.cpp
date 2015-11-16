@@ -2,8 +2,10 @@
 #include "Webster.h"
 
 USING_NS_CC;
-Carpeta::Carpeta()
+
+Carpeta::Carpeta(void)
 {
+
 }
 
 Carpeta::Carpeta(Vector<Sprite*> archivos, int valido)
@@ -60,11 +62,11 @@ void Carpeta::abreCierraCarpeta(Ref* pSender)
 		//elegido = 0;
 	}
 }
-
+/*
 void Carpeta::eliminaCarpeta(void)
 {
 }
-
+*/
 void Carpeta::pasaSiguiente(Ref* pSender)
 {
 	if (abierta->isVisible())

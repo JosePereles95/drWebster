@@ -36,8 +36,19 @@ public:
 	Carpeta* carpeta2;
 	
 	Virus* virus1;
-	//Vector<Carpeta*> allCarpetas;
+	Vector<Carpeta*> allCarpetas;
 	
+	//Extras
+	Sprite* arch3_1;
+	int posXarchs3;
+	int posYarchs3;
+	Sprite* noChecked3;
+	Sprite* Checked3;
+	Vector<Sprite*> archivos3;
+	Carpeta* carpeta3;
+
+	Virus* virus2;
+
 
 	static cocos2d::Scene* createScene();
 

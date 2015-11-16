@@ -6,7 +6,7 @@
 
 USING_NS_CC;
 
-class Virus
+class Virus : public cocos2d::Object
 {
 public:
 	Virus(Vector<Carpeta*>);
@@ -19,13 +19,15 @@ public:
 
 	bool aturdido;
 	bool destruido;
+	bool llegado;
+	MoveTo* moverse;
 
 	int tiempoPapelera;
 	bool enPapelera;
 
 	float velocidad;
 
-	void aturdir(void);
+	void aturdir(Ref* pSender);
 	void movimiento(void);
 };
 

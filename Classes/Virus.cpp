@@ -11,19 +11,34 @@ Virus::Virus(Vector<Carpeta*> folders)
 	boton = Menu::create(imagen, NULL);
 	boton->setPosition(Vec2::ZERO);
 
-	//listaAtaque = folders;
-	//carpetaObjetivo = listaAtaque.at(0);
+	listaAtaque = folders;
+	int tam = listaAtaque.size();
+	carpetaObjetivo = listaAtaque.at(random(0, tam-1));
+	aturdido = false;
+	imagen->setVisible(false);
+	llegado = false;
 }
 
-void Virus::aturdir(void)
+void Virus::aturdir(Ref* pSender)
 {
-	aturdido = true;
+	if (!aturdido) {
+		imagen->stopAction(moverse);
+		aturdido = true;
+	}
+	else {
+		moverse = MoveTo::create(3/2, carpetaObjetivo->abierta->getPosition());
+		imagen->runAction(moverse);
+		aturdido = false;
+	}
 }
 
-void Virus::movimiento(void) 
+void Virus::movimiento(void)
 {
-	if (!aturdido) 
+	if (imagen->isVisible() && !llegado) 
 	{
-		
+		imagen->setVisible(true);
+		moverse = MoveTo::create(3, carpetaObjetivo->abierta->getPosition());
+		imagen->runAction(moverse);
+		llegado = true;
 	}
 }

@@ -5,10 +5,10 @@
 
 USING_NS_CC;
 
-class Carpeta
+class Carpeta : public cocos2d::Object
 {
 public:
-	Carpeta();
+	Carpeta(void);
 	Carpeta(Vector<Sprite*>, int);
 
 	MenuItemImage* imagen;
