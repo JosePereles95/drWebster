@@ -65,15 +65,25 @@ bool Mechanics::init()
 }
 
 void Mechanics::onMouseMove(Event *event) {
+
 	//static Vec2 *oldPosition;
+
 	auto *e = dynamic_cast<EventMouse *>(event);
+
+	_playerSprite->setPosition(e->getCursorX(), e->getCursorY());
+
+	/*_playerSprite->setPosition(_playerSprite->convertToNodeSpace(e->getLocation().x, e->getLocation().y).x,
+		_playerSprite->convertToNodeSpace(e->getLocation().x, e->getLocation().y).y);*/
+
+
+
 	/*if (oldPosition == NULL) {
 		oldPosition = new Vec2(e->getCursorX(), e->getCursorY());
 	}
 	else {*/
 
 		//_podVector = Vec2(e->getCursorX() - oldPosition->x, e->getCursorY() - oldPosition->y);
-		_podVector = Vec2(e->getCursorX(), e->getCursorY());
+		//_podVector = Vec2(e->getCursorX(), e->getCursorY());
 
 		/*
 		if (!_isMovingByMouse) {
@@ -85,8 +95,8 @@ void Mechanics::onMouseMove(Event *event) {
 }
 
 void Mechanics::update(float dt) {
-	auto move = MoveTo::create(0, _podVector);
-	_playerSprite->runAction(move);
+	//auto move = MoveTo::create(0, _podVector);
+	//_playerSprite->runAction(move);
 
 	/*Size visibleSize = Director::getInstance()->getVisibleSize();
 
