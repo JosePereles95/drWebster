@@ -38,17 +38,8 @@ public:
 	Virus* virus1;
 	Vector<Carpeta*> allCarpetas;
 	
-	//Extras
-	Sprite* arch3_1;
-	int posXarchs3;
-	int posYarchs3;
-	Sprite* noChecked3;
-	Sprite* Checked3;
-	Vector<Sprite*> archivos3;
-	Carpeta* carpeta3;
-
-	Virus* virus2;
-
+	Sprite* _cursorSprite;
+	void onMouseMove(Event *event);
 
 	static cocos2d::Scene* createScene();
 

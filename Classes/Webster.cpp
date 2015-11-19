@@ -43,6 +43,9 @@ bool Webster::init()
 	menu->setPosition(Vec2::ZERO);
 	this->addChild(menu, 1);
 
+	_cursorSprite = Sprite::create("cursor.png");
+	addChild(_cursorSprite, 4);
+
 	/*
 	//Archivos encontrados
 	validosEscaneados = 0;
@@ -161,7 +164,17 @@ bool Webster::init()
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);*/
 	this->scheduleUpdate();
 	
+	auto mouseListener = EventListenerMouse::create();
+	mouseListener->onMouseMove = CC_CALLBACK_1(Webster::onMouseMove, this);
+	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
+
 	return true;
+}
+
+void Webster::onMouseMove(Event *event) {
+
+	auto *e = dynamic_cast<EventMouse *>(event);
+	_cursorSprite->setPosition(e->getCursorX(), e->getCursorY());
 }
 
 void Webster::update(float dt) {
