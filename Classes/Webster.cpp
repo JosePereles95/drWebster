@@ -152,6 +152,8 @@ bool Webster::init()
 	virus1->imagen->setPosition(250, 250);
 	addChild(virus1->boton, 4);
 
+	allVirus.insert(0, virus1);
+
 	
 	//Imagen fondo
 	auto background = Sprite::create("fondo_prueba.png");
@@ -168,16 +170,28 @@ bool Webster::init()
 	mouseListener->onMouseMove = CC_CALLBACK_1(Webster::onMouseMove, this);
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
 
+	auto mouseListener2 = EventListenerMouse::create();
+	mouseListener2->onMouseDown = CC_CALLBACK_1(Webster::onMouseDown, this);
+	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener2, this);
+
 	return true;
 }
 
-void Webster::onMouseMove(Event *event) {
+void  Webster::onMouseDown(Event *event)
+{/*
+	Rect mov = _cursorSprite->getBoundingBox();
+	Rect mov2 = _cursorSprite->getBoundingBox();
+	if()*/
+}
 
+void Webster::onMouseMove(Event *event)
+{
 	auto *e = dynamic_cast<EventMouse *>(event);
 	_cursorSprite->setPosition(e->getCursorX(), e->getCursorY());
 }
 
-void Webster::update(float dt) {
+void Webster::update(float dt)
+{
 
 	if (carpeta1->validoEscaneado == 1) {
 		Checked1->setVisible(true);
