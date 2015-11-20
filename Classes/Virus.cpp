@@ -26,9 +26,10 @@ void Virus::aturdir(Ref* pSender)
 		aturdido = true;
 	}
 	else {
-		moverse = MoveTo::create(3/2, carpetaObjetivo->abierta->getPosition());
+		/*moverse = MoveTo::create(3/2, carpetaObjetivo->abierta->getPosition());
 		imagen->runAction(moverse);
-		aturdido = false;
+		aturdido = false;*/
+
 	}
 }
 

@@ -39,9 +39,12 @@ public:
 	Vector<Carpeta*> allCarpetas;
 
 	Vector<Virus*> allVirus;
+	Virus* viruselegido;
+	Rect rect, viruscomp;
 	
 	Sprite* _cursorSprite;
 	void onMouseMove(Event *event);
+	void onMouseUp(Event *event);
 	void onMouseDown(Event *event);
 
 	static cocos2d::Scene* createScene();

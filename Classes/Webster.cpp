@@ -174,11 +174,27 @@ bool Webster::init()
 	mouseListener2->onMouseDown = CC_CALLBACK_1(Webster::onMouseDown, this);
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener2, this);
 
+	auto mouseListener3 = EventListenerMouse::create();
+	mouseListener2->onMouseUp = CC_CALLBACK_1(Webster::onMouseUp, this);
+	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener3, this);
+
 	return true;
 }
 
 void  Webster::onMouseDown(Event *event)
-{/*
+{
+  rect= _cursorSprite->getBoundingBox();
+	for (const auto& virus : allVirus)
+	{
+		viruscomp = virus->imagen->getBoundingBox();
+		if (viruscomp.intersectsRect(rect))
+		{
+			if(virus->aturdido){ viruselegido = virus; }
+			
+		}
+	}
+
+	/*
 	Rect mov = _cursorSprite->getBoundingBox();
 	Rect mov2 = _cursorSprite->getBoundingBox();
 	if()*/
@@ -188,6 +204,17 @@ void Webster::onMouseMove(Event *event)
 {
 	auto *e = dynamic_cast<EventMouse *>(event);
 	_cursorSprite->setPosition(e->getCursorX(), e->getCursorY());
+	
+}
+void Webster::onMouseUp(Event *event)
+{
+	if (viruselegido!=nullptr)
+	{
+		viruselegido->aturdido = false;
+		viruselegido = nullptr;
+	}
+	
+
 }
 
 void Webster::update(float dt)
@@ -204,6 +231,10 @@ void Webster::update(float dt)
 	if (carpeta1->abierta->isVisible()) {
 		virus1->imagen->setVisible(true);
 		virus1->movimiento();
+	}
+	if (viruselegido != nullptr)
+	{
+		virus1->imagen->setPosition(_cursorSprite->getPosition().x, _cursorSprite->getPosition().y);
 	}
 }
 
