@@ -43,7 +43,7 @@ bool Webster::init()
 	menu->setPosition(Vec2::ZERO);
 	this->addChild(menu, 1);
 
-	_cursorSprite = Sprite::create("cursor.png");
+	_cursorSprite = Sprite::create("cursor1.png");
 	addChild(_cursorSprite, 4);
 
 	/*
@@ -199,7 +199,7 @@ void  Webster::onMouseDown(Event *event)
 void Webster::onMouseMove(Event *event)
 {
 	auto *e = dynamic_cast<EventMouse *>(event);
-	_cursorSprite->setPosition(e->getCursorX(), e->getCursorY());
+	_cursorSprite->setPosition(e->getCursorX()+2, e->getCursorY()-2);
 	
 }
 void Webster::onMouseUp(Event *event)
