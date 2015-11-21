@@ -29,6 +29,7 @@ public:
 
 	void aturdir(Ref* pSender);
 	void movimiento(void);
+	void cambiar(Ref* pSender);
 };
 
 #endif // __VIRUS_H__

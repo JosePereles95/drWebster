@@ -183,21 +183,17 @@ bool Webster::init()
 
 void  Webster::onMouseDown(Event *event)
 {
-  rect= _cursorSprite->getBoundingBox();
+	cursorRect = _cursorSprite->getBoundingBox();
+
 	for (const auto& virus : allVirus)
 	{
-		viruscomp = virus->imagen->getBoundingBox();
-		if (viruscomp.intersectsRect(rect))
+		virusRect = virus->imagen->getBoundingBox();
+		if (virusRect.intersectsRect(cursorRect))
 		{
-			if(virus->aturdido){ viruselegido = virus; }
-			
+			if(virus->aturdido)
+				virusElegido = virus;
 		}
 	}
-
-	/*
-	Rect mov = _cursorSprite->getBoundingBox();
-	Rect mov2 = _cursorSprite->getBoundingBox();
-	if()*/
 }
 
 void Webster::onMouseMove(Event *event)
@@ -208,13 +204,11 @@ void Webster::onMouseMove(Event *event)
 }
 void Webster::onMouseUp(Event *event)
 {
-	if (viruselegido!=nullptr)
+	if (virusElegido!=nullptr)
 	{
-		viruselegido->aturdido = false;
-		viruselegido = nullptr;
-	}
-	
-
+		virusElegido->aturdido = false;
+		virusElegido = nullptr;
+	}	
 }
 
 void Webster::update(float dt)
@@ -232,8 +226,8 @@ void Webster::update(float dt)
 		virus1->imagen->setVisible(true);
 		virus1->movimiento();
 	}
-	if (viruselegido != nullptr)
-	{
+
+	if (virusElegido != nullptr) {
 		virus1->imagen->setPosition(_cursorSprite->getPosition().x, _cursorSprite->getPosition().y);
 	}
 }

@@ -39,8 +39,9 @@ public:
 	Vector<Carpeta*> allCarpetas;
 
 	Vector<Virus*> allVirus;
-	Virus* viruselegido;
-	Rect rect, viruscomp;
+	Virus* virusElegido;
+	Rect cursorRect;
+	Rect virusRect;
 	
 	Sprite* _cursorSprite;
 	void onMouseMove(Event *event);

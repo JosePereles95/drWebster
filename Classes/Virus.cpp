@@ -24,13 +24,20 @@ void Virus::aturdir(Ref* pSender)
 	if (!aturdido) {
 		imagen->stopAction(moverse);
 		aturdido = true;
+		auto secuencia = Sequence::create(DelayTime::create(3), CC_CALLBACK_1(Virus::cambiar, this), NULL);
+		imagen->runAction(secuencia);
 	}
 	else {
-		/*moverse = MoveTo::create(3/2, carpetaObjetivo->abierta->getPosition());
+		moverse = MoveTo::create(3/1.5, carpetaObjetivo->abierta->getPosition());
 		imagen->runAction(moverse);
-		aturdido = false;*/
+		aturdido = false;
 
 	}
+}
+
+void Virus::cambiar(Ref* pSender)
+{
+	aturdido = false;
 }
 
 void Virus::movimiento(void)
