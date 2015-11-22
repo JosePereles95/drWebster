@@ -36,6 +36,7 @@ void Virus::aturdir(Ref* pSender)
 void Virus::cambiar(void)
 {
 	if (imagen->isVisible()) {
+		imagen->stopAction(moverse);
 		aturdido = false;
 		moverse = MoveTo::create(3 / 1.5, carpetaObjetivo->abierta->getPosition());
 		imagen->runAction(moverse);

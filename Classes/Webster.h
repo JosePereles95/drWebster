@@ -36,6 +36,8 @@ public:
 	Carpeta* carpeta2;
 	
 	Virus* virus1;
+	Virus* virus2;
+
 	Vector<Carpeta*> allCarpetas;
 
 	Vector<Virus*> allVirus;

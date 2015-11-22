@@ -144,6 +144,12 @@ bool Webster::init()
 
 	allVirus.insert(0, virus1);
 
+	virus2 = new Virus(allCarpetas, 2);
+	virus2->imagen->setPosition(150, 270);
+	addChild(virus2->boton, 4);
+
+	allVirus.insert(1, virus2);
+
 	//Imagen fondo
 	auto background = Sprite::create("fondo_prueba.png");
 	background->setPosition(Point((visibleSize.width / 2), (visibleSize.height / 2)));
@@ -216,6 +222,7 @@ void Webster::onMouseUp(Event *event)
 void Webster::update(float dt)
 {
 	virus1->movimiento();
+	virus2->movimiento();
 
 	if (carpeta1->validoEscaneado == 1) {
 		Checked1->setVisible(true);
@@ -227,6 +234,10 @@ void Webster::update(float dt)
 
 	if (carpeta1->abierta->isVisible()) {
 		virus1->iniciado = true;
+	}
+
+	if (carpeta2->abierta->isVisible()) {
+		virus2->iniciado = true;
 	}
 
 	if (virusElegido != nullptr) {
