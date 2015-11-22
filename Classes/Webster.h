@@ -42,8 +42,13 @@ public:
 	Virus* virusElegido;
 	Rect cursorRect;
 	Rect virusRect;
+	Rect papeleraRect;
+
+
 	
 	Sprite* _cursorSprite;
+	Sprite* papeleraSprite;
+
 	void onMouseMove(Event *event);
 	void onMouseUp(Event *event);
 	void onMouseDown(Event *event);

@@ -9,7 +9,7 @@ USING_NS_CC;
 class Virus : public cocos2d::Object
 {
 public:
-	Virus(Vector<Carpeta*>);
+	Virus(Vector<Carpeta*>, int);
 
 	MenuItemImage* imagen;
 	Menu* boton;
@@ -19,17 +19,25 @@ public:
 
 	bool aturdido;
 	bool destruido;
-	bool llegado;
+	bool iniciado;
+	bool reciclado;
+	bool continua;
+
 	MoveTo* moverse;
 
 	int tiempoPapelera;
 	bool enPapelera;
+	
+	int identificador;
 
 	float velocidad;
 
 	void aturdir(Ref* pSender);
 	void movimiento(void);
-	void cambiar();
+	void cambiar(void);
+
+	void reciclar(void);
+	void reanimar(void);
 };
 
 #endif // __VIRUS_H__

@@ -3,7 +3,7 @@
 
 USING_NS_CC;
 
-Virus::Virus(Vector<Carpeta*> folders)
+Virus::Virus(Vector<Carpeta*> folders, int id)
 {
 	imagen = MenuItemImage::create("virus.png", "virus.png",
 		CC_CALLBACK_1(Virus::aturdir, this));
@@ -12,11 +12,15 @@ Virus::Virus(Vector<Carpeta*> folders)
 	boton->setPosition(Vec2::ZERO);
 
 	listaAtaque = folders;
+	identificador = id;
+
 	int tam = listaAtaque.size();
 	carpetaObjetivo = listaAtaque.at(random(0, tam-1));
 	aturdido = false;
 	imagen->setVisible(false);
-	llegado = false;
+	iniciado = false;
+	continua = true;
+	reciclado = false;
 }
 
 void Virus::aturdir(Ref* pSender)
@@ -24,31 +28,41 @@ void Virus::aturdir(Ref* pSender)
 	if (!aturdido) {
 		imagen->stopAction(moverse);
 		aturdido = true;
-		auto secuencia = Sequence::create(DelayTime::create(3.0f), CallFunc::create(CC_CALLBACK_0(Virus::cambiar, this)), NULL);
-		imagen->runAction(secuencia);
-	}/*
-	else {
-		moverse = MoveTo::create(3/1.5, carpetaObjetivo->abierta->getPosition());
-		imagen->runAction(moverse);
-		aturdido = false;
-
-	}*/
+		auto secuencia1 = Sequence::create(DelayTime::create(3.0f), CallFunc::create(CC_CALLBACK_0(Virus::cambiar, this)), NULL);
+		imagen->runAction(secuencia1);
+	}
 }
 
-void Virus::cambiar()
+void Virus::cambiar(void)
 {
-	aturdido = false;
-	moverse = MoveTo::create(3 / 1.5, carpetaObjetivo->abierta->getPosition());
-	imagen->runAction(moverse);
+	if (imagen->isVisible()) {
+		aturdido = false;
+		moverse = MoveTo::create(3 / 1.5, carpetaObjetivo->abierta->getPosition());
+		imagen->runAction(moverse);
+	}
 }
 
 void Virus::movimiento(void)
 {
-	if (imagen->isVisible() && !llegado) 
+	if (iniciado && continua) 
 	{
 		imagen->setVisible(true);
 		moverse = MoveTo::create(3, carpetaObjetivo->abierta->getPosition());
 		imagen->runAction(moverse);
-		llegado = true;
+		continua = false;
 	}
+}
+
+void Virus::reciclar(void)
+{
+	imagen->stopAction(moverse);
+	imagen->setVisible(false);
+	auto secuencia2 = Sequence::create(DelayTime::create(7.0f), CallFunc::create(CC_CALLBACK_0(Virus::reanimar, this)), NULL);
+	imagen->runAction(secuencia2);
+	CCLOG("llega no mas");
+}
+
+void Virus::reanimar(void)
+{
+	continua = true;
 }

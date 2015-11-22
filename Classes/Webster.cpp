@@ -44,21 +44,11 @@ bool Webster::init()
 	this->addChild(menu, 1);
 
 	_cursorSprite = Sprite::create("cursor1.png");
-	addChild(_cursorSprite, 4);
+	addChild(_cursorSprite, 5);
 
-	/*
-	//Archivos encontrados
-	validosEscaneados = 0;
-	validosTotales = 2;
-
-	__String *text = __String::createWithFormat("%d de %d", validosEscaneados, validosTotales);
-	archivosEncontrados = Label::createWithTTF(text->getCString(), "fonts/MArker Felt.ttf", 20);
-
-	archivosEncontrados->setPosition(Vec2(100, 250));
-	addChild(archivosEncontrados, 3);
-
-	archivosEncontrados = Label::createWithSystemFont(text->getCString(), "arial", 24); //Poner fuente
-	*/
+	papeleraSprite = Sprite::create("papelera.png");
+	papeleraSprite->setPosition(460, 280);
+	addChild(papeleraSprite, 2);
 
 	//Checks de archivos
 	noChecked1 = Sprite::create("noCheck.png");
@@ -148,13 +138,12 @@ bool Webster::init()
     allCarpetas.insert(0, carpeta1);
 	allCarpetas.insert(1, carpeta2);
 
-	virus1 = new Virus(allCarpetas);
+	virus1 = new Virus(allCarpetas, 1);
 	virus1->imagen->setPosition(250, 250);
 	addChild(virus1->boton, 4);
 
 	allVirus.insert(0, virus1);
 
-	
 	//Imagen fondo
 	auto background = Sprite::create("fondo_prueba.png");
 	background->setPosition(Point((visibleSize.width / 2), (visibleSize.height / 2)));
@@ -200,11 +189,24 @@ void Webster::onMouseMove(Event *event)
 {
 	auto *e = dynamic_cast<EventMouse *>(event);
 	_cursorSprite->setPosition(e->getCursorX()+2, e->getCursorY()-2);
-	
 }
+
 void Webster::onMouseUp(Event *event)
 {
-	if (virusElegido!=nullptr)
+	papeleraRect = papeleraSprite->getBoundingBox();
+	if (virusElegido != nullptr) {
+		virusRect = virusElegido->imagen->getBoundingBox();
+
+		if (papeleraRect.intersectsRect(virusRect)) {
+			for (const auto& virus : allVirus)
+			{
+				if (virus->identificador == virusElegido->identificador && virus->aturdido)
+					virus->reciclar();
+			}
+		}
+	}
+
+	if (virusElegido != nullptr)
 	{
 		virusElegido->aturdido = false;
 		virusElegido = nullptr;
@@ -213,6 +215,7 @@ void Webster::onMouseUp(Event *event)
 
 void Webster::update(float dt)
 {
+	virus1->movimiento();
 
 	if (carpeta1->validoEscaneado == 1) {
 		Checked1->setVisible(true);
@@ -223,25 +226,13 @@ void Webster::update(float dt)
 	}
 
 	if (carpeta1->abierta->isVisible()) {
-		virus1->imagen->setVisible(true);
-		virus1->movimiento();
+		virus1->iniciado = true;
 	}
 
 	if (virusElegido != nullptr) {
-		virus1->imagen->setPosition(_cursorSprite->getPosition().x, _cursorSprite->getPosition().y);
+		virusElegido->imagen->setPosition(_cursorSprite->getPosition().x, _cursorSprite->getPosition().y);
 	}
 }
-
-/*
-void Webster::clickado(Event* event)
-{
-	validosEscaneados = 6;//carpeta1->validoEscaneado + carpeta2->validoEscaneado;
-	__String *text = __String::createWithFormat("%d de %d", validosEscaneados, validosTotales);
-	archivosEncontrados->setString(text->getCString());
-	
-	//return true;
-}
-*/
 
 void Webster::menuCloseCallback(Ref* pSender)
 {
