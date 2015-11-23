@@ -54,10 +54,14 @@ public:
 	void onMouseMove(Event *event);
 	void onMouseUp(Event *event);
 	void onMouseDown(Event *event);
+	void onMouseScroll(Event *event);
 
 	static cocos2d::Scene* createScene();
 
 	virtual bool init();
+
+	void goToPauseScene(Ref *pSender);
+	void changeColor(void);
 
 	/*
 	int validosEscaneados;

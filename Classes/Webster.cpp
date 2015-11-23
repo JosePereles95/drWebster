@@ -1,6 +1,7 @@
 #include "Webster.h"
 #include "Carpeta.h"
 #include "Virus.h"
+#include "PauseScene.h"
 
 USING_NS_CC;
 
@@ -31,6 +32,12 @@ bool Webster::init()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+	auto pause_button = MenuItemImage::create("pause.png", "pause.png",
+		CC_CALLBACK_1(Webster::goToPauseScene, this));
+
+	pause_button->setPosition(origin.x + pause_button->getContentSize().width / 2,
+		origin.y + visibleSize.height - pause_button->getContentSize().height / 2);
+
 	// add a "close" icon to exit the progress. it's an autorelease object
 	auto closeItem = MenuItemImage::create("medicine1.png", "medicine1.png",
 		CC_CALLBACK_1(Webster::menuCloseCallback, this));
@@ -39,7 +46,7 @@ bool Webster::init()
 		origin.y + closeItem->getContentSize().height / 2));
 
 	// create menu, it's an autorelease object
-	auto menu = Menu::create(closeItem, NULL);
+	auto menu = Menu::create(closeItem, pause_button, NULL);
 	menu->setPosition(Vec2::ZERO);
 	this->addChild(menu, 1);
 
@@ -170,10 +177,19 @@ bool Webster::init()
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener2, this);
 
 	auto mouseListener3 = EventListenerMouse::create();
-	mouseListener2->onMouseUp = CC_CALLBACK_1(Webster::onMouseUp, this);
+	mouseListener3->onMouseUp = CC_CALLBACK_1(Webster::onMouseUp, this);
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener3, this);
 
+	auto mouseListener4 = EventListenerMouse::create();
+	mouseListener4->onMouseScroll = CC_CALLBACK_1(Webster::onMouseScroll, this);
+	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener4, this);
+
 	return true;
+}
+
+void Webster::goToPauseScene(Ref *pSender) {
+	auto scene = PauseScene::createScene();
+	Director::getInstance()->pushScene(scene);
 }
 
 void  Webster::onMouseDown(Event *event)
@@ -219,10 +235,51 @@ void Webster::onMouseUp(Event *event)
 	}	
 }
 
+void Webster::onMouseScroll(Event *event)
+{
+	papeleraSprite->setColor(ccc3(0, 255, 0));
+	auto secuencia = Sequence::create(DelayTime::create(1.0f), CallFunc::create(CC_CALLBACK_0(Webster::changeColor, this)), NULL);
+	papeleraSprite->runAction(secuencia);
+
+	for (const auto& virus : allVirus)
+	{
+		if (virus->enPapelera && !virus->muerto)
+		{
+			virus->imagen->setVisible(false);
+			virus->muerto = true;
+		}
+	}
+}
+
+void Webster::changeColor(void)
+{
+	papeleraSprite->setColor(ccc3(255, 255, 255));
+}
+
 void Webster::update(float dt)
 {
-	virus1->movimiento();
-	virus2->movimiento();
+	bool hayVivas = false;
+		
+	for (const auto& carpeta : allCarpetas)
+	{
+		if (carpeta->vida > 0)
+			hayVivas = true;
+	}
+
+	if (!hayVivas)
+	{
+		menuCloseCallback(this);
+	}
+	else
+	{
+		for (const auto& virus : allVirus)
+		{
+			if (!virus->muerto)
+			{
+				virus->movimiento();
+			}
+		}
+	}
 
 	if (carpeta1->validoEscaneado == 1) {
 		Checked1->setVisible(true);

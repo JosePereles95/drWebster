@@ -35,6 +35,7 @@ Carpeta::Carpeta(Vector<Sprite*> archivos, int valido)
 	pasar->setVisible(false);
 	escanear->setVisible(false);
 	validoEscaneado = 0;
+	vida = 5;
 }
 
 void Carpeta::abreCierraCarpeta(Ref* pSender)
@@ -62,11 +63,16 @@ void Carpeta::abreCierraCarpeta(Ref* pSender)
 		//elegido = 0;
 	}
 }
-/*
+
 void Carpeta::eliminaCarpeta(void)
 {
+	imagen->setVisible(false);
+	abierta->setVisible(false);
+	contenido.at(elegido)->setVisible(false);
+	pasar->setVisible(false);
+	escanear->setVisible(false);
 }
-*/
+
 void Carpeta::pasaSiguiente(Ref* pSender)
 {
 	if (abierta->isVisible())

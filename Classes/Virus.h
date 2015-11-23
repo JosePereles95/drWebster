@@ -14,14 +14,22 @@ public:
 	MenuItemImage* imagen;
 	Menu* boton;
 	
+	Rect virusRect;
+	Rect carpetaRect;
+	
 	Vector<Carpeta*> listaAtaque;
 	Carpeta* carpetaObjetivo;
+
+	int tam;
+	int ataque;
 
 	bool aturdido;
 	bool destruido;
 	bool iniciado;
 	bool reciclado;
 	bool continua;
+	bool mordedura;
+	bool muerto;
 
 	MoveTo* moverse;
 
@@ -38,6 +46,7 @@ public:
 
 	void reciclar(void);
 	void reanimar(void);
+	void morder(void);
 };
 
 #endif // __VIRUS_H__

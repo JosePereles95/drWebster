@@ -23,6 +23,8 @@ public:
 	Vector<Sprite*> contenido;
 	Sprite* abierta;
 	int validoEscaneado;
+	int vida;
+
 	//CCSprite* abierta;
 	//CCSprite* cerrada;
 
