@@ -66,6 +66,7 @@ public:
 	void escaneando(void);
 	void goToPauseScene(Ref *pSender);
 	void changeColor(void);
+	void goToGameOver(Ref *pSender);
 
 	/*
 	int validosEscaneados;

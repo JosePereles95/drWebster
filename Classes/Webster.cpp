@@ -2,6 +2,7 @@
 #include "Carpeta.h"
 #include "Virus.h"
 #include "PauseScene.h"
+#include "GameOver.h"
 
 USING_NS_CC;
 
@@ -191,6 +192,10 @@ void Webster::goToPauseScene(Ref *pSender) {
 	auto scene = PauseScene::createScene();
 	Director::getInstance()->pushScene(scene);
 }
+void Webster::goToGameOver(Ref *pSender) {
+	auto scene = GameOver::createScene();
+	Director::getInstance()->pushScene(scene);
+}
 
 void  Webster::onMouseDown(Event *event)
 {
@@ -284,7 +289,8 @@ void Webster::update(float dt)
 
 	if (!hayVivas)
 	{
-		menuCloseCallback(this);
+		//menuCloseCallback(this);
+		goToGameOver(this);
 	}
 	else
 	{
