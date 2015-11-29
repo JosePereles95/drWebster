@@ -36,6 +36,7 @@ Carpeta::Carpeta(Vector<Sprite*> archivos, int valido)
 	escanear->setVisible(false);
 	validoEscaneado = 0;
 	vida = 5;
+	tiempoEscanear = false;
 }
 
 void Carpeta::abreCierraCarpeta(Ref* pSender)
@@ -88,6 +89,9 @@ void Carpeta::pasaSiguiente(Ref* pSender)
 
 void Carpeta::escanearArchivo(Ref * pSender)
 {
-	if (elegido == archivoValido && validoEscaneado != 1)
-		validoEscaneado++;
+	if (tiempoEscanear) {
+		if (elegido == archivoValido && validoEscaneado != 1)
+			validoEscaneado++;
+		tiempoEscanear = false;
+	}
 }

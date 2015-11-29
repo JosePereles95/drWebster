@@ -45,6 +45,9 @@ public:
 	Rect cursorRect;
 	Rect virusRect;
 	Rect papeleraRect;
+	Rect carpRect;
+	
+	Carpeta* carpetaElegida;
 
 
 	
@@ -60,6 +63,7 @@ public:
 
 	virtual bool init();
 
+	void escaneando(void);
 	void goToPauseScene(Ref *pSender);
 	void changeColor(void);
 

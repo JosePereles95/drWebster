@@ -24,6 +24,7 @@ public:
 	Sprite* abierta;
 	int validoEscaneado;
 	int vida;
+	bool tiempoEscanear;
 
 	//CCSprite* abierta;
 	//CCSprite* cerrada;

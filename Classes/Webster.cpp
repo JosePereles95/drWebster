@@ -205,6 +205,16 @@ void  Webster::onMouseDown(Event *event)
 				virusElegido = virus;
 		}
 	}
+	for (const auto& carpeta : allCarpetas)
+	{
+		carpRect = carpeta->escanear->getBoundingBox();
+		if (carpRect.intersectsRect(cursorRect))
+		{
+			carpetaElegida = carpeta;
+			auto secuencia = Sequence::create(DelayTime::create(3.0f), CallFunc::create(CC_CALLBACK_0(Webster::escaneando, this)), NULL);
+			carpetaElegida->imagen->runAction(secuencia);
+		}
+	}
 }
 
 void Webster::onMouseMove(Event *event)
@@ -219,6 +229,7 @@ void Webster::onMouseUp(Event *event)
 	if (virusElegido != nullptr) {
 		virusRect = virusElegido->imagen->getBoundingBox();
 
+		
 		if (papeleraRect.intersectsRect(virusRect)) {
 			for (const auto& virus : allVirus)
 			{
@@ -233,6 +244,11 @@ void Webster::onMouseUp(Event *event)
 		virusElegido->aturdido = false;
 		virusElegido = nullptr;
 	}	
+	if (carpetaElegida != nullptr) 
+	{
+		carpetaElegida->tiempoEscanear = false;
+		carpetaElegida = nullptr;
+	}
 }
 
 void Webster::onMouseScroll(Event *event)
@@ -299,6 +315,14 @@ void Webster::update(float dt)
 
 	if (virusElegido != nullptr) {
 		virusElegido->imagen->setPosition(_cursorSprite->getPosition().x, _cursorSprite->getPosition().y);
+	}
+}
+
+void Webster::escaneando(void) 
+{
+	if (carpetaElegida != nullptr) 
+	{
+		carpetaElegida->tiempoEscanear = true;
 	}
 }
 
