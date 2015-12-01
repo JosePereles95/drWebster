@@ -16,6 +16,10 @@ public:
 	
 	Rect virusRect;
 	Rect carpetaRect;
+
+	Sprite* animVirus;
+	SpriteBatchNode* spritebatch;
+	Sprite* imagenAturdido;
 	
 	Vector<Carpeta*> listaAtaque;
 	Carpeta* carpetaObjetivo;

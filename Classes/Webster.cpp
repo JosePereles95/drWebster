@@ -158,6 +158,60 @@ bool Webster::init()
 
 	allVirus.insert(1, virus2);
 
+	addChild(virus1->spritebatch, 3);
+	addChild(virus2->spritebatch, 3);
+
+	addChild(virus1->imagenAturdido, 3);
+	addChild(virus2->imagenAturdido, 3);
+
+	//Sprite Sheet
+	SpriteBatchNode* spritebatch = SpriteBatchNode::create("Escanear_sheet.png");
+	SpriteFrameCache* cache = SpriteFrameCache::getInstance();
+	cache->addSpriteFramesWithFile("Escanear_sheet.plist");
+
+	cargando1 = Sprite::createWithSpriteFrameName("Escanear01.png");
+	spritebatch->addChild(cargando1, 3);
+	addChild(spritebatch, 3);
+	
+	cargando1->setVisible(false);
+
+	Vector<SpriteFrame*> animFrames(5);
+
+	char str[100] = { 0 };
+	for (int i = 1; i < 5; i++)
+	{
+		sprintf(str, "Escanear%02d.png", i);
+		SpriteFrame* frame = cache->getSpriteFrameByName(str);
+		animFrames.pushBack(frame);
+	}
+
+	Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.1f);
+	cargando1->runAction(RepeatForever::create(Animate::create(animation)));
+
+	//Animacion fuego
+	SpriteBatchNode* spritebatch2 = SpriteBatchNode::create("Fire_sheet.png");
+	SpriteFrameCache* cache2 = SpriteFrameCache::getInstance();
+	cache2->addSpriteFramesWithFile("Fire_sheet.plist");
+
+	animFuego = Sprite::createWithSpriteFrameName("fire_01.png");
+	spritebatch2->addChild(animFuego, 3);
+	addChild(spritebatch2, 3);
+	animFuego->setPosition(460, 280);
+	animFuego->setVisible(false);
+
+	Vector<SpriteFrame*> animFrames2(4);
+
+	char str2[100] = { 0 };
+	for (int i = 1; i < 4; i++)
+	{
+		sprintf(str2, "fire_%02d.png", i);
+		SpriteFrame* frame2 = cache2->getSpriteFrameByName(str2);
+		animFrames2.pushBack(frame2);
+	}
+
+	Animation* animation2 = Animation::createWithSpriteFrames(animFrames2, 0.1f);
+	animFuego->runAction(RepeatForever::create(Animate::create(animation2)));
+
 	//Imagen fondo
 	auto background = Sprite::create("fondo_prueba.png");
 	background->setPosition(Point((visibleSize.width / 2), (visibleSize.height / 2)));
@@ -210,14 +264,20 @@ void  Webster::onMouseDown(Event *event)
 				virusElegido = virus;
 		}
 	}
+
 	for (const auto& carpeta : allCarpetas)
 	{
 		carpRect = carpeta->escanear->getBoundingBox();
 		if (carpRect.intersectsRect(cursorRect))
 		{
 			carpetaElegida = carpeta;
-			auto secuencia = Sequence::create(DelayTime::create(3.0f), CallFunc::create(CC_CALLBACK_0(Webster::escaneando, this)), NULL);
-			carpetaElegida->imagen->runAction(secuencia);
+			if (carpetaElegida->abierta->isVisible()) {
+				secuenciaEscaneo = Sequence::create(DelayTime::create(3.0f), CallFunc::create(CC_CALLBACK_0(Webster::escaneando, this)), NULL);
+				cargando1->setPosition(carpetaElegida->contenido.at(carpetaElegida->elegido)->getPosition().x,
+					carpetaElegida->contenido.at(carpetaElegida->elegido)->getPosition().y);
+				cargando1->setVisible(true);
+				carpetaElegida->imagen->runAction(secuenciaEscaneo);
+			}
 		}
 	}
 }
@@ -246,19 +306,21 @@ void Webster::onMouseUp(Event *event)
 
 	if (virusElegido != nullptr)
 	{
-		virusElegido->aturdido = false;
 		virusElegido = nullptr;
 	}	
 	if (carpetaElegida != nullptr) 
 	{
+		carpetaElegida->imagen->stopAction(secuenciaEscaneo);
 		carpetaElegida->tiempoEscanear = false;
 		carpetaElegida = nullptr;
+		cargando1->setVisible(false);
 	}
 }
 
 void Webster::onMouseScroll(Event *event)
 {
-	papeleraSprite->setColor(ccc3(0, 255, 0));
+	papeleraSprite->setColor(ccc3(255, 0, 0));
+	animFuego->setVisible(true);
 	auto secuencia = Sequence::create(DelayTime::create(1.0f), CallFunc::create(CC_CALLBACK_0(Webster::changeColor, this)), NULL);
 	papeleraSprite->runAction(secuencia);
 
@@ -266,7 +328,6 @@ void Webster::onMouseScroll(Event *event)
 	{
 		if (virus->enPapelera && !virus->muerto)
 		{
-			virus->imagen->setVisible(false);
 			virus->muerto = true;
 		}
 	}
@@ -275,6 +336,7 @@ void Webster::onMouseScroll(Event *event)
 void Webster::changeColor(void)
 {
 	papeleraSprite->setColor(ccc3(255, 255, 255));
+	animFuego->setVisible(false);
 }
 
 void Webster::update(float dt)
@@ -329,6 +391,7 @@ void Webster::escaneando(void)
 	if (carpetaElegida != nullptr) 
 	{
 		carpetaElegida->tiempoEscanear = true;
+		cargando1->setVisible(false);
 	}
 }
 

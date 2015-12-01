@@ -48,11 +48,14 @@ public:
 	Rect carpRect;
 	
 	Carpeta* carpetaElegida;
-
-
 	
 	Sprite* _cursorSprite;
 	Sprite* papeleraSprite;
+
+	Sprite* cargando1;
+	Sprite* animFuego;
+
+	Sequence* secuenciaEscaneo;
 
 	void onMouseMove(Event *event);
 	void onMouseUp(Event *event);
