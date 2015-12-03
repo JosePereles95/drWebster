@@ -1,5 +1,5 @@
 #include "GameOver.h"
-#include "Webster.h"
+#include "Tutorial.h"
 
 USING_NS_CC;
 
@@ -56,7 +56,7 @@ bool GameOver::init()
 }
 
 void GameOver::resumeGameScreen(Ref *pSender) {
-	auto scene = Webster::createScene();
+	auto scene = Tutorial::createScene();
 	Director::getInstance()->popScene();
 	Director::getInstance()->replaceScene(scene);
 }

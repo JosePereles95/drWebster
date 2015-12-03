@@ -1,6 +1,6 @@
 #include "AppDelegate.h"
 #include "Mechanics.h"
-#include "Webster.h"
+#include "Inicio.h"
 
 USING_NS_CC;
 
@@ -84,7 +84,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-	auto scene = Webster::createScene();
+	auto scene = Inicio::createScene();
 
     // run
     director->runWithScene(scene);

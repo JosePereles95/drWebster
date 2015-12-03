@@ -1,15 +1,16 @@
-#include "PauseScene.h"
+#include "Inicio.h"
 #include "Tutorial.h"
+
 
 USING_NS_CC;
 
-Scene* PauseScene::createScene()
+Scene* Inicio::createScene()
 {
 	// 'scene' is an autorelease object
 	auto scene = Scene::create();
 
 	// 'layer' is an autorelease object
-	auto layer = PauseScene::create();
+	auto layer = Inicio::create();
 
 	// add layer as a child to scene
 	scene->addChild(layer);
@@ -19,7 +20,7 @@ Scene* PauseScene::createScene()
 }
 
 // on "init" you need to initialize your instance
-bool PauseScene::init()
+bool Inicio::init()
 {
 	//////////////////////////////GameScreen
 	// 1. super init first
@@ -31,17 +32,12 @@ bool PauseScene::init()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto resumeItem = MenuItemImage::create("pause.png", "pause.png",
-		CC_CALLBACK_1(PauseScene::resumeGameScreen,
+	auto resumeItem = MenuItemImage::create("Logo.png"," Logo.png",
+		CC_CALLBACK_1(Inicio::resumeGameScreen,
 			this));
 
-	auto closeItem = MenuItemImage::create("medicine1.png", "medicine1.png",
-		CC_CALLBACK_1(PauseScene::menuCloseCallback, this));
-
-	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width / 2,
-		origin.y + closeItem->getContentSize().height / 2));
-
-	auto menu = Menu::create(resumeItem, closeItem, NULL);
+	
+	auto menu = Menu::create(resumeItem,NULL);
 
 	menu->alignItemsVerticallyWithPadding(visibleSize.height / 4);
 	addChild(menu, 1);
@@ -55,14 +51,12 @@ bool PauseScene::init()
 	return true;
 }
 
-void PauseScene::resumeGameScreen(Ref *pSender) {
-	Director::getInstance()->popScene();
+void Inicio::resumeGameScreen(Ref *pSender) {
+	auto scene = Tutorial::createScene();
+	Director::getInstance()->pushScene(scene);
 }
 
-void PauseScene::menuCloseCallback(Ref* pSender)
-{
-	Director::getInstance()->end();
-}
+
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 exit(0);
