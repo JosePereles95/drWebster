@@ -3,34 +3,69 @@
 
 USING_NS_CC;
 
-Virus::Virus(Vector<Carpeta*> folders, int id)
+Virus::Virus(Vector<Carpeta*> folders, int id, int tipo)
 {
-	spritebatch = SpriteBatchNode::create("Virus_sheet.png");
-	SpriteFrameCache* cache = SpriteFrameCache::getInstance();
-	cache->addSpriteFramesWithFile("Virus_sheet.plist");
+	tipoVirus = tipo;
 
-	animVirus = Sprite::createWithSpriteFrameName("Virus01.png");
-	spritebatch->addChild(animVirus, 3);
-
-	animVirus->setVisible(false);
-
-	Vector<SpriteFrame*> animFrames(3);
-
-	char str[100] = { 0 };
-	for (int i = 1; i < 3; i++)
+	if (tipoVirus == 1)
 	{
-		sprintf(str, "Virus%02d.png", i);
-		SpriteFrame* frame = cache->getSpriteFrameByName(str);
-		animFrames.pushBack(frame);
+		spritebatch = SpriteBatchNode::create("Virus_sheet.png");
+		SpriteFrameCache* cache = SpriteFrameCache::getInstance();
+		cache->addSpriteFramesWithFile("Virus_sheet.plist");
+
+		animVirus = Sprite::createWithSpriteFrameName("Virus01.png");
+		spritebatch->addChild(animVirus, 3);
+
+		animVirus->setVisible(false);
+
+		Vector<SpriteFrame*> animFrames(3);
+
+		char str[100] = { 0 };
+		for (int i = 1; i < 3; i++)
+		{
+			sprintf(str, "Virus%02d.png", i);
+			SpriteFrame* frame = cache->getSpriteFrameByName(str);
+			animFrames.pushBack(frame);
+		}
+
+		Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.1f);
+		animVirus->runAction(RepeatForever::create(Animate::create(animation)));
+
+		imagenAturdido = Sprite::create("VirusAturdido.png");
+
+		imagen = MenuItemImage::create("virus.png", "virus.png",
+			CC_CALLBACK_1(Virus::aturdir, this));
 	}
 
-	Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.1f);
-	animVirus->runAction(RepeatForever::create(Animate::create(animation)));
+	else if (tipoVirus == 2)
+	{
+		spritebatch = SpriteBatchNode::create("VirusCuernos_sheet.png");
+		SpriteFrameCache* cache = SpriteFrameCache::getInstance();
+		cache->addSpriteFramesWithFile("VirusCuernos_sheet.plist");
 
-	imagenAturdido = Sprite::create("VirusAturdido.png");
+		animVirus = Sprite::createWithSpriteFrameName("VirusCuernos01.png");
+		spritebatch->addChild(animVirus, 3);
 
-	imagen = MenuItemImage::create("virus.png", "virus.png",
-		CC_CALLBACK_1(Virus::aturdir, this));
+		animVirus->setVisible(false);
+
+		Vector<SpriteFrame*> animFrames(3);
+
+		char str[100] = { 0 };
+		for (int i = 1; i < 3; i++)
+		{
+			sprintf(str, "VirusCuernos%02d.png", i);
+			SpriteFrame* frame = cache->getSpriteFrameByName(str);
+			animFrames.pushBack(frame);
+		}
+
+		Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.1f);
+		animVirus->runAction(RepeatForever::create(Animate::create(animation)));
+
+		imagenAturdido = Sprite::create("VirusCuernosAturdido.png");
+
+		imagen = MenuItemImage::create("virusCuernos.png", "virusCuernos.png",
+			CC_CALLBACK_1(Virus::aturdir, this));
+	}
 
 	boton = Menu::create(imagen, NULL);
 	boton->setPosition(Vec2::ZERO);
@@ -59,7 +94,10 @@ void Virus::aturdir(Ref* pSender)
 		aturdido = true;
 		animVirus->setVisible(false);
 		imagenAturdido->setVisible(true);
-		auto secuencia1 = Sequence::create(DelayTime::create(3.0f), CallFunc::create(CC_CALLBACK_0(Virus::cambiar, this)), NULL);
+		if(tipoVirus == 1)
+			secuencia1 = Sequence::create(DelayTime::create(3.0f), CallFunc::create(CC_CALLBACK_0(Virus::cambiar, this)), NULL);
+		if(tipoVirus == 2)
+			secuencia1 = Sequence::create(DelayTime::create(5.0f), CallFunc::create(CC_CALLBACK_0(Virus::cambiar, this)), NULL);
 		imagen->runAction(secuencia1);
 	}
 }
@@ -85,7 +123,10 @@ void Virus::movimiento(void)
 	{
 		animVirus->setVisible(true);
 		imagen->setVisible(true);
-		moverse = MoveTo::create(3, carpetaObjetivo->abierta->getPosition());
+		if(tipoVirus == 1)
+			moverse = MoveTo::create(5, carpetaObjetivo->abierta->getPosition());
+		if(tipoVirus == 2)
+			moverse = MoveTo::create(7, carpetaObjetivo->abierta->getPosition());
 		imagen->runAction(moverse);
 		continua = false;
 	}

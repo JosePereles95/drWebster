@@ -9,13 +9,16 @@ USING_NS_CC;
 class Virus : public cocos2d::Object
 {
 public:
-	Virus(Vector<Carpeta*>, int);
+	Virus(Vector<Carpeta*>, int, int);
+
+	int tipoVirus;
 
 	MenuItemImage* imagen;
 	Menu* boton;
 	
 	Rect virusRect;
 	Rect carpetaRect;
+	Sequence* secuencia1;
 
 	Sprite* animVirus;
 	SpriteBatchNode* spritebatch;

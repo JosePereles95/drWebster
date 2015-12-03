@@ -146,13 +146,13 @@ bool Webster::init()
     allCarpetas.insert(0, carpeta1);
 	allCarpetas.insert(1, carpeta2);
 
-	virus1 = new Virus(allCarpetas, 1);
+	virus1 = new Virus(allCarpetas, 1, 1);
 	virus1->imagen->setPosition(250, 250);
 	addChild(virus1->boton, 4);
 
 	allVirus.insert(0, virus1);
 
-	virus2 = new Virus(allCarpetas, 2);
+	virus2 = new Virus(allCarpetas, 2, 2);
 	virus2->imagen->setPosition(150, 270);
 	addChild(virus2->boton, 4);
 
@@ -291,15 +291,33 @@ void Webster::onMouseMove(Event *event)
 void Webster::onMouseUp(Event *event)
 {
 	papeleraRect = papeleraSprite->getBoundingBox();
-	if (virusElegido != nullptr) {
+	if (virusElegido != nullptr)
+	{
 		virusRect = virusElegido->imagen->getBoundingBox();
-
-		
-		if (papeleraRect.intersectsRect(virusRect)) {
+				
+		if (papeleraRect.intersectsRect(virusRect))
+		{
 			for (const auto& virus : allVirus)
 			{
 				if (virus->identificador == virusElegido->identificador && virus->aturdido)
-					virus->reciclar();
+				{
+					if (virus->tipoVirus == 1)
+						virus->reciclar();
+
+					else if (virus->tipoVirus == 2)
+					{
+						bool cuernosValido = true;
+						for (const auto& otroVirus : allVirus)
+						{
+							if (otroVirus->tipoVirus == 1 && (!otroVirus->enPapelera && !otroVirus->muerto))
+							{
+								cuernosValido = false;
+							}
+						}
+						if (cuernosValido)
+							virus->reciclar();
+					}
+				}
 			}
 		}
 	}
