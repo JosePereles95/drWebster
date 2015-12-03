@@ -46,6 +46,14 @@ bool Tutorial::init()
 	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width / 2,
 		origin.y + closeItem->getContentSize().height / 2));
 
+	//Música de fondo.
+	auto musicaAlice = CocosDenshion::SimpleAudioEngine::getInstance();
+	//musicaAlice->preloadBackgroundMusic("/music/alice.mp3");
+	//musicaAlice->playBackgroundMusic("/music/alice.mp3", true);
+
+	//Efectos
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/carpeta.mp3");
+
 	// create menu, it's an autorelease object
 	auto menu = Menu::create(closeItem, pause_button, NULL);
 	menu->setPosition(Vec2::ZERO);

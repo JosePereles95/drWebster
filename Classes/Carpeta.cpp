@@ -1,5 +1,7 @@
 #include "Carpeta.h"
 #include "Webster.h"
+#include "Tutorial.h"
+
 
 USING_NS_CC;
 
@@ -78,6 +80,7 @@ void Carpeta::pasaSiguiente(Ref* pSender)
 {
 	if (abierta->isVisible())
 	{
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/carpeta.mp3");
 		contenido.at(elegido)->setVisible(false);
 		if (elegido < contenido.size() - 1)
 			elegido++;

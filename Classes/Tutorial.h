@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "Carpeta.h"
 #include "Virus.h"
+#include "SimpleAudioEngine.h"  
 
 USING_NS_CC;
 
