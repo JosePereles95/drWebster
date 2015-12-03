@@ -109,7 +109,10 @@ void Virus::cambiar(void)
 		aturdido = false;
 		imagenAturdido->setVisible(false);
 		animVirus->setVisible(true);
-		moverse = MoveTo::create(3 / 1.5, carpetaObjetivo->abierta->getPosition());
+		if (tipoVirus == 1)
+			moverse = MoveTo::create(5, carpetaObjetivo->abierta->getPosition());
+		if (tipoVirus == 2)
+			moverse = MoveTo::create(7, carpetaObjetivo->abierta->getPosition());
 		imagen->runAction(moverse);
 	}
 }
@@ -121,6 +124,7 @@ void Virus::movimiento(void)
 
 	if (iniciado && continua) 
 	{
+		continua = false;
 		animVirus->setVisible(true);
 		imagen->setVisible(true);
 		if(tipoVirus == 1)
@@ -128,7 +132,7 @@ void Virus::movimiento(void)
 		if(tipoVirus == 2)
 			moverse = MoveTo::create(7, carpetaObjetivo->abierta->getPosition());
 		imagen->runAction(moverse);
-		continua = false;
+		
 	}
 
 	virusRect = imagen->getBoundingBox();
@@ -176,4 +180,5 @@ void Virus::reanimar(void)
 {
 	continua = true;
 	this->enPapelera = false;
+	aturdido = false;
 }
