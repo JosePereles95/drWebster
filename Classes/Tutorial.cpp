@@ -36,8 +36,7 @@ bool Tutorial::init()
 	auto pause_button = MenuItemImage::create("pause.png", "pause.png",
 		CC_CALLBACK_1(Tutorial::goToPauseScene, this));
 
-	pause_button->setPosition(origin.x + pause_button->getContentSize().width / 2,
-		origin.y + visibleSize.height - pause_button->getContentSize().height / 2);
+	pause_button->setPosition(10, 80);
 
 	// add a "close" icon to exit the progress. it's an autorelease object
 	auto closeItem = MenuItemImage::create("medicine1.png", "medicine1.png",
@@ -64,113 +63,82 @@ bool Tutorial::init()
 
 	papeleraSprite = Sprite::create("papelera.png");
 	papeleraSprite->setPosition(460, 280);
-	addChild(papeleraSprite, 2);
+	addChild(papeleraSprite, 3);
 
 	//Checks de archivos
+	posXChecked1 = 70;
+	posYChecked1 = 280;
+
 	noChecked1 = Sprite::create("noCheck.png");
-	noChecked1->setPosition(20, 150);
+	noChecked1->setPosition(posXChecked1, posYChecked1);
 	noChecked1->setVisible(true);
 	addChild(noChecked1, 3);
 
 	Checked1 = Sprite::create("Check.png");
-	Checked1->setPosition(20, 150);
+	Checked1->setPosition(posXChecked1, posYChecked1);
 	Checked1->setVisible(false);
 	addChild(Checked1, 3);
 
-	noChecked2 = Sprite::create("noCheck.png");
-	noChecked2->setPosition(35, 150);
-	noChecked2->setVisible(true);
-	addChild(noChecked2, 3);
-
-	Checked2 = Sprite::create("Check.png");
-	Checked2->setPosition(35, 150);
-	Checked2->setVisible(false);
-	addChild(Checked2, 3);
-
-
 	//Carpeta1
-	posXarchs1 = 300;
-	posYarchs1 = 160;
-	arch1_1 = Sprite::create("Chica1.jpg");
+	posXarchs1 = 170;
+	posYarchs1 = 150;
+
+	arch1_1 = Sprite::create("PanelVirus.png");
 	arch1_1->setPosition(posXarchs1, posYarchs1);
 	archivos1.insert(0, arch1_1);
-	addChild(arch1_1, 1);
+	addChild(arch1_1, 2);
 
-	arch1_2 = Sprite::create("gato1.jpg");
-	arch1_2->setPosition(posXarchs1, posYarchs1);
-	archivos1.insert(1, arch1_2);
-	addChild(arch1_2, 1);
-
-	arch1_3 = Sprite::create("gato2.jpg");
-	arch1_3->setPosition(posXarchs1, posYarchs1);
-	archivos1.insert(2, arch1_3);
-	addChild(arch1_3, 1);
-
-	arch1_4 = Sprite::create("gato3.jpg");
-	arch1_4->setPosition(posXarchs1, posYarchs1);
-	archivos1.insert(3, arch1_4);
-	addChild(arch1_4, 1);
+	posXCarpeta1 = 65;
+	posYCarpeta1 = 120;
 
 	carpeta1 = new Carpeta(archivos1, 0);
-	carpeta1->imagen->setPosition(100, 120);
-	carpeta1->pasar->setPosition(posXarchs1 - 75, posYarchs1 + 80);
-	carpeta1->escanear->setPosition(posXarchs1 - 75, posYarchs1 + 60);
-	carpeta1->abierta->setPosition(100, 120);
-	addChild(carpeta1->botones, 1);
-	addChild(carpeta1->abierta, 2);
+	carpeta1->imagen->setPosition(posXCarpeta1, posYCarpeta1);
+	carpeta1->pasar->setPosition(posXarchs1 + 30, posYarchs1 - 84);
+	carpeta1->escanear->setPosition(posXarchs1 + 60, posYarchs1 - 84);
+	carpeta1->abierta->setPosition(posXCarpeta1, posYCarpeta1);
+	addChild(carpeta1->botones, 2);
+	addChild(carpeta1->abierta, 1);
+	
+	posXarchs2 = 290;	//Carpeta2
 
-	//Carpeta2
-	posXarchs2 = 310;
-	posYarchs2 = 180;
-	arch2_1 = Sprite::create("perro1.jpg");
+	posYarchs2 = 160;
+
+	arch2_1 = Sprite::create("denegado.png");
 	arch2_1->setPosition(posXarchs2, posYarchs2);
 	archivos2.insert(0, arch2_1);
-	addChild(arch2_1, 1);
+	addChild(arch2_1, 2);
 
-	arch2_2 = Sprite::create("perro2.jpg");
+	arch2_2 = Sprite::create("HijaFamilia.png");
 	arch2_2->setPosition(posXarchs2, posYarchs2);
 	archivos2.insert(1, arch2_2);
-	addChild(arch2_2, 1);
+	addChild(arch2_2, 2);
 
-	arch2_3 = Sprite::create("perro3.jpg");
-	arch2_3->setPosition(posXarchs2, posYarchs2);
-	archivos2.insert(2, arch2_3);
-	addChild(arch2_3, 1);
+	posXCarpeta2 = 150;
+	posYCarpeta2 = 120;
 
-	arch2_4 = Sprite::create("perro4.jpg");
-	arch2_4->setPosition(posXarchs2, posYarchs2);
-	archivos2.insert(3, arch2_4);
-	addChild(arch2_4, 1);
-
-	carpeta2 = new Carpeta(archivos2, 2);
-	carpeta2->imagen->setPosition(100, 100);
-	carpeta2->pasar->setPosition(posXarchs2 - 75, posYarchs2 + 80);
-	carpeta2->escanear->setPosition(posXarchs2 - 75, posYarchs2 + 60);
-	carpeta2->abierta->setPosition(100, 100);
-	addChild(carpeta2->botones, 1);
-	addChild(carpeta2->abierta, 2);
+	carpeta2 = new Carpeta(archivos2, 1);
+	carpeta2->imagen->setPosition(posXCarpeta2, posYCarpeta2);
+	carpeta2->imagen->setColor(ccc3(200, 0, 0));
+	carpeta2->abierta->setColor(ccc3(200, 0, 0));
+	carpeta2->pasar->setPosition(posXarchs2 + 30, posYarchs2 - 84);
+	carpeta2->escanear->setPosition(posXarchs2 + 60, posYarchs2 - 84);
+	carpeta2->abierta->setPosition(posXCarpeta2, posYCarpeta2);
+	addChild(carpeta2->botones, 2);
+	addChild(carpeta2->abierta, 1);
 
 	//Virus
 	allCarpetas.insert(0, carpeta1);
-	allCarpetas.insert(1, carpeta2);
 
 	virus1 = new Virus(allCarpetas, 1, 1);
-	virus1->imagen->setPosition(250, 250);
+	virus1->imagen->setPosition(posXarchs1, posYarchs1);
 	addChild(virus1->boton, 4);
 
 	allVirus.insert(0, virus1);
 
-	virus2 = new Virus(allCarpetas, 2, 2);
-	virus2->imagen->setPosition(150, 270);
-	addChild(virus2->boton, 4);
+	addChild(virus1->spritebatch, 4);
+	addChild(virus1->imagenAturdido, 4);
 
-	allVirus.insert(1, virus2);
-
-	addChild(virus1->spritebatch, 3);
-	addChild(virus2->spritebatch, 3);
-
-	addChild(virus1->imagenAturdido, 3);
-	addChild(virus2->imagenAturdido, 3);
+	virus1->ataque = 0;
 
 	//Sprite Sheet
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create("Escanear_sheet.png");
@@ -221,8 +189,8 @@ bool Tutorial::init()
 	animFuego->runAction(RepeatForever::create(Animate::create(animation2)));
 
 	//Imagen fondo
-	auto background = Sprite::create("fondo_prueba.png");
-	background->setPosition(Point((visibleSize.width / 2), (visibleSize.height / 2)));
+	auto background = Sprite::create("FondoDoctor.png");
+	background->setPosition(240, 160);
 	addChild(background, 0);
 	/*
 	auto listener = EventListenerMouse::create();
@@ -395,16 +363,8 @@ void Tutorial::update(float dt)
 		Checked1->setVisible(true);
 	}
 
-	if (carpeta2->validoEscaneado == 1) {
-		Checked2->setVisible(true);
-	}
-
 	if (carpeta1->abierta->isVisible()) {
 		virus1->iniciado = true;
-	}
-
-	if (carpeta2->abierta->isVisible()) {
-		virus2->iniciado = true;
 	}
 
 	if (virusElegido != nullptr) {

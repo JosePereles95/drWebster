@@ -27,14 +27,19 @@ public:
 
 	Sprite* noChecked1;
 	Sprite* Checked1;
-	Sprite* noChecked2;
-	Sprite* Checked2;
+
+	int posXChecked1;
+	int posYChecked1;
 
 	Vector<Sprite*> archivos1;
 	Vector<Sprite*> archivos2;
 
 	Carpeta* carpeta1;
 	Carpeta* carpeta2;
+	int posXCarpeta1;
+	int posYCarpeta1;
+	int posXCarpeta2;
+	int posYCarpeta2;
 
 	Virus* virus1;
 	Virus* virus2;

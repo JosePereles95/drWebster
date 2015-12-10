@@ -15,10 +15,10 @@ Carpeta::Carpeta(Vector<Sprite*> archivos, int valido)
 	imagen = MenuItemImage::create("carpeta1.png", "carpeta1.png",
 		CC_CALLBACK_1(Carpeta::abreCierraCarpeta, this));
 
-	pasar = MenuItemImage::create("flecha.png", "flecha.png",
+	pasar = MenuItemImage::create("flecha.png", "flecha1.png",
 		CC_CALLBACK_1(Carpeta::pasaSiguiente, this));
 
-	escanear = MenuItemImage::create("scan.jpg", "scan.jpg",
+	escanear = MenuItemImage::create("scan.png", "scan1.png",
 		CC_CALLBACK_1(Carpeta::escanearArchivo, this));
 
 	botones = Menu::create(imagen, pasar, escanear, NULL);
@@ -37,7 +37,7 @@ Carpeta::Carpeta(Vector<Sprite*> archivos, int valido)
 	pasar->setVisible(false);
 	escanear->setVisible(false);
 	validoEscaneado = 0;
-	vida = 5;
+	vida = 10;
 	tiempoEscanear = false;
 }
 

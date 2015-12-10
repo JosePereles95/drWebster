@@ -84,7 +84,10 @@ Virus::Virus(Vector<Carpeta*> folders, int id, int tipo)
 	mordedura = false;
 	enPapelera = false;
 	muerto = false;
-	ataque = 1;
+	if (tipoVirus == 1)
+		ataque = 1;
+	else if (tipoVirus == 2)
+		ataque = 2;
 }
 
 void Virus::aturdir(Ref* pSender)

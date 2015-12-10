@@ -88,21 +88,6 @@ bool Webster::init()
 	archivos1.insert(0, arch1_1);
 	addChild(arch1_1, 1);
 
-	arch1_2 = Sprite::create("gato1.jpg");
-	arch1_2->setPosition(posXarchs1, posYarchs1);
-	archivos1.insert(1, arch1_2);
-	addChild(arch1_2, 1);
-
-	arch1_3 = Sprite::create("gato2.jpg");
-	arch1_3->setPosition(posXarchs1, posYarchs1);
-	archivos1.insert(2, arch1_3);
-	addChild(arch1_3, 1);
-
-	arch1_4 = Sprite::create("gato3.jpg");
-	arch1_4->setPosition(posXarchs1, posYarchs1);
-	archivos1.insert(3, arch1_4);
-	addChild(arch1_4, 1);
-
 	carpeta1 = new Carpeta(archivos1, 0);
 	carpeta1->imagen->setPosition(100, 120);
 	carpeta1->pasar->setPosition(posXarchs1 - 75, posYarchs1 + 80);
@@ -213,6 +198,7 @@ bool Webster::init()
 	animFuego->runAction(RepeatForever::create(Animate::create(animation2)));
 
 	//Imagen fondo
+	//auto background = Sprite::create("FondoDoctor.jpg");
 	auto background = Sprite::create("fondo_prueba.png");
 	background->setPosition(Point((visibleSize.width / 2), (visibleSize.height / 2)));
 	addChild(background, 0);
