@@ -88,7 +88,7 @@ bool Webster::init()
 	archivos1.insert(0, arch1_1);
 	addChild(arch1_1, 1);
 
-	carpeta1 = new Carpeta(archivos1, 0);
+	carpeta1 = new Carpeta(archivos1, 0, 1);
 	carpeta1->imagen->setPosition(100, 120);
 	carpeta1->pasar->setPosition(posXarchs1 - 75, posYarchs1 + 80);
 	carpeta1->escanear->setPosition(posXarchs1 - 75, posYarchs1 + 60);
@@ -119,7 +119,7 @@ bool Webster::init()
 	archivos2.insert(3, arch2_4);
 	addChild(arch2_4, 1);
 
-	carpeta2 = new Carpeta(archivos2, 2);
+	carpeta2 = new Carpeta(archivos2, 2, 1);
 	carpeta2->imagen->setPosition(100, 100);
 	carpeta2->pasar->setPosition(posXarchs2 - 75, posYarchs2 + 80);
 	carpeta2->escanear->setPosition(posXarchs2 - 75, posYarchs2 + 60);

@@ -9,7 +9,7 @@ class Carpeta : public cocos2d::Object
 {
 public:
 	Carpeta(void);
-	Carpeta(Vector<Sprite*>, int);
+	Carpeta(Vector<Sprite*>, int, int);
 
 	MenuItemImage* imagen;
 	MenuItemImage* pasar;
@@ -24,6 +24,7 @@ public:
 	Sprite* abierta;
 	int validoEscaneado;
 	int vida;
+	int tipo;
 	bool tiempoEscanear;
 
 	//CCSprite* abierta;

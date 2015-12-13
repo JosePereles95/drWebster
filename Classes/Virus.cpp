@@ -66,6 +66,35 @@ Virus::Virus(Vector<Carpeta*> folders, int id, int tipo)
 		imagen = MenuItemImage::create("virusCuernos.png", "virusCuernos.png",
 			CC_CALLBACK_1(Virus::aturdir, this));
 	}
+	else if (tipoVirus == 3)
+	{
+		spritebatch = SpriteBatchNode::create("VirusMadre_sheet.png");
+		SpriteFrameCache* cache = SpriteFrameCache::getInstance();
+		cache->addSpriteFramesWithFile("VirusMadre_sheet.plist");
+
+		animVirus = Sprite::createWithSpriteFrameName("VirusMadre01.png");
+		spritebatch->addChild(animVirus, 3);
+
+		animVirus->setVisible(false);
+
+		Vector<SpriteFrame*> animFrames(3);
+
+		char str[100] = { 0 };
+		for (int i = 1; i < 3; i++)
+		{
+			sprintf(str, "VirusMadre%02d.png", i);
+			SpriteFrame* frame = cache->getSpriteFrameByName(str);
+			animFrames.pushBack(frame);
+		}
+
+		Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.1f);
+		animVirus->runAction(RepeatForever::create(Animate::create(animation)));
+
+		imagenAturdido = Sprite::create("VirusMadreAturdido.png");
+
+		imagen = MenuItemImage::create("virusCuernos.png", "virusCuernos.png", //Mismo png (tamaño) que Cuernos
+			CC_CALLBACK_1(Virus::aturdir, this));
+	}
 
 	boton = Menu::create(imagen, NULL);
 	boton->setPosition(Vec2::ZERO);
@@ -88,6 +117,8 @@ Virus::Virus(Vector<Carpeta*> folders, int id, int tipo)
 		ataque = 1;
 	else if (tipoVirus == 2)
 		ataque = 2;
+	else if (tipoVirus == 3)
+		ataque = 0;
 }
 
 void Virus::aturdir(Ref* pSender)
@@ -97,7 +128,7 @@ void Virus::aturdir(Ref* pSender)
 		aturdido = true;
 		animVirus->setVisible(false);
 		imagenAturdido->setVisible(true);
-		if(tipoVirus == 1)
+		if(tipoVirus == 1 || tipoVirus == 3)
 			secuencia1 = Sequence::create(DelayTime::create(3.0f), CallFunc::create(CC_CALLBACK_0(Virus::cambiar, this)), NULL);
 		if(tipoVirus == 2)
 			secuencia1 = Sequence::create(DelayTime::create(5.0f), CallFunc::create(CC_CALLBACK_0(Virus::cambiar, this)), NULL);
@@ -112,7 +143,7 @@ void Virus::cambiar(void)
 		aturdido = false;
 		imagenAturdido->setVisible(false);
 		animVirus->setVisible(true);
-		if (tipoVirus == 1)
+		if (tipoVirus == 1 || tipoVirus == 3)
 			moverse = MoveTo::create(5, carpetaObjetivo->abierta->getPosition());
 		if (tipoVirus == 2)
 			moverse = MoveTo::create(7, carpetaObjetivo->abierta->getPosition());
@@ -130,7 +161,7 @@ void Virus::movimiento(void)
 		continua = false;
 		animVirus->setVisible(true);
 		imagen->setVisible(true);
-		if(tipoVirus == 1)
+		if(tipoVirus == 1 || tipoVirus == 3)
 			moverse = MoveTo::create(5, carpetaObjetivo->abierta->getPosition());
 		if(tipoVirus == 2)
 			moverse = MoveTo::create(7, carpetaObjetivo->abierta->getPosition());

@@ -8,23 +8,14 @@ USING_NS_CC;
 
 Scene* Tutorial::createScene()
 {
-	// 'scene' is an autorelease object
 	auto scene = Scene::create();
-
-	// 'layer' is an autorelease object
 	auto layer = Tutorial::create();
-
-	// add layer as a child to scene
 	scene->addChild(layer);
-
-	// return the scene
 	return scene;
 }
 
-// on "init" you need to initialize your instance
 bool Tutorial::init()
 {
-	// 1. super init first
 	if (!Layer::init())
 	{
 		return false;
@@ -33,121 +24,210 @@ bool Tutorial::init()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto pause_button = MenuItemImage::create("pause.png", "pause.png",
-		CC_CALLBACK_1(Tutorial::goToPauseScene, this));
-
-	pause_button->setPosition(10, 80);
-
-	// add a "close" icon to exit the progress. it's an autorelease object
-	auto closeItem = MenuItemImage::create("medicine1.png", "medicine1.png",
-		CC_CALLBACK_1(Tutorial::menuCloseCallback, this));
-
-	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width / 2,
-		origin.y + closeItem->getContentSize().height / 2));
-
 	//Música de fondo.
-	auto musicaAlice = CocosDenshion::SimpleAudioEngine::getInstance();
+	musicaWebster = CocosDenshion::SimpleAudioEngine::getInstance();
 	//musicaAlice->preloadBackgroundMusic("/music/alice.mp3");
-	//musicaAlice->playBackgroundMusic("/music/alice.mp3", true);
+	musicaWebster->playBackgroundMusic("/music/alice.mp3", true);
+	musicaWebster->stopBackgroundMusic(false);
+	musicaWebster->setBackgroundMusicVolume(0.25f);
 
 	//Efectos
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/carpeta.mp3");
 
-	// create menu, it's an autorelease object
-	auto menu = Menu::create(closeItem, pause_button, NULL);
-	menu->setPosition(Vec2::ZERO);
-	this->addChild(menu, 1);
-
+	//Cursor
 	_cursorSprite = Sprite::create("cursor1.png");
-	addChild(_cursorSprite, 5);
+	addChild(_cursorSprite, 6);
 
+	//Papelera
 	papeleraSprite = Sprite::create("papelera.png");
-	papeleraSprite->setPosition(460, 280);
+	papeleraSprite->setPosition(visibleSize.width - papeleraSprite->getContentSize().width / 2 - 15, 
+		visibleSize.height - papeleraSprite->getContentSize().height / 2 - 15);
 	addChild(papeleraSprite, 3);
 
+	//Interfaz
+	interfazSprite = Sprite::create("IntWebster.png");
+	interfazSprite->setPosition(origin.x + interfazSprite->getContentSize().width / 2,
+		origin.y + visibleSize.height - interfazSprite->getContentSize().height / 2);
+	addChild(interfazSprite, 1);
+
 	//Checks de archivos
-	posXChecked1 = 70;
-	posYChecked1 = 280;
+	posXChecked1 = 202;
+	posYChecked1 = visibleSize.height - 110;
 
 	noChecked1 = Sprite::create("noCheck.png");
 	noChecked1->setPosition(posXChecked1, posYChecked1);
 	noChecked1->setVisible(true);
-	addChild(noChecked1, 3);
+	addChild(noChecked1, 2);
 
 	Checked1 = Sprite::create("Check.png");
 	Checked1->setPosition(posXChecked1, posYChecked1);
 	Checked1->setVisible(false);
-	addChild(Checked1, 3);
+	addChild(Checked1, 2);
 
 	//Carpeta1
-	posXarchs1 = 170;
-	posYarchs1 = 150;
+	posXarchs1 = 400;
+	posYarchs1 = 360;
 
 	arch1_1 = Sprite::create("PanelVirus.png");
 	arch1_1->setPosition(posXarchs1, posYarchs1);
 	archivos1.insert(0, arch1_1);
 	addChild(arch1_1, 2);
 
-	posXCarpeta1 = 65;
-	posYCarpeta1 = 120;
+	arch1_2 = Sprite::create("entrada_ponencia.png");
+	arch1_2->setPosition(posXarchs1, posYarchs1);
+	archivos1.insert(1, arch1_2);
+	addChild(arch1_2, 2);
 
-	carpeta1 = new Carpeta(archivos1, 0);
+	posXCarpeta1 = 50;
+	posYCarpeta1 = 200;
+
+	carpeta1 = new Carpeta(archivos1, 1, 1);
 	carpeta1->imagen->setPosition(posXCarpeta1, posYCarpeta1);
-	carpeta1->pasar->setPosition(posXarchs1 + 30, posYarchs1 - 84);
-	carpeta1->escanear->setPosition(posXarchs1 + 60, posYarchs1 - 84);
+	carpeta1->pasar->setPosition(posXarchs1 + 90, posYarchs1 - 230);
+	carpeta1->escanear->setPosition(posXarchs1 + 165, posYarchs1 - 230);
 	carpeta1->abierta->setPosition(posXCarpeta1, posYCarpeta1);
 	addChild(carpeta1->botones, 2);
-	addChild(carpeta1->abierta, 1);
-	
-	posXarchs2 = 290;	//Carpeta2
+	addChild(carpeta1->abierta, 2);
 
-	posYarchs2 = 160;
+	//Carpeta2
+	posXarchs2 = 1000;
+	posYarchs2 = 420;
 
 	arch2_1 = Sprite::create("denegado.png");
 	arch2_1->setPosition(posXarchs2, posYarchs2);
 	archivos2.insert(0, arch2_1);
 	addChild(arch2_1, 2);
 
-	arch2_2 = Sprite::create("HijaFamilia.png");
-	arch2_2->setPosition(posXarchs2, posYarchs2);
-	archivos2.insert(1, arch2_2);
-	addChild(arch2_2, 2);
+	posXCarpeta2 = visibleSize.width / 2;
+	posYCarpeta2 = visibleSize.height / 2;
 
-	posXCarpeta2 = 150;
-	posYCarpeta2 = 120;
-
-	carpeta2 = new Carpeta(archivos2, 1);
+	carpeta2 = new Carpeta(archivos2, -1, 1);
 	carpeta2->imagen->setPosition(posXCarpeta2, posYCarpeta2);
 	carpeta2->imagen->setColor(ccc3(200, 0, 0));
 	carpeta2->abierta->setColor(ccc3(200, 0, 0));
-	carpeta2->pasar->setPosition(posXarchs2 + 30, posYarchs2 - 84);
-	carpeta2->escanear->setPosition(posXarchs2 + 60, posYarchs2 - 84);
+	carpeta2->pasar->setPosition(posXarchs2 + 90, posYarchs2 - 230);
+	carpeta2->escanear->setPosition(posXarchs2 + 165, posYarchs2 - 230);
 	carpeta2->abierta->setPosition(posXCarpeta2, posYCarpeta2);
 	addChild(carpeta2->botones, 2);
-	addChild(carpeta2->abierta, 1);
+	addChild(carpeta2->abierta, 2);
+
+	//Mensajes tutorial
+	tuto1 = Sprite::create("tutorial1.png");
+	tuto1->setPosition(visibleSize.width / 2,
+		visibleSize.height / 2 - tuto1->getContentSize().height / 2 - 35);
+	addChild(tuto1, 4);
+
+	//Barra tareas
+	barra = Sprite::create("Barra_tareas3.png");
+	barra->setPosition(visibleSize.width / 2, barra->getContentSize().height / 2);
+	addChild(barra, 1);
+
+	//Correo
+	archMail_1 = Sprite::create("webster_correo1.png");
+	posXarchsMail = visibleSize.width - archMail_1->getContentSize().width / 2 - 55;
+	posYarchsMail = visibleSize.height / 2 - 40;
+	archMail_1->setPosition(posXarchsMail, posYarchsMail);
+	allMails.insert(0, archMail_1);
+	addChild(archMail_1, 2);
+
+	archMail_2 = Sprite::create("webster_correo2.png");
+	archMail_2->setPosition(posXarchsMail, posYarchsMail);
+	allMails.insert(1, archMail_2);
+	addChild(archMail_2, 2);
+
+	archMail_3 = Sprite::create("webster_correo3.png");
+	archMail_3->setPosition(posXarchsMail, posYarchsMail);
+	allMails.insert(2, archMail_3);
+	addChild(archMail_3, 2);
+
+	posXMail = visibleSize.width / 2 + 165;
+	posYMail = barra->getContentSize().height / 2;
+
+	mail = new Carpeta(allMails, -1, 3);
+	mail->imagen->setPosition(posXMail, posYMail);
+	mail->pasar->setPosition(posXarchsMail + 20, posYarchsMail - 257);
+	mail->escanear->setPosition(posXarchsMail + 120, posYarchsMail - 257);
+	mail->abierta->setPosition(posXMail, posYMail);
+	addChild(mail->botones, 2);
+	addChild(mail->abierta, 2);
+
+	//Noticias
+	archNews_1 = Sprite::create("webster_noticia1.png");
+	posXarchsNews = visibleSize.width - archNews_1->getContentSize().width / 2 - 30;
+	posYarchsNews = visibleSize.height / 2;
+	archNews_1->setPosition(posXarchsNews, posYarchsNews);
+	allNoticias.insert(0, archNews_1);
+	addChild(archNews_1, 2);
+
+	posXNoticias = visibleSize.width / 2 + 295;
+	posYNoticias = barra->getContentSize().height / 2;
+
+	noticias = new Carpeta(allNoticias, -1, 6);
+	noticias->imagen->setPosition(posXNoticias, posYNoticias);
+	noticias->pasar->setPosition(posXarchsNews - 40, posYarchsNews - 250);
+	noticias->escanear->setPosition(posXarchsNews + 40, posYarchsNews - 250);
+	noticias->abierta->setPosition(posXNoticias, posYNoticias);
+	addChild(noticias->botones, 2);
+	addChild(noticias->abierta, 2);
+	
+	//Estado
+	estado = Sprite::create("estado.png");
+	estado->setPosition(visibleSize.width / 2,
+		barra->getContentSize().height / 2 + 10);
+	addChild(estado, 2);
+
+	//Musica y boton pausa
+	auto pause_button = MenuItemImage::create("pause.png", "pause.png",
+		CC_CALLBACK_1(Tutorial::goToPauseScene, this));
+	pause_button->setPosition(164, visibleSize.height - 25);
+
+	auto musica = MenuItemImage::create("musica.png", "musica.png",
+		CC_CALLBACK_1(Tutorial::playMusic, this));
+	musica->setPosition(visibleSize.width / 2 - 287,
+		barra->getContentSize().height / 2);
+	
+	//Menu con botones
+	auto menu = Menu::create(pause_button, musica, NULL);
+	menu->setPosition(Vec2::ZERO);
+	this->addChild(menu, 3);
+
+	/*
+	mail = new Carpeta(archivos2, -1, 3);
+	mail->imagen->setPosition(160, 45);
+	mail->abierta->setPosition(160, 45);
+	addChild(mail->botones, 1);
+	addChild(mail->abierta, 1);
+
+
+	pensamientos = new Carpeta(archivos2, -1, 55);
+	pensamientos->imagen->setPosition(310, 45);
+	pensamientos->abierta->setPosition(310, 45);
+	addChild(pensamientos->botones, 1);
+	addChild(pensamientos->abierta, 1);
+	*/
 
 	//Virus
 	allCarpetas.insert(0, carpeta1);
+	allCarpetas.insert(1, noticias);
+	allCarpetas.insert(2, mail);
 
-	virus1 = new Virus(allCarpetas, 1, 1);
+	virus1 = new Virus(allCarpetas, 1, 3);
 	virus1->imagen->setPosition(posXarchs1, posYarchs1);
-	addChild(virus1->boton, 4);
+	addChild(virus1->boton, 5);
 
 	allVirus.insert(0, virus1);
 
-	addChild(virus1->spritebatch, 4);
-	addChild(virus1->imagenAturdido, 4);
+	addChild(virus1->spritebatch, 5);
+	addChild(virus1->imagenAturdido, 5);
 
-	virus1->ataque = 0;
-
-	//Sprite Sheet
+	//Animacion escaneando
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create("Escanear_sheet.png");
 	SpriteFrameCache* cache = SpriteFrameCache::getInstance();
 	cache->addSpriteFramesWithFile("Escanear_sheet.plist");
 
 	cargando1 = Sprite::createWithSpriteFrameName("Escanear01.png");
-	spritebatch->addChild(cargando1, 3);
-	addChild(spritebatch, 3);
+	spritebatch->addChild(cargando1, 4);
+	addChild(spritebatch, 4);
 
 	cargando1->setVisible(false);
 
@@ -170,9 +250,10 @@ bool Tutorial::init()
 	cache2->addSpriteFramesWithFile("Fire_sheet.plist");
 
 	animFuego = Sprite::createWithSpriteFrameName("fire_01.png");
-	spritebatch2->addChild(animFuego, 3);
-	addChild(spritebatch2, 3);
-	animFuego->setPosition(460, 280);
+	spritebatch2->addChild(animFuego, 4);
+	addChild(spritebatch2, 4);
+	animFuego->setPosition(papeleraSprite->getPosition().x,
+		papeleraSprite->getPosition().y);
 	animFuego->setVisible(false);
 
 	Vector<SpriteFrame*> animFrames2(4);
@@ -190,15 +271,13 @@ bool Tutorial::init()
 
 	//Imagen fondo
 	auto background = Sprite::create("FondoDoctor.png");
-	background->setPosition(240, 160);
+	background->setPosition(Point((visibleSize.width / 2),
+		(visibleSize.height / 2)));
 	addChild(background, 0);
-	/*
-	auto listener = EventListenerMouse::create();
-	//touchListener->onTouchBegan = CC_CALLBACK_2(Tutorial::onTouchBegan, this);
-	listener->onMouseDown = CC_CALLBACK_1(Tutorial::clickado, this);
-	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);*/
+
 	this->scheduleUpdate();
 
+	//Eventos de ratón
 	auto mouseListener = EventListenerMouse::create();
 	mouseListener->onMouseMove = CC_CALLBACK_1(Tutorial::onMouseMove, this);
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
@@ -218,10 +297,22 @@ bool Tutorial::init()
 	return true;
 }
 
+void Tutorial::playMusic(Ref *pSender) {
+	if (!musicaWebster->isBackgroundMusicPlaying()) {
+		musicaWebster->resumeBackgroundMusic();
+	}
+	else {
+		musicaWebster->pauseBackgroundMusic();
+	}
+}
+
+//Pausa
 void Tutorial::goToPauseScene(Ref *pSender) {
 	auto scene = PauseScene::createScene();
 	Director::getInstance()->pushScene(scene);
 }
+
+//Muerto
 void Tutorial::goToGameOver(Ref *pSender) {
 	auto scene = GameOver::createScene();
 	Director::getInstance()->pushScene(scene);
@@ -261,7 +352,7 @@ void  Tutorial::onMouseDown(Event *event)
 void Tutorial::onMouseMove(Event *event)
 {
 	auto *e = dynamic_cast<EventMouse *>(event);
-	_cursorSprite->setPosition(e->getCursorX() + 2, e->getCursorY() - 2);
+	_cursorSprite->setPosition(e->getCursorX() + 17, e->getCursorY() - 17);
 }
 
 void Tutorial::onMouseUp(Event *event)
@@ -277,7 +368,7 @@ void Tutorial::onMouseUp(Event *event)
 			{
 				if (virus->identificador == virusElegido->identificador && virus->aturdido)
 				{
-					if (virus->tipoVirus == 1)
+					if (virus->tipoVirus == 1 || virus->tipoVirus == 3)
 						virus->reciclar();
 
 					else if (virus->tipoVirus == 2)
@@ -285,7 +376,8 @@ void Tutorial::onMouseUp(Event *event)
 						bool cuernosValido = true;
 						for (const auto& otroVirus : allVirus)
 						{
-							if (otroVirus->tipoVirus == 1 && (!otroVirus->enPapelera && !otroVirus->muerto))
+							if ((otroVirus->tipoVirus == 1 || otroVirus->tipoVirus == 3)
+								&& (!otroVirus->enPapelera && !otroVirus->muerto))
 							{
 								cuernosValido = false;
 							}
@@ -345,7 +437,6 @@ void Tutorial::update(float dt)
 
 	if (!hayVivas)
 	{
-		//menuCloseCallback(this);
 		goToGameOver(this);
 	}
 	else
@@ -380,7 +471,7 @@ void Tutorial::escaneando(void)
 		cargando1->setVisible(false);
 	}
 }
-
+/*
 void Tutorial::menuCloseCallback(Ref* pSender)
 {
 	Director::getInstance()->end();
@@ -388,4 +479,4 @@ void Tutorial::menuCloseCallback(Ref* pSender)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	exit(0);
 #endif
-}
+}*/

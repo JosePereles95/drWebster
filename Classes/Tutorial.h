@@ -57,9 +57,34 @@ public:
 
 	Sprite* _cursorSprite;
 	Sprite* papeleraSprite;
+	Sprite* interfazSprite;
 
 	Sprite* cargando1;
 	Sprite* animFuego;
+	Sprite* tuto1;
+	Sprite* barra;
+
+	Carpeta* noticias;
+	int posXNoticias;
+	int posYNoticias;
+	Sprite* archNews_1;
+	Vector<Sprite*> allNoticias;
+	int posXarchsNews;
+	int posYarchsNews;
+
+	Carpeta* mail;
+	int posXMail;
+	int posYMail;
+	Sprite* archMail_1;
+	Sprite* archMail_2;
+	Sprite* archMail_3;
+	Vector<Sprite*> allMails;
+	int posXarchsMail;
+	int posYarchsMail;
+
+	Sprite* estado;
+
+	CocosDenshion::SimpleAudioEngine* musicaWebster;
 
 	Sequence* secuenciaEscaneo;
 
@@ -76,17 +101,9 @@ public:
 	void goToPauseScene(Ref *pSender);
 	void changeColor(void);
 	void goToGameOver(Ref *pSender);
+	void playMusic(Ref *pSender);
 
-	/*
-	int validosEscaneados;
-	int validosTotales;
-	Label* archivosEncontrados;
-	*/
-
-	//void clickado(Event*);
-
-	// a selector callback
-	void menuCloseCallback(cocos2d::Ref* pSender);
+	//void menuCloseCallback(cocos2d::Ref* pSender);
 
 	void update(float dt);
 
