@@ -7,28 +7,28 @@
             <key>VirusCuernos01.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{31,27}}</string>
+                <string>{{2,2},{44,38}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{31,27}}</string>
+                <string>{{0,0},{44,38}}</string>
                 <key>sourceSize</key>
-                <string>{31,27}</string>
+                <string>{44,38}</string>
             </dict>
             <key>VirusCuernos02.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{35,2},{31,27}}</string>
+                <string>{{48,2},{44,38}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{31,27}}</string>
+                <string>{{0,0},{44,38}}</string>
                 <key>sourceSize</key>
-                <string>{31,27}</string>
+                <string>{44,38}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -38,9 +38,9 @@
             <key>realTextureFileName</key>
             <string>VirusCuernos_sheet.png</string>
             <key>size</key>
-            <string>{68,31}</string>
+            <string>{94,42}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:331204a9bb8c8fbb2ddf09bd77c8a230:acf2ec7241f133932e2f83145178f629:236245d70f2df96a52b88ff616d6e130$</string>
+            <string>$TexturePacker:SmartUpdate:5cce5cb7600423f49867769b313e8d38:0de7042f8ffb6d65767b0f30ba0c36f8:236245d70f2df96a52b88ff616d6e130$</string>
             <key>textureFileName</key>
             <string>VirusCuernos_sheet.png</string>
         </dict>

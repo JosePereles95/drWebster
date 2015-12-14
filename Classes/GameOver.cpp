@@ -1,5 +1,6 @@
 #include "GameOver.h"
 #include "Tutorial.h"
+#include "Alice.h"
 
 USING_NS_CC;
 
@@ -31,7 +32,15 @@ bool GameOver::init()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto resumeItem = MenuItemImage::create("pause.png", "pause.png",
+	//Cursor
+	_cursorSprite = Sprite::create("cursor1.png");
+	addChild(_cursorSprite, 7);
+	_cursorSprite->setVisible(false);
+
+	_cursorSprite2 = Sprite::create("cursor2.png");
+	addChild(_cursorSprite2, 6);
+
+	auto resumeItem = MenuItemImage::create("reanudar.png", "reanudar.png",
 		CC_CALLBACK_1(GameOver::resumeGameScreen,
 			this));
 
@@ -46,17 +55,27 @@ bool GameOver::init()
 	menu->alignItemsVerticallyWithPadding(visibleSize.height / 4);
 	addChild(menu, 1);
 
-
-	auto background = Sprite::create("Dead.jpg");
+	auto background = Sprite::create("dead.png");
 	background->setPosition(Point((visibleSize.width / 2),
 		(visibleSize.height / 2)));
 	addChild(background, 0);
 
+	auto mouseListener = EventListenerMouse::create();
+	mouseListener->onMouseMove = CC_CALLBACK_1(GameOver::onMouseMove, this);
+	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
+
 	return true;
 }
 
+void GameOver::onMouseMove(Event *event)
+{
+	auto *e = dynamic_cast<EventMouse *>(event);
+	_cursorSprite2->setPosition(e->getCursorX() + 16, e->getCursorY() - 16);
+	_cursorSprite->setPosition(_cursorSprite2->getPosition().x - 14, _cursorSprite2->getPosition().y + 14);
+}
+
 void GameOver::resumeGameScreen(Ref *pSender) {
-	auto scene = Tutorial::createScene();
+	auto scene = Alice::createScene();
 	Director::getInstance()->popScene();
 	Director::getInstance()->replaceScene(scene);
 }

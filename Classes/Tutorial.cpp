@@ -3,6 +3,9 @@
 #include "Virus.h"
 #include "PauseScene.h"
 #include "GameOver.h"
+#include "Alice.h"
+#include "AnimacionScene.h"
+#include "PauseScene.h"
 
 USING_NS_CC;
 
@@ -20,7 +23,7 @@ bool Tutorial::init()
 	{
 		return false;
 	}
-
+	PauseScene::TutorialPantalla = 0;
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -33,10 +36,17 @@ bool Tutorial::init()
 
 	//Efectos
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/carpeta.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/notificacion_estado.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/acierto_escaneo.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/fallo_escaneo.mp3");
 
 	//Cursor
 	_cursorSprite = Sprite::create("cursor1.png");
-	addChild(_cursorSprite, 6);
+	addChild(_cursorSprite, 7);
+	_cursorSprite->setVisible(false);
+
+	_cursorSprite2 = Sprite::create("cursor2.png");
+	addChild(_cursorSprite2, 6);
 
 	//Papelera
 	papeleraSprite = Sprite::create("papelera.png");
@@ -49,6 +59,17 @@ bool Tutorial::init()
 	interfazSprite->setPosition(origin.x + interfazSprite->getContentSize().width / 2,
 		origin.y + visibleSize.height - interfazSprite->getContentSize().height / 2);
 	addChild(interfazSprite, 1);
+
+	//Labels
+	Dosis= Label::createWithSystemFont("1", "Arial.ttf", 26);
+	Dosis->setColor(Color3B(0, 0, 0));
+	Dosis->setPosition(174, visibleSize.height - 159);
+	addChild(Dosis, 2);
+
+	Alarma = Label::createWithSystemFont("!", "Impact.ttf", 26);
+	Alarma->setColor(Color3B(255, 0, 0));
+	Alarma->setPosition(250, visibleSize.height - 159);
+	addChild(Alarma, 2);
 
 	//Checks de archivos
 	posXChecked1 = 202;
@@ -65,7 +86,7 @@ bool Tutorial::init()
 	addChild(Checked1, 2);
 
 	//Carpeta1
-	posXarchs1 = 400;
+	posXarchs1 = 350;
 	posYarchs1 = 360;
 
 	arch1_1 = Sprite::create("PanelVirus.png");
@@ -87,6 +108,7 @@ bool Tutorial::init()
 	carpeta1->escanear->setPosition(posXarchs1 + 165, posYarchs1 - 230);
 	carpeta1->abierta->setPosition(posXCarpeta1, posYCarpeta1);
 	addChild(carpeta1->botones, 2);
+	carpeta1->imagen->setVisible(false);
 	addChild(carpeta1->abierta, 2);
 
 	//Carpeta2
@@ -109,13 +131,112 @@ bool Tutorial::init()
 	carpeta2->escanear->setPosition(posXarchs2 + 165, posYarchs2 - 230);
 	carpeta2->abierta->setPosition(posXCarpeta2, posYCarpeta2);
 	addChild(carpeta2->botones, 2);
+	carpeta2->imagen->setVisible(false);
 	addChild(carpeta2->abierta, 2);
+
+	//Carpeta3
+	posXarchs3 = 1100;
+	posYarchs3 = 440;
+
+	arch3_1 = Sprite::create("FichaAlice.png");
+	arch3_1->setPosition(posXarchs3, posYarchs3);
+	archivos3.insert(0, arch3_1);
+	addChild(arch3_1, 3);
+
+	posXCarpeta3 = 75;
+	posYCarpeta3 = 450;
+
+	carpeta3 = new Carpeta(archivos3, -1, 1);
+	carpeta3->imagen->setPosition(posXCarpeta3, posYCarpeta3);
+	carpeta3->abierta->setPosition(posXCarpeta3, posYCarpeta3);
+	carpeta3->escanear->setVisible(false);
+	carpeta3->pasar->setVisible(false);
+	addChild(carpeta3->botones, 2);
+	carpeta3->imagen->setVisible(false);
+	addChild(carpeta3->abierta, 2);
+
+	//Carpeta4
+	posXarchs4 = 1100;
+	posYarchs4 = 450;
+
+	arch4_1 = Sprite::create("About.png");
+	arch4_1->setPosition(posXarchs4, posYarchs4);
+	archivos4.insert(0, arch4_1);
+	addChild(arch4_1, 2);
+
+	posXCarpeta4 = visibleSize.width / 2;
+	posYCarpeta4 = visibleSize.height / 2 + 100;
+
+	carpeta4 = new Carpeta(archivos4, -1, 1);
+	carpeta4->imagen->setPosition(posXCarpeta4, posYCarpeta4);
+	carpeta4->pasar->setPosition(posXarchs4 + 90, posYarchs4 - 230);
+	carpeta4->escanear->setPosition(posXarchs4 + 165, posYarchs4 - 230);
+	carpeta4->abierta->setPosition(posXCarpeta4, posYCarpeta4);
+	addChild(carpeta4->botones, 2);
+	carpeta4->imagen->setVisible(false);
+	addChild(carpeta4->abierta, 2);
 
 	//Mensajes tutorial
 	tuto1 = Sprite::create("tutorial1.png");
 	tuto1->setPosition(visibleSize.width / 2,
 		visibleSize.height / 2 - tuto1->getContentSize().height / 2 - 35);
 	addChild(tuto1, 4);
+	tuto1->setVisible(false);
+
+	tuto2 = Sprite::create("tutorial2.png");
+	tuto2->setPosition(visibleSize.width / 2,
+		visibleSize.height / 2 - tuto2->getContentSize().height / 2 - 35);
+	addChild(tuto2, 4);
+	tuto2->setVisible(false);
+
+	tuto3 = Sprite::create("tutorial3.png");
+	tuto3->setPosition(visibleSize.width / 2,
+		visibleSize.height / 2 - tuto3->getContentSize().height / 2 - 35);
+	addChild(tuto3, 4);
+	tuto3->setVisible(false);
+
+	tuto4 = Sprite::create("tutorial4.png");
+	tuto4->setPosition(visibleSize.width / 2,
+		visibleSize.height / 2 - tuto4->getContentSize().height / 2 - 35);
+	addChild(tuto4, 4);
+	tuto4->setVisible(false);
+
+	tuto5 = Sprite::create("tutorial5.png");
+	tuto5->setPosition(visibleSize.width / 2,
+		visibleSize.height / 2 - tuto5->getContentSize().height / 2 - 35);
+	addChild(tuto5, 4);
+	tuto5->setVisible(false);
+
+	tuto6 = Sprite::create("tutorial6.png");
+	tuto6->setPosition(visibleSize.width / 2,
+		visibleSize.height / 2 - tuto6->getContentSize().height / 2 - 35);
+	addChild(tuto6, 4);
+	tuto6->setVisible(false);
+
+	tuto7 = Sprite::create("tutorial7.png");
+	tuto7->setPosition(visibleSize.width / 2,
+		visibleSize.height / 2 - tuto7->getContentSize().height / 2 - 35);
+	addChild(tuto7, 4);
+	tuto7->setVisible(false);
+
+	tuto8 = Sprite::create("tutorial8.png");
+	tuto8->setPosition(visibleSize.width / 2,
+		visibleSize.height / 2 - tuto8->getContentSize().height / 2 - 35);
+	addChild(tuto8, 4);
+	tuto8->setVisible(false);
+
+	tuto9 = Sprite::create("tutorial9.png");
+	tuto9->setPosition(visibleSize.width / 2,
+		visibleSize.height / 2 - tuto9->getContentSize().height / 2 - 35);
+	addChild(tuto9, 4);
+	tuto9->setVisible(false);
+
+	bool_aux = true;
+	bool_aux2 = true;
+	bool_aux3 = true;
+	bool_aux4 = true;
+	auto secuencia2 = Sequence::create(DelayTime::create(2.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::changeTutorial1, this)), NULL);
+	this->runAction(secuencia2);
 
 	//Barra tareas
 	barra = Sprite::create("Barra_tareas3.png");
@@ -149,6 +270,7 @@ bool Tutorial::init()
 	mail->escanear->setPosition(posXarchsMail + 120, posYarchsMail - 257);
 	mail->abierta->setPosition(posXMail, posYMail);
 	addChild(mail->botones, 2);
+	mail->imagen->setVisible(false);
 	addChild(mail->abierta, 2);
 
 	//Noticias
@@ -168,6 +290,7 @@ bool Tutorial::init()
 	noticias->escanear->setPosition(posXarchsNews + 40, posYarchsNews - 250);
 	noticias->abierta->setPosition(posXNoticias, posYNoticias);
 	addChild(noticias->botones, 2);
+	noticias->imagen->setVisible(false);
 	addChild(noticias->abierta, 2);
 	
 	//Estado
@@ -176,35 +299,46 @@ bool Tutorial::init()
 		barra->getContentSize().height / 2 + 10);
 	addChild(estado, 2);
 
-	//Musica y boton pausa
+	//Pensamiento
+	archThoughs_1 = Sprite::create("pensamientos_webster.png");
+	posXarchsThoughs = visibleSize.width / 2;
+	posYarchsThoughs = visibleSize.height / 2 - 200;
+	archThoughs_1->setPosition(posXarchsThoughs, posYarchsThoughs);
+	allStatus.insert(0, archThoughs_1);
+	addChild(archThoughs_1, 4);
+
+	posXThoughs = visibleSize.width / 2 - 160;
+	posYThoughs = visibleSize.height / 2 - 330;
+
+	pensamientos = new Carpeta(allStatus, -1, 5);
+	pensamientos->imagen->setPosition(posXThoughs, posYThoughs);
+	pensamientos->pasar->setPosition(-100, -100);
+	pensamientos->escanear->setPosition(-100, -100);
+	pensamientos->abierta->setPosition(posXThoughs, posYThoughs);
+	addChild(pensamientos->botones, 2);
+	pensamientos->imagen->setVisible(false);
+	addChild(pensamientos->abierta, 2);
+
+	//Musica, boton pausa y terminar nivel
 	auto pause_button = MenuItemImage::create("pause.png", "pause.png",
 		CC_CALLBACK_1(Tutorial::goToPauseScene, this));
 	pause_button->setPosition(164, visibleSize.height - 25);
 
-	auto musica = MenuItemImage::create("musica.png", "musica.png",
+	musica = MenuItemImage::create("musica.png", "musica.png",
 		CC_CALLBACK_1(Tutorial::playMusic, this));
 	musica->setPosition(visibleSize.width / 2 - 287,
 		barra->getContentSize().height / 2);
+	musica->setVisible(false);
+
+	pasarNivel = MenuItemImage::create("BotonFicha.png", "BotonFicha2.png",
+		CC_CALLBACK_1(Tutorial::terminarNivel, this));
+	pasarNivel->setPosition(posXarchs3, posYarchs3 - 230);
+	pasarNivel->setVisible(false);
 	
 	//Menu con botones
-	auto menu = Menu::create(pause_button, musica, NULL);
+	auto menu = Menu::create(pause_button, musica, pasarNivel, NULL);
 	menu->setPosition(Vec2::ZERO);
 	this->addChild(menu, 3);
-
-	/*
-	mail = new Carpeta(archivos2, -1, 3);
-	mail->imagen->setPosition(160, 45);
-	mail->abierta->setPosition(160, 45);
-	addChild(mail->botones, 1);
-	addChild(mail->abierta, 1);
-
-
-	pensamientos = new Carpeta(archivos2, -1, 55);
-	pensamientos->imagen->setPosition(310, 45);
-	pensamientos->abierta->setPosition(310, 45);
-	addChild(pensamientos->botones, 1);
-	addChild(pensamientos->abierta, 1);
-	*/
 
 	//Virus
 	allCarpetas.insert(0, carpeta1);
@@ -212,13 +346,57 @@ bool Tutorial::init()
 	allCarpetas.insert(2, mail);
 
 	virus1 = new Virus(allCarpetas, 1, 3);
-	virus1->imagen->setPosition(posXarchs1, posYarchs1);
+	virus1->imagen->setPosition(posXarchs2, posYarchs2);
 	addChild(virus1->boton, 5);
 
 	allVirus.insert(0, virus1);
 
 	addChild(virus1->spritebatch, 5);
 	addChild(virus1->imagenAturdido, 5);
+
+	//Sprites falsos
+	auto tinto1 = TintTo::create(0.0f, 130.0f, 130.0f, 130.0f);
+	auto tinto2 = TintTo::create(0.0f, 130.0f, 130.0f, 130.0f);
+	auto tinto3 = TintTo::create(0.0f, 130.0f, 130.0f, 130.0f);
+	auto tinto4 = TintTo::create(0.0f, 130.0f, 130.0f, 130.0f);
+	auto tinto5 = TintTo::create(0.0f, 130.0f, 130.0f, 130.0f);
+	auto tinto6 = TintTo::create(0.0f, 130.0f, 130.0f, 130.0f);
+	auto tinto7 = TintTo::create(0.0f, 130.0f, 130.0f, 130.0f);
+	auto tinto8 = TintTo::create(0.0f, 130.0f, 130.0f, 130.0f);
+
+	falso1 = Sprite::create("carpeta1.png");
+	falso1->setPosition(carpeta1->imagen->getPosition().x, carpeta1->imagen->getPosition().y);
+	addChild(falso1, 3);
+	falso1->runAction(tinto1);
+	falso2 = Sprite::create("carpeta1.png");
+	falso2->setPosition(carpeta3->imagen->getPosition().x, carpeta3->imagen->getPosition().y);
+	addChild(falso2, 3);
+	falso2->runAction(tinto2);
+	falso3 = Sprite::create("carpeta1.png");
+	falso3->setPosition(carpeta4->imagen->getPosition().x, carpeta4->imagen->getPosition().y);
+	addChild(falso3, 3);
+	falso3->runAction(tinto3);
+	falso4 = Sprite::create("musica.png");
+	falso4->setPosition(musica->getPosition().x, musica->getPosition().y);
+	addChild(falso4, 3);
+	falso4->runAction(tinto4);
+	falso5 = Sprite::create("pensamientos.png");
+	falso5->setPosition(pensamientos->imagen->getPosition().x, pensamientos->imagen->getPosition().y);
+	addChild(falso5, 3);
+	falso5->runAction(tinto5);
+	falso6 = Sprite::create("mail.png");
+	falso6->setPosition(mail->imagen->getPosition().x, mail->imagen->getPosition().y);
+	addChild(falso6, 3);
+	falso6->runAction(tinto6);
+	falso7 = Sprite::create("News2.png");
+	falso7->setPosition(noticias->imagen->getPosition().x, noticias->imagen->getPosition().y);
+	addChild(falso7, 3);
+	falso7->runAction(tinto7);
+	falso8 = Sprite::create("carpeta1.png");
+	falso8->setColor(ccc3(200, 0, 0));
+	falso8->setPosition(carpeta2->imagen->getPosition().x, carpeta2->imagen->getPosition().y);
+	addChild(falso8, 3);
+	falso8->runAction(tinto8);
 
 	//Animacion escaneando
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create("Escanear_sheet.png");
@@ -297,13 +475,124 @@ bool Tutorial::init()
 	return true;
 }
 
+void Tutorial::changeTutorial1(void) {
+	tuto1->setVisible(true);
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/notificacion_estado.mp3");
+
+	auto secuencia3 = Sequence::create(DelayTime::create(5.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::wait1, this)), NULL);
+	this->runAction(secuencia3);
+}
+
+void Tutorial::wait1(void) {
+	tuto1->setVisible(false);
+
+	auto secuencia4 = Sequence::create(DelayTime::create(2.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::changeTutorial2, this)), NULL);
+	this->runAction(secuencia4);
+}
+
+void Tutorial::changeTutorial2(void) {
+	tuto2->setVisible(true);
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/notificacion_estado.mp3");
+
+	falso8->setVisible(false);
+	carpeta2->imagen->setVisible(true);
+}
+
+void Tutorial::wait2(void) {
+	tuto2->setVisible(false);
+
+	auto secuencia6 = Sequence::create(DelayTime::create(0.5f), CallFunc::create(CC_CALLBACK_0(Tutorial::changeTutorial3, this)), NULL);
+	this->runAction(secuencia6);
+}
+
+void Tutorial::changeTutorial3(void) {
+	tuto3->setVisible(true);
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/notificacion_estado.mp3");
+
+	auto secuencia7 = Sequence::create(DelayTime::create(3.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::wait3, this)), NULL);
+	this->runAction(secuencia7);
+}
+
+void Tutorial::wait3(void) {
+	tuto3->setVisible(false);
+
+	auto secuencia8 = Sequence::create(DelayTime::create(0.5f), CallFunc::create(CC_CALLBACK_0(Tutorial::changeTutorial4, this)), NULL);
+	this->runAction(secuencia8);
+}
+
+void Tutorial::changeTutorial4(void) {
+	tuto4->setVisible(true);
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/notificacion_estado.mp3");
+}
+
+void Tutorial::wait4(void) {
+	tuto4->setVisible(false);
+
+	auto secuencia10 = Sequence::create(DelayTime::create(7.1f), CallFunc::create(CC_CALLBACK_0(Tutorial::changeTutorial5, this)), NULL);
+	this->runAction(secuencia10);
+}
+
+void Tutorial::changeTutorial5(void) {
+	tuto5->setVisible(true);
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/notificacion_estado.mp3");
+}
+
+void Tutorial::wait5(void) {
+	tuto5->setVisible(false);
+
+	auto secuencia12 = Sequence::create(DelayTime::create(2.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::changeTutorial6, this)), NULL);
+	this->runAction(secuencia12);
+}
+
+void Tutorial::changeTutorial6(void) {
+	tuto6->setVisible(true);
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/notificacion_estado.mp3");
+}
+
+void Tutorial::wait6(void) {
+	tuto6->setVisible(false);
+
+	auto secuencia14 = Sequence::create(DelayTime::create(0.5f), CallFunc::create(CC_CALLBACK_0(Tutorial::changeTutorial7, this)), NULL);
+	this->runAction(secuencia14);
+}
+
+void Tutorial::changeTutorial7(void) {
+	tuto7->setVisible(true);
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/notificacion_estado.mp3");
+}
+
+void Tutorial::wait7(void) {
+	tuto7->setVisible(false);
+
+	auto secuencia16 = Sequence::create(DelayTime::create(0.5f), CallFunc::create(CC_CALLBACK_0(Tutorial::changeTutorial8, this)), NULL);
+	this->runAction(secuencia16);
+}
+
+void Tutorial::changeTutorial8(void) {
+	tuto8->setVisible(true);
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/notificacion_estado.mp3");
+}
+
+void Tutorial::wait8(void) {
+	tuto8->setVisible(false);
+
+	auto secuencia18 = Sequence::create(DelayTime::create(0.5f), CallFunc::create(CC_CALLBACK_0(Tutorial::changeTutorial9, this)), NULL);
+	this->runAction(secuencia18);
+}
+
+void Tutorial::changeTutorial9(void) {
+	tuto9->setVisible(true);
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/notificacion_estado.mp3");
+}
+
+
 void Tutorial::playMusic(Ref *pSender) {
-	if (!musicaWebster->isBackgroundMusicPlaying()) {
+	/*if (!musicaWebster->isBackgroundMusicPlaying()) {
 		musicaWebster->resumeBackgroundMusic();
 	}
 	else {
 		musicaWebster->pauseBackgroundMusic();
-	}
+	}*/
 }
 
 //Pausa
@@ -352,7 +641,8 @@ void  Tutorial::onMouseDown(Event *event)
 void Tutorial::onMouseMove(Event *event)
 {
 	auto *e = dynamic_cast<EventMouse *>(event);
-	_cursorSprite->setPosition(e->getCursorX() + 17, e->getCursorY() - 17);
+	_cursorSprite2->setPosition(e->getCursorX() + 16, e->getCursorY() - 16);
+	_cursorSprite->setPosition(_cursorSprite2->getPosition().x - 14, _cursorSprite2->getPosition().y + 14);
 }
 
 void Tutorial::onMouseUp(Event *event)
@@ -405,16 +695,21 @@ void Tutorial::onMouseUp(Event *event)
 
 void Tutorial::onMouseScroll(Event *event)
 {
-	papeleraSprite->setColor(ccc3(255, 0, 0));
-	animFuego->setVisible(true);
-	auto secuencia = Sequence::create(DelayTime::create(1.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::changeColor, this)), NULL);
-	papeleraSprite->runAction(secuencia);
+	if(tuto5->isVisible() && virus1->enPapelera){
+		papeleraSprite->setColor(ccc3(255, 0, 0));
+		animFuego->setVisible(true);
+		auto secuencia = Sequence::create(DelayTime::create(1.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::changeColor, this)), NULL);
+		papeleraSprite->runAction(secuencia);
 
-	for (const auto& virus : allVirus)
-	{
-		if (virus->enPapelera && !virus->muerto)
+		for (const auto& virus : allVirus)
 		{
-			virus->muerto = true;
+			if (virus->enPapelera && !virus->muerto)
+			{
+				virus->muerto = true;
+				Dosis->setString("0");
+				auto secuencia11 = Sequence::create(DelayTime::create(0.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::wait5, this)), NULL);
+				this->runAction(secuencia11);
+			}
 		}
 	}
 }
@@ -427,6 +722,50 @@ void Tutorial::changeColor(void)
 
 void Tutorial::update(float dt)
 {
+	if (virus1->imagen->isVisible() && bool_aux) {
+		auto secuencia5 = Sequence::create(DelayTime::create(0.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::wait2, this)), NULL);
+		this->runAction(secuencia5);
+		bool_aux = false;
+	}
+
+	if (mail->contenido.at(2)->isVisible() && bool_aux2) {
+		auto secuencia13 = Sequence::create(DelayTime::create(3.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::wait6, this)), NULL);
+		this->runAction(secuencia13);
+		bool_aux2 = false;
+	}
+
+	if (tuto6->isVisible()) {
+		//Habilitar botones
+		falso3->setVisible(false);
+		carpeta4->imagen->setVisible(true);
+		falso4->setVisible(false);
+		musica->setVisible(true);
+		falso5->setVisible(false);
+		pensamientos->imagen->setVisible(true);
+		falso6->setVisible(false);
+		mail->imagen->setVisible(true);
+		falso7->setVisible(false);
+		noticias->imagen->setVisible(true);
+	}
+
+	if (tuto9->isVisible()) {
+		falso2->setVisible(false);
+		carpeta3->imagen->setVisible(true);
+		if(carpeta3->contenido.at(0)->isVisible())
+			pasarNivel->setVisible(true);
+	}
+
+	if (tuto7->isVisible()) {
+		falso1->setVisible(false);
+		carpeta1->imagen->setVisible(true);
+	}
+
+	if (carpeta1->contenido.at(1)->isVisible() && bool_aux3) {
+		auto secuencia15 = Sequence::create(DelayTime::create(1.5f), CallFunc::create(CC_CALLBACK_0(Tutorial::wait7, this)), NULL);
+		this->runAction(secuencia15);
+		bool_aux3 = false;
+	}
+
 	bool hayVivas = false;
 
 	for (const auto& carpeta : allCarpetas)
@@ -450,16 +789,25 @@ void Tutorial::update(float dt)
 		}
 	}
 
-	if (carpeta1->validoEscaneado == 1) {
+	if (carpeta1->validoEscaneado == 1 && bool_aux4) {
 		Checked1->setVisible(true);
+		auto secuencia17 = Sequence::create(DelayTime::create(5.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::wait8, this)), NULL);
+		this->runAction(secuencia17);
+		bool_aux4 = false;
 	}
 
-	if (carpeta1->abierta->isVisible()) {
+	if (carpeta2->abierta->isVisible()) {
 		virus1->iniciado = true;
+		Alarma->setVisible(false);
 	}
 
 	if (virusElegido != nullptr) {
 		virusElegido->imagen->setPosition(_cursorSprite->getPosition().x, _cursorSprite->getPosition().y);
+	}
+
+	if (virus1->enPapelera && tuto4->isVisible()) {
+		auto secuencia9 = Sequence::create(DelayTime::create(0.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::wait4, this)), NULL);
+		this->runAction(secuencia9);
 	}
 }
 
@@ -471,12 +819,11 @@ void Tutorial::escaneando(void)
 		cargando1->setVisible(false);
 	}
 }
-/*
-void Tutorial::menuCloseCallback(Ref* pSender)
-{
-	Director::getInstance()->end();
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	exit(0);
-#endif
-}*/
+void Tutorial::terminarNivel(Ref *pSender) {
+	PauseScene::TutorialPantalla = 1;
+	auto scene = Alice::createScene();
+	Director::getInstance()->pushScene(scene);
+	auto scene2 = AnimacionScene::createScene();
+	Director::getInstance()->pushScene(scene2);
+}

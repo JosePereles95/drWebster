@@ -3,12 +3,17 @@
 
 #include "cocos2d.h"
 
+USING_NS_CC;
+
 class GameOver : public cocos2d::Layer
 {
 public:
 	void resumeGameScreen(Ref *pSender);
-
+	Sprite* _cursorSprite;
+	Sprite* _cursorSprite2;
 	static cocos2d::Scene* createScene();
+
+	void onMouseMove(Event *event);
 
 	void menuCloseCallback(cocos2d::Ref* pSender);
 

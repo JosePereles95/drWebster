@@ -3,6 +3,10 @@
 
 USING_NS_CC;
 
+//Variable Global
+int PauseScene::TutorialPantalla;
+int PauseScene::AlicePantalla;
+
 Scene* PauseScene::createScene()
 {
 	// 'scene' is an autorelease object
@@ -27,11 +31,19 @@ bool PauseScene::init()
 	{
 		return false;
 	}
-
+	
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto resumeItem = MenuItemImage::create("pause.png", "pause.png",
+	//Cursor
+	_cursorSprite = Sprite::create("cursor1.png");
+	addChild(_cursorSprite, 7);
+	_cursorSprite->setVisible(false);
+
+	_cursorSprite2 = Sprite::create("cursor2.png");
+	addChild(_cursorSprite2, 6);
+
+	auto resumeItem = MenuItemImage::create("reanudar.png", "reanudar.png",
 		CC_CALLBACK_1(PauseScene::resumeGameScreen,
 			this));
 
@@ -46,13 +58,32 @@ bool PauseScene::init()
 	menu->alignItemsVerticallyWithPadding(visibleSize.height / 4);
 	addChild(menu, 1);
 
+	if (TutorialPantalla == 0) {
+		auto background = Sprite::create("PausaWebster.png");
+		background->setPosition(Point((visibleSize.width / 2),
+			(visibleSize.height / 2)));
+		addChild(background, 0);
+	}
+	if(TutorialPantalla == 1)
+	{
+		auto background = Sprite::create("PausaNina2.png");
+		background->setPosition(Point((visibleSize.width / 2),
+			(visibleSize.height / 2)));
+		addChild(background, 0);
+	}
 
-	auto background = Sprite::create("fondoPausa.jpg");
-	background->setPosition(Point((visibleSize.width / 2),
-		(visibleSize.height / 2)));
-	addChild(background, 0);
+	auto mouseListener = EventListenerMouse::create();
+	mouseListener->onMouseMove = CC_CALLBACK_1(PauseScene::onMouseMove, this);
+	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(mouseListener, this);
 
 	return true;
+}
+
+void PauseScene::onMouseMove(Event *event)
+{
+	auto *e = dynamic_cast<EventMouse *>(event);
+	_cursorSprite2->setPosition(e->getCursorX() + 16, e->getCursorY() - 16);
+	_cursorSprite->setPosition(_cursorSprite2->getPosition().x - 14, _cursorSprite2->getPosition().y + 14);
 }
 
 void PauseScene::resumeGameScreen(Ref *pSender) {

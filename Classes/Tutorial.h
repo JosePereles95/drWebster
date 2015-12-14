@@ -11,19 +11,25 @@ USING_NS_CC;
 class Tutorial : public cocos2d::Layer
 {
 public:
+	//Label
+	Label* Dosis;
+	Label* Alarma;
 	Sprite* arch1_1;
 	Sprite* arch1_2;
-	Sprite* arch1_3;
-	Sprite* arch1_4;
 	int posXarchs1;
 	int posYarchs1;
 
 	Sprite* arch2_1;
-	Sprite* arch2_2;
-	Sprite* arch2_3;
-	Sprite* arch2_4;
 	int posXarchs2;
 	int posYarchs2;
+
+	Sprite* arch3_1;
+	int posXarchs3;
+	int posYarchs3;
+
+	Sprite* arch4_1;
+	int posXarchs4;
+	int posYarchs4;
 
 	Sprite* noChecked1;
 	Sprite* Checked1;
@@ -33,16 +39,23 @@ public:
 
 	Vector<Sprite*> archivos1;
 	Vector<Sprite*> archivos2;
+	Vector<Sprite*> archivos3;
+	Vector<Sprite*> archivos4;
 
 	Carpeta* carpeta1;
 	Carpeta* carpeta2;
+	Carpeta* carpeta3;
+	Carpeta* carpeta4;
 	int posXCarpeta1;
 	int posYCarpeta1;
 	int posXCarpeta2;
 	int posYCarpeta2;
+	int posXCarpeta3;
+	int posYCarpeta3;
+	int posXCarpeta4;
+	int posYCarpeta4;
 
 	Virus* virus1;
-	Virus* virus2;
 
 	Vector<Carpeta*> allCarpetas;
 
@@ -56,13 +69,38 @@ public:
 	Carpeta* carpetaElegida;
 
 	Sprite* _cursorSprite;
+	Sprite* _cursorSprite2;
 	Sprite* papeleraSprite;
 	Sprite* interfazSprite;
 
 	Sprite* cargando1;
 	Sprite* animFuego;
-	Sprite* tuto1;
 	Sprite* barra;
+	MenuItemImage* musica;
+	MenuItemImage* pasarNivel;
+
+	Sprite* falso1; //Carpeta1
+	Sprite* falso2; //Carpeta3
+	Sprite* falso3; //Carpeta4
+	Sprite* falso4; //Musica
+	Sprite* falso5; //Pensamiento
+	Sprite* falso6; //Mail
+	Sprite* falso7; //Noticias
+	Sprite* falso8; //Carpeta2
+
+	Sprite* tuto1;
+	Sprite* tuto2;
+	Sprite* tuto3;
+	Sprite* tuto4;
+	Sprite* tuto5;
+	Sprite* tuto6;
+	Sprite* tuto7;
+	Sprite* tuto8;
+	Sprite* tuto9;
+	bool bool_aux;
+	bool bool_aux2;
+	bool bool_aux3;
+	bool bool_aux4;
 
 	Carpeta* noticias;
 	int posXNoticias;
@@ -81,6 +119,14 @@ public:
 	Vector<Sprite*> allMails;
 	int posXarchsMail;
 	int posYarchsMail;
+
+	Carpeta* pensamientos;
+	int posXThoughs;
+	int posYThoughs;
+	Sprite* archThoughs_1;
+	Vector<Sprite*> allStatus;
+	int posXarchsThoughs;
+	int posYarchsThoughs;
 
 	Sprite* estado;
 
@@ -102,6 +148,25 @@ public:
 	void changeColor(void);
 	void goToGameOver(Ref *pSender);
 	void playMusic(Ref *pSender);
+	void terminarNivel(Ref *pSender);
+
+	void changeTutorial1(void);
+	void wait1(void);
+	void changeTutorial2(void);
+	void wait2(void);
+	void changeTutorial3(void);
+	void wait3(void);
+	void changeTutorial4(void);
+	void wait4(void);
+	void changeTutorial5(void);
+	void wait5(void);
+	void changeTutorial6(void);
+	void wait6(void);
+	void changeTutorial7(void);
+	void wait7(void);
+	void changeTutorial8(void);
+	void wait8(void);
+	void changeTutorial9(void);
 
 	//void menuCloseCallback(cocos2d::Ref* pSender);
 

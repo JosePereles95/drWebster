@@ -1,6 +1,7 @@
 #include "Carpeta.h"
 #include "Webster.h"
 #include "Tutorial.h"
+#include "Alice.h"
 
 
 USING_NS_CC;
@@ -146,8 +147,14 @@ void Carpeta::pasaSiguiente(Ref* pSender)
 void Carpeta::escanearArchivo(Ref * pSender)
 {
 	if (tiempoEscanear) {
-		if (elegido == archivoValido && validoEscaneado != 1)
+		if (elegido == archivoValido && validoEscaneado != 1) {
 			validoEscaneado++;
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/acierto_escaneo.mp3");
+		}
+		else {
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/fallo_escaneo.mp3");
+		}
+
 		tiempoEscanear = false;
 	}
 }

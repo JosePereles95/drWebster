@@ -3,12 +3,20 @@
 
 #include "cocos2d.h"
 
+USING_NS_CC;
+
 class PauseScene : public cocos2d::Layer
 {
 public:
+	static int TutorialPantalla;
+	static int AlicePantalla;
+	Sprite* _cursorSprite;
+	Sprite* _cursorSprite2;
 	void resumeGameScreen(Ref *pSender);
 
 	static cocos2d::Scene* createScene();
+	
+	void onMouseMove(Event *event);
 
 	void menuCloseCallback(cocos2d::Ref* pSender);
 

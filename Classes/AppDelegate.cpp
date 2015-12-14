@@ -1,6 +1,8 @@
 #include "AppDelegate.h"
 #include "Mechanics.h"
 #include "Inicio.h"
+#include "Alice.h"
+
 
 USING_NS_CC;
 
@@ -89,7 +91,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // run
     director->runWithScene(scene);
 
-	//glview->setCursorVisible(false);   //CURSOR INVISIBLE
+	glview->setCursorVisible(false);   //CURSOR INVISIBLE
 
     return true;
 }

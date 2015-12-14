@@ -14,7 +14,7 @@ Virus::Virus(Vector<Carpeta*> folders, int id, int tipo)
 		cache->addSpriteFramesWithFile("Virus_sheet.plist");
 
 		animVirus = Sprite::createWithSpriteFrameName("Virus01.png");
-		spritebatch->addChild(animVirus, 3);
+		spritebatch->addChild(animVirus, 5);
 
 		animVirus->setVisible(false);
 
@@ -44,7 +44,7 @@ Virus::Virus(Vector<Carpeta*> folders, int id, int tipo)
 		cache->addSpriteFramesWithFile("VirusCuernos_sheet.plist");
 
 		animVirus = Sprite::createWithSpriteFrameName("VirusCuernos01.png");
-		spritebatch->addChild(animVirus, 3);
+		spritebatch->addChild(animVirus, 5);
 
 		animVirus->setVisible(false);
 
@@ -73,7 +73,7 @@ Virus::Virus(Vector<Carpeta*> folders, int id, int tipo)
 		cache->addSpriteFramesWithFile("VirusMadre_sheet.plist");
 
 		animVirus = Sprite::createWithSpriteFrameName("VirusMadre01.png");
-		spritebatch->addChild(animVirus, 3);
+		spritebatch->addChild(animVirus, 5);
 
 		animVirus->setVisible(false);
 
