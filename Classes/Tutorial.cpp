@@ -751,12 +751,14 @@ void Tutorial::update(float dt)
 	if (tuto9->isVisible()) {
 		falso2->setVisible(false);
 		carpeta3->imagen->setVisible(true);
-		if (carpeta3->contenido.at(0)->isVisible())
+		if (carpeta3->contenido.at(0)->isVisible()) {
 			pasarNivel->setVisible(true);
-		else {
-			pasarNivel->setVisible(false);
 			carpeta3->escanear->setVisible(false);
 			carpeta3->pasar->setVisible(false);
+		}
+		
+		else {
+			pasarNivel->setVisible(false);
 		}
 	}
 
