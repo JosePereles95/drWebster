@@ -628,7 +628,7 @@ void  Tutorial::onMouseDown(Event *event)
 		{
 			carpetaElegida = carpeta;
 			if (carpetaElegida->abierta->isVisible()) {
-				secuenciaEscaneo = Sequence::create(DelayTime::create(3.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::escaneando, this)), NULL);
+				secuenciaEscaneo = Sequence::create(DelayTime::create(2.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::escaneando, this)), NULL);
 				cargando1->setPosition(carpetaElegida->contenido.at(carpetaElegida->elegido)->getPosition().x,
 					carpetaElegida->contenido.at(carpetaElegida->elegido)->getPosition().y);
 				cargando1->setVisible(true);

@@ -115,6 +115,8 @@ public:
 	int posYarchsThoughs;
 
 	bool bool_aux;
+	bool bool_aux2;
+	bool tiempoEspera;
 
 	CocosDenshion::SimpleAudioEngine* musicaWebster;
 

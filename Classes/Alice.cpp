@@ -331,6 +331,9 @@ bool Alice::init()
 	addChild(virus3->spritebatch, 5);
 	addChild(virus3->imagenAturdido, 5);
 
+	bool_aux2 = true;
+	tiempoEspera = true;
+
 	//Animacion escaneando
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create("Escanear_sheet.png");
 	SpriteFrameCache* cache = SpriteFrameCache::getInstance();
@@ -450,7 +453,7 @@ void  Alice::onMouseDown(Event *event)
 		{
 			carpetaElegida = carpeta;
 			if (carpetaElegida->abierta->isVisible()) {
-				secuenciaEscaneo = Sequence::create(DelayTime::create(3.0f), CallFunc::create(CC_CALLBACK_0(Alice::escaneando, this)), NULL);
+				secuenciaEscaneo = Sequence::create(DelayTime::create(2.0f), CallFunc::create(CC_CALLBACK_0(Alice::escaneando, this)), NULL);
 				cargando1->setPosition(carpetaElegida->contenido.at(carpetaElegida->elegido)->getPosition().x,
 					carpetaElegida->contenido.at(carpetaElegida->elegido)->getPosition().y);
 				cargando1->setVisible(true);
@@ -517,12 +520,13 @@ void Alice::onMouseUp(Event *event)
 
 void Alice::onMouseScroll(Event *event)
 {
-	if (NDosis > 0) {
+	if (NDosis > 0 && tiempoEspera) {
 		NDosis--;
 		std::string letra = std::to_string(NDosis);
 		Dosis->setString(letra);
 		papeleraSprite->setColor(ccc3(255, 0, 0));
 		animFuego->setVisible(true);
+		tiempoEspera = false;
 		auto secuencia = Sequence::create(DelayTime::create(1.0f), CallFunc::create(CC_CALLBACK_0(Alice::changeColor, this)), NULL);
 		papeleraSprite->runAction(secuencia);
 
@@ -540,6 +544,7 @@ void Alice::changeColor(void)
 {
 	papeleraSprite->setColor(ccc3(255, 255, 255));
 	animFuego->setVisible(false);
+	tiempoEspera = true;
 }
 
 void Alice::update(float dt)
@@ -606,6 +611,11 @@ void Alice::update(float dt)
 
 	if (mail->validoEscaneado == 1) {
 		Checked2->setVisible(true);
+	}
+
+	if (Checked1->isVisible() && Checked2->isVisible() && bool_aux2) {
+		NDosis += 1;
+		bool_aux2 = false;
 	}
 
 	if (mail->abierta->isVisible()) {

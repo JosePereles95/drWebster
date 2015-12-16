@@ -129,9 +129,9 @@ void Virus::aturdir(Ref* pSender)
 		animVirus->setVisible(false);
 		imagenAturdido->setVisible(true);
 		if(tipoVirus == 1 || tipoVirus == 3)
-			secuencia1 = Sequence::create(DelayTime::create(3.0f), CallFunc::create(CC_CALLBACK_0(Virus::cambiar, this)), NULL);
+			secuencia1 = Sequence::create(DelayTime::create(4.0f), CallFunc::create(CC_CALLBACK_0(Virus::cambiar, this)), NULL);
 		if(tipoVirus == 2)
-			secuencia1 = Sequence::create(DelayTime::create(5.0f), CallFunc::create(CC_CALLBACK_0(Virus::cambiar, this)), NULL);
+			secuencia1 = Sequence::create(DelayTime::create(6.0f), CallFunc::create(CC_CALLBACK_0(Virus::cambiar, this)), NULL);
 		imagen->runAction(secuencia1);
 	}
 }
@@ -144,9 +144,9 @@ void Virus::cambiar(void)
 		imagenAturdido->setVisible(false);
 		animVirus->setVisible(true);
 		if (tipoVirus == 1 || tipoVirus == 3)
-			moverse = MoveTo::create(5, carpetaObjetivo->abierta->getPosition());
+			moverse = MoveTo::create(6, carpetaObjetivo->abierta->getPosition());
 		if (tipoVirus == 2)
-			moverse = MoveTo::create(7, carpetaObjetivo->abierta->getPosition());
+			moverse = MoveTo::create(8, carpetaObjetivo->abierta->getPosition());
 		imagen->runAction(moverse);
 	}
 }
