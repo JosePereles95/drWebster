@@ -82,7 +82,7 @@ bool Alice::init()
 	victorySprite->setVisible(false);
 
 	//Labels
-	NDosis = 10;
+	NDosis = 1;
 	Dosis = Label::createWithSystemFont("1", "Arial.ttf", 26);
 	std::string letra = std::to_string(NDosis);
 	Dosis->setString(letra);
