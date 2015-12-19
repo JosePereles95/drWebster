@@ -74,6 +74,7 @@ public:
 	Sprite* _cursorSprite2;
 	Sprite* papeleraSprite;
 	Sprite* interfazSprite;
+	Sprite* victorySprite;
 
 	Sprite* cargando1;
 	Sprite* animFuego;
@@ -103,6 +104,7 @@ public:
 	bool bool_aux2;
 	bool bool_aux3;
 	bool bool_aux4;
+	bool bool_aux5;
 
 	Carpeta* noticias;
 	int posXNoticias;
@@ -147,6 +149,7 @@ public:
 
 	virtual bool init();
 
+	void victoria(void);
 	void escaneando(void);
 	void goToPauseScene(Ref *pSender);
 	void changeColor(void);

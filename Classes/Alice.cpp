@@ -28,10 +28,9 @@ bool Alice::init()
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	//Música de fondo.
-	musicaWebster = CocosDenshion::SimpleAudioEngine::getInstance();
-	//musicaAlice->preloadBackgroundMusic("/music/alice.mp3");
-	musicaWebster->playBackgroundMusic("/music/alice.mp3", true);
-	musicaWebster->stopBackgroundMusic(false);
+	musicaAlice = CocosDenshion::SimpleAudioEngine::getInstance();
+	musicaAlice->playBackgroundMusic("/music/alice.mp3", true);
+	musicaAlice->stopBackgroundMusic(false);
 
 	//Efectos
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/carpeta.mp3");
@@ -43,6 +42,7 @@ bool Alice::init()
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/scan.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/aturde.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/quemar.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/victory2.mp3");
 
 	//Cursor
 	_cursorSprite = Sprite::create("cursor1.png");
@@ -73,6 +73,13 @@ bool Alice::init()
 	interfazSprite->setPosition(origin.x + interfazSprite->getContentSize().width / 2,
 		origin.y + visibleSize.height - interfazSprite->getContentSize().height / 2);
 	addChild(interfazSprite, 1);
+
+	//Mensaje
+	victorySprite = Sprite::create("mensaje_scan.png");
+	victorySprite->setPosition(interfazSprite->getPosition().x - 15,
+		interfazSprite->getPosition().y - 140);
+	addChild(victorySprite, 4);
+	victorySprite->setVisible(false);
 
 	//Labels
 	NDosis = 10;
@@ -356,6 +363,7 @@ bool Alice::init()
 
 	bool_aux2 = true;
 	bool_aux3 = true;
+	bool_aux4 = true;
 	tiempoEspera = true;
 
 	//Animacion escaneando
@@ -436,11 +444,11 @@ bool Alice::init()
 }
 
 void Alice::playMusic(Ref *pSender) {
-	if (!musicaWebster->isBackgroundMusicPlaying()) {
-		musicaWebster->resumeBackgroundMusic();
+	if (!musicaAlice->isBackgroundMusicPlaying()) {
+		musicaAlice->resumeBackgroundMusic();
 	}
 	else {
-		musicaWebster->pauseBackgroundMusic();
+		musicaAlice->pauseBackgroundMusic();
 	}
 }
 
@@ -659,6 +667,12 @@ void Alice::update(float dt)
 		bool_aux3 = false;
 	}
 
+	if (Checked1->isVisible() && Checked2->isVisible() && bool_aux4) {
+		auto secuencia = Sequence::create(DelayTime::create(1.0f), CallFunc::create(CC_CALLBACK_0(Alice::victoria, this)), NULL);
+		this->runAction(secuencia);
+		bool_aux4 = false;
+	}
+
 	if (mail->abierta->isVisible() || !mail->imagen->isVisible()) {
 		virus1->iniciado = true;
 	}
@@ -672,6 +686,17 @@ void Alice::update(float dt)
 		virusElegido->imagen->setPosition(_cursorSprite->getPosition().x, _cursorSprite->getPosition().y);
 	}
 	
+}
+
+void Alice::victoria(void) {
+	victorySprite->setVisible(true);
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/victory2.mp3");
+	auto secuencia = Sequence::create(DelayTime::create(4.0f), CallFunc::create(CC_CALLBACK_0(Alice::quitaMensaje, this)), NULL);
+	victorySprite->runAction(secuencia);
+}
+
+void Alice::quitaMensaje(void) {
+	victorySprite->setVisible(false);
 }
 
 void Alice::escaneando(void)

@@ -74,6 +74,7 @@ public:
 	Sprite* papeleraSprite;
 	Sprite* interfazSprite;
 	Sprite* barraVida;
+	Sprite* victorySprite;
 
 	Sprite* cargando1;
 	Sprite* animFuego;
@@ -118,11 +119,12 @@ public:
 	bool bool_aux;
 	bool bool_aux2;
 	bool bool_aux3;
+	bool bool_aux4;
 	bool tiempoEspera;
 	float vidaTotal;
 	float relVida;
 
-	CocosDenshion::SimpleAudioEngine* musicaWebster;
+	CocosDenshion::SimpleAudioEngine* musicaAlice;
 	unsigned int scanEffect;
 
 	Sequence* secuenciaEscaneo;
@@ -136,6 +138,8 @@ public:
 
 	virtual bool init();
 
+	void victoria(void);
+	void quitaMensaje(void);
 	void escaneando(void);
 	void goToPauseScene(Ref *pSender);
 	void goToFinal(Ref *pSender);

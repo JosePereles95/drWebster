@@ -7,28 +7,28 @@
             <key>Virus01.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{42,28}}</string>
+                <string>{{2,2},{76,50}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{42,28}}</string>
+                <string>{{0,0},{76,50}}</string>
                 <key>sourceSize</key>
-                <string>{42,28}</string>
+                <string>{76,50}</string>
             </dict>
             <key>Virus02.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{46,2},{42,28}}</string>
+                <string>{{80,2},{76,50}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{42,28}}</string>
+                <string>{{0,0},{76,50}}</string>
                 <key>sourceSize</key>
-                <string>{42,28}</string>
+                <string>{76,50}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -38,9 +38,9 @@
             <key>realTextureFileName</key>
             <string>Virus_sheet.png</string>
             <key>size</key>
-            <string>{91,32}</string>
+            <string>{158,54}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:e322e49d621887de274c9717c76cde20:957e1965a0af40f445ec38e9f6c2bb6c:94d1ad7e30f9e62d3a8033dfdd2c2608$</string>
+            <string>$TexturePacker:SmartUpdate:2f4b48f4441bc6f98357612a536be38d:aed8e1a1762223b5f0bf87401f80b958:94d1ad7e30f9e62d3a8033dfdd2c2608$</string>
             <key>textureFileName</key>
             <string>Virus_sheet.png</string>
         </dict>

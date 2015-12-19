@@ -29,10 +29,8 @@ bool Tutorial::init()
 
 	//Música de fondo.
 	musicaWebster = CocosDenshion::SimpleAudioEngine::getInstance();
-	//musicaAlice->preloadBackgroundMusic("/music/alice.mp3");
-	musicaWebster->playBackgroundMusic("/music/alice.mp3", true);
+	musicaWebster->playBackgroundMusic("/music/webster.mp3", true);
 	musicaWebster->stopBackgroundMusic(false);
-	musicaWebster->setBackgroundMusicVolume(0.25f);
 
 	//Efectos
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/carpeta.mp3");
@@ -44,6 +42,7 @@ bool Tutorial::init()
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/scan.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/aturde.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/quemar.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/victory2.mp3");
 
 	//Cursor
 	_cursorSprite = Sprite::create("cursor1.png");
@@ -64,6 +63,13 @@ bool Tutorial::init()
 	interfazSprite->setPosition(origin.x + interfazSprite->getContentSize().width / 2,
 		origin.y + visibleSize.height - interfazSprite->getContentSize().height / 2);
 	addChild(interfazSprite, 1);
+
+	//Mensaje
+	victorySprite = Sprite::create("mensaje_scan.png");
+	victorySprite->setPosition(interfazSprite->getPosition().x - 15,
+		interfazSprite->getPosition().y - 140);
+	addChild(victorySprite, 4);
+	victorySprite->setVisible(false);
 
 	//Labels
 	Dosis= Label::createWithSystemFont("1", "Arial.ttf", 26);
@@ -254,6 +260,7 @@ bool Tutorial::init()
 	bool_aux2 = true;
 	bool_aux3 = true;
 	bool_aux4 = true;
+	bool_aux5 = true;
 	auto secuencia2 = Sequence::create(DelayTime::create(2.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::changeTutorial1, this)), NULL);
 	this->runAction(secuencia2);
 
@@ -600,6 +607,7 @@ void Tutorial::changeTutorial8(void) {
 }
 
 void Tutorial::wait8(void) {
+	victorySprite->setVisible(false);
 	tuto8->setVisible(false);
 
 	auto secuencia18 = Sequence::create(DelayTime::create(0.5f), CallFunc::create(CC_CALLBACK_0(Tutorial::changeTutorial9, this)), NULL);
@@ -613,12 +621,12 @@ void Tutorial::changeTutorial9(void) {
 
 
 void Tutorial::playMusic(Ref *pSender) {
-	/*if (!musicaWebster->isBackgroundMusicPlaying()) {
+	if (!musicaWebster->isBackgroundMusicPlaying()) {
 		musicaWebster->resumeBackgroundMusic();
 	}
 	else {
 		musicaWebster->pauseBackgroundMusic();
-	}*/
+	}
 }
 
 //Pausa
@@ -842,6 +850,12 @@ void Tutorial::update(float dt)
 		bool_aux4 = false;
 	}
 
+	if (Checked1->isVisible() && bool_aux5) {
+		auto secuencia = Sequence::create(DelayTime::create(1.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::victoria, this)), NULL);
+		this->runAction(secuencia);
+		bool_aux5 = false;
+	}
+
 	if (carpeta2->abierta->isVisible()) {
 		virus1->iniciado = true;
 		Alarma->setVisible(false);
@@ -857,6 +871,11 @@ void Tutorial::update(float dt)
 		auto secuencia9 = Sequence::create(DelayTime::create(0.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::wait4, this)), NULL);
 		this->runAction(secuencia9);
 	}
+}
+
+void Tutorial::victoria(void) {
+	victorySprite->setVisible(true);
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/victory2.mp3");
 }
 
 void Tutorial::escaneando(void)
