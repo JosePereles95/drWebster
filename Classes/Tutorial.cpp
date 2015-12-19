@@ -39,6 +39,11 @@ bool Tutorial::init()
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/notificacion_estado.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/acierto_escaneo.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/fallo_escaneo.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/abre1.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/cierra1.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/scan.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/aturde.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/quemar.mp3");
 
 	//Cursor
 	_cursorSprite = Sprite::create("cursor1.png");
@@ -87,25 +92,36 @@ bool Tutorial::init()
 
 	//Carpeta1
 	posXarchs1 = 350;
-	posYarchs1 = 360;
+	posYarchs1 = 350;
 
-	arch1_1 = Sprite::create("PanelVirus.png");
+	arch1_1 = Sprite::create("Ponencia01.png");
 	arch1_1->setPosition(posXarchs1, posYarchs1);
 	archivos1.insert(0, arch1_1);
 	addChild(arch1_1, 2);
 
-	arch1_2 = Sprite::create("entrada_ponencia.png");
+	arch1_2 = Sprite::create("Ponencia02.png");
 	arch1_2->setPosition(posXarchs1, posYarchs1);
 	archivos1.insert(1, arch1_2);
 	addChild(arch1_2, 2);
 
+	arch1_3 = Sprite::create("PanelVirus.png");
+	arch1_3->setPosition(posXarchs1, posYarchs1);
+	archivos1.insert(2, arch1_3);
+	addChild(arch1_3, 2);
+
+	arch1_4 = Sprite::create("entrada_ponencia.png");
+	arch1_4->setPosition(posXarchs1, posYarchs1);
+	archivos1.insert(3, arch1_4);
+	addChild(arch1_4, 2);
+
 	posXCarpeta1 = 50;
 	posYCarpeta1 = 200;
 
-	carpeta1 = new Carpeta(archivos1, 1, 1);
+	carpeta1 = new Carpeta(archivos1, 3, 1);
 	carpeta1->imagen->setPosition(posXCarpeta1, posYCarpeta1);
-	carpeta1->pasar->setPosition(posXarchs1 + 90, posYarchs1 - 230);
-	carpeta1->escanear->setPosition(posXarchs1 + 165, posYarchs1 - 230);
+	carpeta1->pasar->setPosition(posXarchs1 + 110, posYarchs1 + 260);
+	carpeta1->escanear->setPosition(posXarchs1 + 160, posYarchs1 + 260);
+	carpeta1->cerrar->setPosition(posXarchs1 + 210, posYarchs1 + 260);
 	carpeta1->abierta->setPosition(posXCarpeta1, posYCarpeta1);
 	addChild(carpeta1->botones, 2);
 	carpeta1->imagen->setVisible(false);
@@ -127,8 +143,9 @@ bool Tutorial::init()
 	carpeta2->imagen->setPosition(posXCarpeta2, posYCarpeta2);
 	carpeta2->imagen->setColor(ccc3(200, 0, 0));
 	carpeta2->abierta->setColor(ccc3(200, 0, 0));
-	carpeta2->pasar->setPosition(posXarchs2 + 90, posYarchs2 - 230);
-	carpeta2->escanear->setPosition(posXarchs2 + 165, posYarchs2 - 230);
+	//carpeta2->pasar->setPosition(posXarchs2 + 110, posYarchs2 + 260);
+	//carpeta2->escanear->setPosition(posXarchs2 + 160, posYarchs2 + 260);
+	carpeta2->cerrar->setPosition(posXarchs2 + 210, posYarchs2 + 260);
 	carpeta2->abierta->setPosition(posXCarpeta2, posYCarpeta2);
 	addChild(carpeta2->botones, 2);
 	carpeta2->imagen->setVisible(false);
@@ -151,13 +168,14 @@ bool Tutorial::init()
 	carpeta3->abierta->setPosition(posXCarpeta3, posYCarpeta3);
 	carpeta3->escanear->setVisible(false);
 	carpeta3->pasar->setVisible(false);
-	addChild(carpeta3->botones, 2);
+	carpeta3->cerrar->setPosition(posXarchs3 + 206, posYarchs3 + 212);
+	addChild(carpeta3->botones, 3);
 	carpeta3->imagen->setVisible(false);
 	addChild(carpeta3->abierta, 2);
 
 	//Carpeta4
-	posXarchs4 = 1100;
-	posYarchs4 = 450;
+	posXarchs4 = 1050;
+	posYarchs4 = 410;
 
 	arch4_1 = Sprite::create("About.png");
 	arch4_1->setPosition(posXarchs4, posYarchs4);
@@ -169,8 +187,9 @@ bool Tutorial::init()
 
 	carpeta4 = new Carpeta(archivos4, -1, 1);
 	carpeta4->imagen->setPosition(posXCarpeta4, posYCarpeta4);
-	carpeta4->pasar->setPosition(posXarchs4 + 90, posYarchs4 - 230);
-	carpeta4->escanear->setPosition(posXarchs4 + 165, posYarchs4 - 230);
+	//carpeta4->pasar->setPosition(posXarchs4 + 110, posYarchs4 + 260);
+	//carpeta4->escanear->setPosition(posXarchs4 + 160, posYarchs4 + 260);
+	carpeta4->cerrar->setPosition(posXarchs4 + 210, posYarchs4 + 260);
 	carpeta4->abierta->setPosition(posXCarpeta4, posYCarpeta4);
 	addChild(carpeta4->botones, 2);
 	carpeta4->imagen->setVisible(false);
@@ -261,13 +280,19 @@ bool Tutorial::init()
 	allMails.insert(2, archMail_3);
 	addChild(archMail_3, 2);
 
+	archMail_4 = Sprite::create("webster_correo4.png");
+	archMail_4->setPosition(posXarchsMail, posYarchsMail);
+	allMails.insert(3, archMail_4);
+	addChild(archMail_4, 2);
+
 	posXMail = visibleSize.width / 2 + 165;
 	posYMail = barra->getContentSize().height / 2;
 
 	mail = new Carpeta(allMails, -1, 3);
 	mail->imagen->setPosition(posXMail, posYMail);
-	mail->pasar->setPosition(posXarchsMail + 20, posYarchsMail - 257);
-	mail->escanear->setPosition(posXarchsMail + 120, posYarchsMail - 257);
+	mail->pasar->setPosition(posXarchsMail + 130, posYarchsMail + 214);
+	mail->escanear->setPosition(posXarchsMail + 175, posYarchsMail + 214);
+	mail->cerrar->setPosition(posXarchsMail + 220, posYarchsMail + 214);
 	mail->abierta->setPosition(posXMail, posYMail);
 	addChild(mail->botones, 2);
 	mail->imagen->setVisible(false);
@@ -283,11 +308,11 @@ bool Tutorial::init()
 
 	posXNoticias = visibleSize.width / 2 + 295;
 	posYNoticias = barra->getContentSize().height / 2;
-
 	noticias = new Carpeta(allNoticias, -1, 6);
 	noticias->imagen->setPosition(posXNoticias, posYNoticias);
-	noticias->pasar->setPosition(posXarchsNews - 40, posYarchsNews - 250);
-	noticias->escanear->setPosition(posXarchsNews + 40, posYarchsNews - 250);
+	noticias->pasar->setPosition(-100, -100);
+	noticias->escanear->setPosition(posXarchsNews + 160, posYarchsNews + 260);
+	noticias->cerrar->setPosition(posXarchsNews + 210, posYarchsNews + 260);
 	noticias->abierta->setPosition(posXNoticias, posYNoticias);
 	addChild(noticias->botones, 2);
 	noticias->imagen->setVisible(false);
@@ -314,8 +339,9 @@ bool Tutorial::init()
 	pensamientos->imagen->setPosition(posXThoughs, posYThoughs);
 	pensamientos->pasar->setPosition(-100, -100);
 	pensamientos->escanear->setPosition(-100, -100);
+	pensamientos->cerrar->setPosition(posXarchsThoughs + 130, posYarchsThoughs + 80);
 	pensamientos->abierta->setPosition(posXThoughs, posYThoughs);
-	addChild(pensamientos->botones, 2);
+	addChild(pensamientos->botones, 4);
 	pensamientos->imagen->setVisible(false);
 	addChild(pensamientos->abierta, 2);
 
@@ -397,7 +423,7 @@ bool Tutorial::init()
 	falso8->setPosition(carpeta2->imagen->getPosition().x, carpeta2->imagen->getPosition().y);
 	addChild(falso8, 3);
 	falso8->runAction(tinto8);
-
+	
 	//Animacion escaneando
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create("Escanear_sheet.png");
 	SpriteFrameCache* cache = SpriteFrameCache::getInstance();
@@ -409,10 +435,10 @@ bool Tutorial::init()
 
 	cargando1->setVisible(false);
 
-	Vector<SpriteFrame*> animFrames(5);
+	Vector<SpriteFrame*> animFrames(4);
 
 	char str[100] = { 0 };
-	for (int i = 1; i < 5; i++)
+	for (int i = 1; i < 4; i++)
 	{
 		sprintf(str, "Escanear%02d.png", i);
 		SpriteFrame* frame = cache->getSpriteFrameByName(str);
@@ -628,6 +654,7 @@ void  Tutorial::onMouseDown(Event *event)
 		{
 			carpetaElegida = carpeta;
 			if (carpetaElegida->abierta->isVisible()) {
+				scanEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/scan.mp3");
 				secuenciaEscaneo = Sequence::create(DelayTime::create(2.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::escaneando, this)), NULL);
 				cargando1->setPosition(carpetaElegida->contenido.at(carpetaElegida->elegido)->getPosition().x,
 					carpetaElegida->contenido.at(carpetaElegida->elegido)->getPosition().y);
@@ -643,6 +670,15 @@ void Tutorial::onMouseMove(Event *event)
 	auto *e = dynamic_cast<EventMouse *>(event);
 	_cursorSprite2->setPosition(e->getCursorX() + 16, e->getCursorY() - 16);
 	_cursorSprite->setPosition(_cursorSprite2->getPosition().x - 14, _cursorSprite2->getPosition().y + 14);
+
+	//huella
+	auto huella = Sprite::create("cursor2.png");
+	huella->setPosition(_cursorSprite2->getPosition());
+	huella->setOpacity(50);
+	addChild(huella, 6);
+	auto action = FadeOut::create(0.25);
+
+	huella->runAction(action);
 }
 
 void Tutorial::onMouseUp(Event *event)
@@ -684,11 +720,13 @@ void Tutorial::onMouseUp(Event *event)
 	{
 		virusElegido = nullptr;
 	}
+
 	if (carpetaElegida != nullptr)
 	{
 		carpetaElegida->imagen->stopAction(secuenciaEscaneo);
 		carpetaElegida->tiempoEscanear = false;
 		carpetaElegida = nullptr;
+		CocosDenshion::SimpleAudioEngine::getInstance()->stopEffect(scanEffect);
 		cargando1->setVisible(false);
 	}
 }
@@ -698,6 +736,7 @@ void Tutorial::onMouseScroll(Event *event)
 	if(tuto5->isVisible() && virus1->enPapelera){
 		papeleraSprite->setColor(ccc3(255, 0, 0));
 		animFuego->setVisible(true);
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/quemar.mp3");
 		auto secuencia = Sequence::create(DelayTime::create(1.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::changeColor, this)), NULL);
 		papeleraSprite->runAction(secuencia);
 
@@ -728,7 +767,7 @@ void Tutorial::update(float dt)
 		bool_aux = false;
 	}
 
-	if (mail->contenido.at(2)->isVisible() && bool_aux2) {
+	if (mail->contenido.at(3)->isVisible() && bool_aux2) {
 		auto secuencia13 = Sequence::create(DelayTime::create(3.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::wait6, this)), NULL);
 		this->runAction(secuencia13);
 		bool_aux2 = false;
@@ -767,7 +806,7 @@ void Tutorial::update(float dt)
 		carpeta1->imagen->setVisible(true);
 	}
 
-	if (carpeta1->contenido.at(1)->isVisible() && bool_aux3) {
+	if (carpeta1->contenido.at(3)->isVisible() && bool_aux3) {
 		auto secuencia15 = Sequence::create(DelayTime::create(1.5f), CallFunc::create(CC_CALLBACK_0(Tutorial::wait7, this)), NULL);
 		this->runAction(secuencia15);
 		bool_aux3 = false;
@@ -806,6 +845,8 @@ void Tutorial::update(float dt)
 	if (carpeta2->abierta->isVisible()) {
 		virus1->iniciado = true;
 		Alarma->setVisible(false);
+		carpeta2->escanear->setVisible(false);
+		carpeta2->pasar->setVisible(false);
 	}
 
 	if (virusElegido != nullptr) {
@@ -823,6 +864,7 @@ void Tutorial::escaneando(void)
 	if (carpetaElegida != nullptr)
 	{
 		carpetaElegida->tiempoEscanear = true;
+		CocosDenshion::SimpleAudioEngine::getInstance()->stopEffect(scanEffect);
 		cargando1->setVisible(false);
 	}
 }

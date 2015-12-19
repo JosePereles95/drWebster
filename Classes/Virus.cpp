@@ -1,5 +1,7 @@
 #include "Virus.h"
 #include "Carpeta.h"
+#include "Alice.h"
+#include "Tutorial.h"
 
 USING_NS_CC;
 
@@ -124,16 +126,25 @@ Virus::Virus(Vector<Carpeta*> folders, int id, int tipo)
 void Virus::aturdir(Ref* pSender)
 {
 	if (!aturdido) {
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/aturde.mp3");
 		imagen->stopAction(moverse);
 		aturdido = true;
 		animVirus->setVisible(false);
 		imagenAturdido->setVisible(true);
+		imagenAturdido->setColor(ccc3(230, 0, 0));
+		auto secuencia = Sequence::create(DelayTime::create(0.5f), CallFunc::create(CC_CALLBACK_0(Virus::cambiaColor, this)), NULL);
+		imagenAturdido->runAction(secuencia);
 		if(tipoVirus == 1 || tipoVirus == 3)
 			secuencia1 = Sequence::create(DelayTime::create(4.0f), CallFunc::create(CC_CALLBACK_0(Virus::cambiar, this)), NULL);
 		if(tipoVirus == 2)
 			secuencia1 = Sequence::create(DelayTime::create(6.0f), CallFunc::create(CC_CALLBACK_0(Virus::cambiar, this)), NULL);
 		imagen->runAction(secuencia1);
 	}
+}
+
+void Virus::cambiaColor(void)
+{
+	imagenAturdido->setColor(ccc3(255, 255, 255));
 }
 
 void Virus::cambiar(void)

@@ -7,54 +7,41 @@
             <key>Escanear01.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{53,51}}</string>
+                <string>{{2,2},{60,60}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{53,51}}</string>
+                <string>{{0,0},{60,60}}</string>
                 <key>sourceSize</key>
-                <string>{53,51}</string>
+                <string>{60,60}</string>
             </dict>
             <key>Escanear02.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{57,2},{51,52}}</string>
+                <string>{{64,2},{60,60}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{51,52}}</string>
+                <string>{{0,0},{60,60}}</string>
                 <key>sourceSize</key>
-                <string>{51,52}</string>
+                <string>{60,60}</string>
             </dict>
             <key>Escanear03.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{110,2},{51,52}}</string>
+                <string>{{126,2},{60,60}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{51,52}}</string>
+                <string>{{0,0},{60,60}}</string>
                 <key>sourceSize</key>
-                <string>{51,52}</string>
-            </dict>
-            <key>Escanear04.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{163,2},{51,52}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{51,52}}</string>
-                <key>sourceSize</key>
-                <string>{51,52}</string>
+                <string>{60,60}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -64,9 +51,9 @@
             <key>realTextureFileName</key>
             <string>Escanear_sheet.png</string>
             <key>size</key>
-            <string>{216,56}</string>
+            <string>{189,64}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:d4e860a64d5b73917c87227b66900806:7ad2dac43b23b0f71908cb525b43419e:4ad62d4907abeba6efd41431c1118c89$</string>
+            <string>$TexturePacker:SmartUpdate:d48be2ef76a2dc4b325aa5abccc43d32:a8c110c421d6873a951c12c9a51ec542:4ad62d4907abeba6efd41431c1118c89$</string>
             <key>textureFileName</key>
             <string>Escanear_sheet.png</string>
         </dict>

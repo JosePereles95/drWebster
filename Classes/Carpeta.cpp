@@ -19,54 +19,37 @@ Carpeta::Carpeta(Vector<Sprite*> archivos, int valido, int t)
 
 	if (tipo == 1) { // Carpeta
 		imagen = MenuItemImage::create("carpeta1.png", "carpeta1.png",
-			CC_CALLBACK_1(Carpeta::abreCierraCarpeta, this));
-		pasar = MenuItemImage::create("flecha.png", "flecha1.png",
-			CC_CALLBACK_1(Carpeta::pasaSiguiente, this));
-		escanear = MenuItemImage::create("scan.png", "scan1.png",
-			CC_CALLBACK_1(Carpeta::escanearArchivo, this));
+			CC_CALLBACK_1(Carpeta::abreCarpeta, this));
 	}
 	else if (tipo == 2) { // Musica
 		imagen = MenuItemImage::create("musica.png", "musica.png",
-			CC_CALLBACK_1(Carpeta::abreCierraCarpeta, this));
-		pasar = MenuItemImage::create("flecha.png", "flecha1.png",
-			CC_CALLBACK_1(Carpeta::pasaSiguiente, this));
-		escanear = MenuItemImage::create("scan.png", "scan1.png",
-			CC_CALLBACK_1(Carpeta::escanearArchivo, this));
+			CC_CALLBACK_1(Carpeta::abreCarpeta, this));
 	}
 	else if (tipo == 3) { // Correo
 		imagen = MenuItemImage::create("mail.png", "mail.png",
-			CC_CALLBACK_1(Carpeta::abreCierraCarpeta, this));
-		pasar = MenuItemImage::create("flechacorreo1.png", "flechacorreo2.png",
-			CC_CALLBACK_1(Carpeta::pasaSiguiente, this));
-		escanear = MenuItemImage::create("scancorreo1.png", "scancorreo2.png",
-			CC_CALLBACK_1(Carpeta::escanearArchivo, this));
+			CC_CALLBACK_1(Carpeta::abreCarpeta, this));
 	}
 	else if (tipo == 4) { // Estado
 		imagen = MenuItemImage::create("estado.png", "estado.png",
-			CC_CALLBACK_1(Carpeta::abreCierraCarpeta, this));
-		pasar = MenuItemImage::create("flecha.png", "flecha1.png",
-			CC_CALLBACK_1(Carpeta::pasaSiguiente, this));
-		escanear = MenuItemImage::create("scan.png", "scan1.png",
-			CC_CALLBACK_1(Carpeta::escanearArchivo, this));
+			CC_CALLBACK_1(Carpeta::abreCarpeta, this));
 	}
 	else if (tipo == 5) { // Pensamiento
 		imagen = MenuItemImage::create("pensamientos.png", "pensamientos.png",
-			CC_CALLBACK_1(Carpeta::abreCierraCarpeta, this));
-		pasar = MenuItemImage::create("flecha.png", "flecha1.png",
-			CC_CALLBACK_1(Carpeta::pasaSiguiente, this));
-		escanear = MenuItemImage::create("scan.png", "scan1.png",
-			CC_CALLBACK_1(Carpeta::escanearArchivo, this));
+			CC_CALLBACK_1(Carpeta::abreCarpeta, this));
 	}
 	else if (tipo == 6) { // Noticias
 		imagen = MenuItemImage::create("News2.png", "News2.png",
-			CC_CALLBACK_1(Carpeta::abreCierraCarpeta, this));
-		pasar = MenuItemImage::create("flechanoticias1.png", "flechanoticias2.png",
-			CC_CALLBACK_1(Carpeta::pasaSiguiente, this));
-		escanear = MenuItemImage::create("scannoticias1.png", "scannoticias2.png",
-			CC_CALLBACK_1(Carpeta::escanearArchivo, this));
+			CC_CALLBACK_1(Carpeta::abreCarpeta, this));
 	}
 
-	botones = Menu::create(imagen, pasar, escanear, NULL);
+	pasar = MenuItemImage::create("flecha.png", "flecha1.png",
+		CC_CALLBACK_1(Carpeta::pasaSiguiente, this));
+	escanear = MenuItemImage::create("scan.png", "scan1.png",
+		CC_CALLBACK_1(Carpeta::escanearArchivo, this));
+	cerrar = MenuItemImage::create("cerrar.png", "cerrar1.png",
+		CC_CALLBACK_1(Carpeta::cierraCarpeta, this));
+
+	botones = Menu::create(imagen, pasar, escanear, cerrar, NULL);
 	botones->setPosition(Vec2::ZERO);
 	
 	
@@ -78,7 +61,7 @@ Carpeta::Carpeta(Vector<Sprite*> archivos, int valido, int t)
 	else if (tipo == 2)
 		abierta = Sprite::create("musica.png");
 	else if (tipo == 3)
-		abierta = Sprite::create("mail.png");
+		abierta = Sprite::create("mail1.png");
 	else if (tipo == 4)
 		abierta = Sprite::create("estado.png");
 	else if (tipo == 5)
@@ -90,35 +73,36 @@ Carpeta::Carpeta(Vector<Sprite*> archivos, int valido, int t)
 	abierta->setVisible(false);
 	pasar->setVisible(false);
 	escanear->setVisible(false);
+	cerrar->setVisible(false);
 	validoEscaneado = 0;
 	vida = 10;
 	tiempoEscanear = false;
 }
 
-void Carpeta::abreCierraCarpeta(Ref* pSender)
+void Carpeta::abreCarpeta(Ref* pSender)
 {
-	//abierta = Sprite::create("carpeta2.png");
-	//cerrada = Sprite::create("carpeta1.png");
-
 	if (!contenido.at(elegido)->isVisible())
 	{
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/abre1.mp3");
 		contenido.at(elegido)->setVisible(true);
 		abierta->setVisible(true);
 		pasar->setVisible(true);
 		escanear->setVisible(true);
-
-		//imagen->setNormalImage(abierta);
+		cerrar->setVisible(true);
 	}
-	else
-	{
-		contenido.at(elegido)->setVisible(false);
-		abierta->setVisible(false);
-		pasar->setVisible(false);
-		escanear->setVisible(false);
+}
 
-		//imagen->setNormalImage(cerrada);
-		//elegido = 0;
-	}
+void Carpeta::cierraCarpeta(Ref* pSender)
+{
+		if(contenido.at(elegido)->isVisible())
+		{
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/cierra1.mp3");
+			contenido.at(elegido)->setVisible(false);
+			abierta->setVisible(false);
+			pasar->setVisible(false);
+			escanear->setVisible(false);
+			cerrar->setVisible(false);
+		}
 }
 
 void Carpeta::eliminaCarpeta(void)
@@ -128,6 +112,7 @@ void Carpeta::eliminaCarpeta(void)
 	contenido.at(elegido)->setVisible(false);
 	pasar->setVisible(false);
 	escanear->setVisible(false);
+	cerrar->setVisible(false);
 }
 
 void Carpeta::pasaSiguiente(Ref* pSender)

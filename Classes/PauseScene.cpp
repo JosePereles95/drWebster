@@ -84,6 +84,15 @@ void PauseScene::onMouseMove(Event *event)
 	auto *e = dynamic_cast<EventMouse *>(event);
 	_cursorSprite2->setPosition(e->getCursorX() + 16, e->getCursorY() - 16);
 	_cursorSprite->setPosition(_cursorSprite2->getPosition().x - 14, _cursorSprite2->getPosition().y + 14);
+
+	//huella
+	auto huella = Sprite::create("cursor2.png");
+	huella->setPosition(_cursorSprite2->getPosition());
+	huella->setOpacity(50);
+	addChild(huella, 6);
+	auto action = FadeOut::create(0.25);
+
+	huella->runAction(action);
 }
 
 void PauseScene::resumeGameScreen(Ref *pSender) {

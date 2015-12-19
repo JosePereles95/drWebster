@@ -32,13 +32,17 @@ bool Alice::init()
 	//musicaAlice->preloadBackgroundMusic("/music/alice.mp3");
 	musicaWebster->playBackgroundMusic("/music/alice.mp3", true);
 	musicaWebster->stopBackgroundMusic(false);
-	musicaWebster->setBackgroundMusicVolume(0.25f);
 
 	//Efectos
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/carpeta.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/notificacion_estado.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/acierto_escaneo.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/fallo_escaneo.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/abre1.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/cierra1.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/scan.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/aturde.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/quemar.mp3");
 
 	//Cursor
 	_cursorSprite = Sprite::create("cursor1.png");
@@ -59,6 +63,11 @@ bool Alice::init()
 		origin.y + visibleSize.height - interfazSprite->getContentSize().height / 2);
 	addChild(interfazSprite, 1);*/
 
+	//Barra de vida
+	barraVida = Sprite::create("BarraVida.png");
+	barraVida->setPosition(302, 702); // La vida dura 228
+	addChild(barraVida, 1);
+
 	//Interfaz
 	interfazSprite = Sprite::create("ChicaInt.png");
 	interfazSprite->setPosition(origin.x + interfazSprite->getContentSize().width / 2,
@@ -66,7 +75,7 @@ bool Alice::init()
 	addChild(interfazSprite, 1);
 
 	//Labels
-	NDosis = 2;
+	NDosis = 10;
 	Dosis = Label::createWithSystemFont("1", "Arial.ttf", 26);
 	std::string letra = std::to_string(NDosis);
 	Dosis->setString(letra);
@@ -107,7 +116,7 @@ bool Alice::init()
 	addChild(Checked2, 2);
 
 	//Carpeta1
-	posXarchs1 = 240;
+	posXarchs1 = 255;
 	posYarchs1 = 345;
 
 	arch1_1 = Sprite::create("HijaFamilia.png");
@@ -130,8 +139,9 @@ bool Alice::init()
 
 	carpeta1 = new Carpeta(archivos1, 1, 1);
 	carpeta1->imagen->setPosition(posXCarpeta1, posYCarpeta1);
-	carpeta1->pasar->setPosition(posXarchs1 + 90, posYarchs1 - 230);
-	carpeta1->escanear->setPosition(posXarchs1 + 165, posYarchs1 - 230);
+	carpeta1->pasar->setPosition(posXarchs1 + 110, posYarchs1 + 260);
+	carpeta1->escanear->setPosition(posXarchs1 + 160, posYarchs1 + 260);
+	carpeta1->cerrar->setPosition(posXarchs1 + 210, posYarchs1 + 260);
 	carpeta1->abierta->setPosition(posXCarpeta1, posYCarpeta1);
 	addChild(carpeta1->botones, 2);
 	addChild(carpeta1->abierta, 2);
@@ -155,8 +165,9 @@ bool Alice::init()
 
 	carpeta2 = new Carpeta(archivos2, -1, 1);
 	carpeta2->imagen->setPosition(posXCarpeta2, posYCarpeta2);
-	carpeta2->pasar->setPosition(posXarchs2 + 90, posYarchs2 - 230);
-	carpeta2->escanear->setPosition(posXarchs2 + 165, posYarchs2 - 230);
+	carpeta2->pasar->setPosition(posXarchs2 + 110, posYarchs2 + 260);
+	carpeta2->escanear->setPosition(posXarchs2 + 160, posYarchs2 + 260);
+	carpeta2->cerrar->setPosition(posXarchs2 + 210, posYarchs2 + 260);
 	carpeta2->abierta->setPosition(posXCarpeta2, posYCarpeta2);
 	addChild(carpeta2->botones, 2);
 	addChild(carpeta2->abierta, 2);
@@ -171,13 +182,14 @@ bool Alice::init()
 	addChild(arch3_1, 2);
 
 	posXCarpeta3 = carpeta1->imagen->getPosition().x + 250;
-	posYCarpeta3 = carpeta1->imagen->getPosition().y - 50;
+	posYCarpeta3 = carpeta1->imagen->getPosition().y + 10;
 
 	carpeta3 = new Carpeta(archivos3, -1, 1);
 	carpeta3->imagen->setPosition(posXCarpeta3, posYCarpeta3);
 	carpeta3->abierta->setPosition(posXCarpeta3, posYCarpeta3);
-	carpeta3->pasar->setPosition(posXarchs3 + 90, posYarchs3 - 230);
-	carpeta3->escanear->setPosition(posXarchs3 + 165, posYarchs3 - 230);
+	carpeta3->pasar->setPosition(-100, -100);
+	carpeta3->escanear->setPosition(posXarchs3 + 160, posYarchs3 + 260);
+	carpeta3->cerrar->setPosition(posXarchs3 + 210, posYarchs3 + 260);
 	addChild(carpeta3->botones, 2);
 	addChild(carpeta3->abierta, 2);
 
@@ -206,8 +218,9 @@ bool Alice::init()
 
 	mail = new Carpeta(allMails, 1, 3);
 	mail->imagen->setPosition(posXMail, posYMail);
-	mail->pasar->setPosition(posXarchsMail + 20, posYarchsMail - 257);
-	mail->escanear->setPosition(posXarchsMail + 120, posYarchsMail - 257);
+	mail->pasar->setPosition(posXarchsMail + 130, posYarchsMail + 214);
+	mail->escanear->setPosition(posXarchsMail + 175, posYarchsMail + 214);
+	mail->cerrar->setPosition(posXarchsMail + 220, posYarchsMail + 214);
 	mail->abierta->setPosition(posXMail, posYMail);
 	addChild(mail->botones, 2);
 	addChild(mail->abierta, 2);
@@ -225,8 +238,9 @@ bool Alice::init()
 
 	noticias = new Carpeta(allNoticias, -1, 6);
 	noticias->imagen->setPosition(posXNoticias, posYNoticias);
-	noticias->pasar->setPosition(posXarchsNews - 40, posYarchsNews - 250);
-	noticias->escanear->setPosition(posXarchsNews + 40, posYarchsNews - 250);
+	noticias->pasar->setPosition(-100, -100);
+	noticias->escanear->setPosition(posXarchsNews + 160, posYarchsNews + 260);
+	noticias->cerrar->setPosition(posXarchsNews + 210, posYarchsNews + 260);
 	noticias->abierta->setPosition(posXNoticias, posYNoticias);
 	addChild(noticias->botones, 2);
 	addChild(noticias->abierta, 2);
@@ -246,8 +260,9 @@ bool Alice::init()
 	estado->imagen->setPosition(posXStatus, posYStatus);
 	estado->pasar->setPosition(-100, -100);
 	estado->escanear->setPosition(-100, -100);
+	estado->cerrar->setPosition(posXarchsStatus + 130, posYarchsStatus + 80);
 	estado->abierta->setPosition(posXStatus, posYStatus);
-	addChild(estado->botones, 2);
+	addChild(estado->botones, 4);
 	addChild(estado->abierta, 2);
 
 	//Pensamiento
@@ -265,6 +280,7 @@ bool Alice::init()
 	pensamientos->imagen->setPosition(posXThoughs, posYThoughs);
 	pensamientos->pasar->setPosition(-100, -100);
 	pensamientos->escanear->setPosition(-100, -100);
+	pensamientos->cerrar->setPosition(posXarchsThoughs + 130, posYarchsThoughs + 80);
 	pensamientos->abierta->setPosition(posXThoughs, posYThoughs);
 	addChild(pensamientos->botones, 2);
 	addChild(pensamientos->abierta, 2);
@@ -304,6 +320,13 @@ bool Alice::init()
 	allCarpetas.insert(3, noticias);
 	allCarpetas.insert(4, mail);
 
+	for (const auto& carpeta : allCarpetas)
+	{
+		vidaTotal += (float) carpeta->vida;
+	}
+
+	relVida = (float) (228.0f / vidaTotal);
+
 	virus1 = new Virus(allCarpetas, 1, 1);
 	virus1->imagen->setPosition(posXarchsMail, posYarchsMail);
 	addChild(virus1->boton, 5);
@@ -332,6 +355,7 @@ bool Alice::init()
 	addChild(virus3->imagenAturdido, 5);
 
 	bool_aux2 = true;
+	bool_aux3 = true;
 	tiempoEspera = true;
 
 	//Animacion escaneando
@@ -345,10 +369,10 @@ bool Alice::init()
 
 	cargando1->setVisible(false);
 
-	Vector<SpriteFrame*> animFrames(5);
+	Vector<SpriteFrame*> animFrames(4);
 
 	char str[100] = { 0 };
-	for (int i = 1; i < 5; i++)
+	for (int i = 1; i < 4; i++)
 	{
 		sprintf(str, "Escanear%02d.png", i);
 		SpriteFrame* frame = cache->getSpriteFrameByName(str);
@@ -453,6 +477,7 @@ void  Alice::onMouseDown(Event *event)
 		{
 			carpetaElegida = carpeta;
 			if (carpetaElegida->abierta->isVisible()) {
+				scanEffect = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/scan.mp3");
 				secuenciaEscaneo = Sequence::create(DelayTime::create(2.0f), CallFunc::create(CC_CALLBACK_0(Alice::escaneando, this)), NULL);
 				cargando1->setPosition(carpetaElegida->contenido.at(carpetaElegida->elegido)->getPosition().x,
 					carpetaElegida->contenido.at(carpetaElegida->elegido)->getPosition().y);
@@ -468,6 +493,15 @@ void Alice::onMouseMove(Event *event)
 	auto *e = dynamic_cast<EventMouse *>(event);
 	_cursorSprite2->setPosition(e->getCursorX() + 16, e->getCursorY() - 16);
 	_cursorSprite->setPosition(_cursorSprite2->getPosition().x - 14, _cursorSprite2->getPosition().y + 14);
+
+	//huella
+	auto huella = Sprite::create("cursor2.png");
+	huella->setPosition(_cursorSprite2->getPosition());
+	huella->setOpacity(50);
+	addChild(huella, 6);
+	auto action = FadeOut::create(0.25);
+
+	huella->runAction(action);
 }
 
 void Alice::onMouseUp(Event *event)
@@ -514,6 +548,7 @@ void Alice::onMouseUp(Event *event)
 		carpetaElegida->imagen->stopAction(secuenciaEscaneo);
 		carpetaElegida->tiempoEscanear = false;
 		carpetaElegida = nullptr;
+		CocosDenshion::SimpleAudioEngine::getInstance()->stopEffect(scanEffect);
 		cargando1->setVisible(false);
 	}
 }
@@ -526,6 +561,7 @@ void Alice::onMouseScroll(Event *event)
 		Dosis->setString(letra);
 		papeleraSprite->setColor(ccc3(255, 0, 0));
 		animFuego->setVisible(true);
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/quemar.mp3");
 		tiempoEspera = false;
 		auto secuencia = Sequence::create(DelayTime::create(1.0f), CallFunc::create(CC_CALLBACK_0(Alice::changeColor, this)), NULL);
 		papeleraSprite->runAction(secuencia);
@@ -549,27 +585,25 @@ void Alice::changeColor(void)
 
 void Alice::update(float dt)
 {
-	bool todosvisibles=true;
+	bool todosvisibles = true;
+	bool todosmuertos = true;
 	for (const auto& virus : allVirus)
 	{
 		if (!virus->iniciado)
 		{
 			todosvisibles = false;
 		}
-	}
-
-	bool todosmuertos= true;
-	for (const auto& virus : allVirus)
-	{
 		if (!virus->muerto)
 		{
 			todosmuertos = false;
 		}
 	}
+
 	if(todosmuertos)
 	{
 		goToFinal(this);
 	}
+
 	if (todosvisibles && Alarma->isVisible()) { 
 		Alarma->setVisible(false); 
 	}
@@ -583,12 +617,16 @@ void Alice::update(float dt)
 	}
 
 	bool hayVivas = false;
+	auto vidaPaciente = 0.0f;
 
 	for (const auto& carpeta : allCarpetas)
 	{
+		vidaPaciente += (float) carpeta->vida;
 		if (carpeta->vida > 0)
 			hayVivas = true;
 	}
+
+	barraVida->setPositionX((float) (302.0f - (vidaTotal - vidaPaciente)*relVida));
 
 	if (!hayVivas)
 	{
@@ -605,24 +643,27 @@ void Alice::update(float dt)
 		}
 	}
 
-	if (carpeta1->validoEscaneado == 1) {
+	if (carpeta1->validoEscaneado == 1 && bool_aux2) {
 		Checked1->setVisible(true);
-	}
-
-	if (mail->validoEscaneado == 1) {
-		Checked2->setVisible(true);
-	}
-
-	if (Checked1->isVisible() && Checked2->isVisible() && bool_aux2) {
 		NDosis += 1;
+		std::string letra = std::to_string(NDosis);
+		Dosis->setString(letra);
 		bool_aux2 = false;
 	}
 
-	if (mail->abierta->isVisible()) {
+	if (mail->validoEscaneado == 1 && bool_aux3) {
+		Checked2->setVisible(true);
+		NDosis += 1;
+		std::string letra = std::to_string(NDosis);
+		Dosis->setString(letra);
+		bool_aux3 = false;
+	}
+
+	if (mail->abierta->isVisible() || !mail->imagen->isVisible()) {
 		virus1->iniciado = true;
 	}
 
-	if (carpeta2->abierta->isVisible()) {
+	if (carpeta2->abierta->isVisible() || !carpeta2->imagen->isVisible()) {
 		virus2->iniciado = true;
 		virus3->iniciado = true;
 	}
@@ -630,6 +671,7 @@ void Alice::update(float dt)
 	if (virusElegido != nullptr) {
 		virusElegido->imagen->setPosition(_cursorSprite->getPosition().x, _cursorSprite->getPosition().y);
 	}
+	
 }
 
 void Alice::escaneando(void)
@@ -637,6 +679,7 @@ void Alice::escaneando(void)
 	if (carpetaElegida != nullptr)
 	{
 		carpetaElegida->tiempoEscanear = true;
+		CocosDenshion::SimpleAudioEngine::getInstance()->stopEffect(scanEffect);
 		cargando1->setVisible(false);
 	}
 }

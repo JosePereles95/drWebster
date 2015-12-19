@@ -73,6 +73,7 @@ public:
 	Sprite* _cursorSprite2;
 	Sprite* papeleraSprite;
 	Sprite* interfazSprite;
+	Sprite* barraVida;
 
 	Sprite* cargando1;
 	Sprite* animFuego;
@@ -116,9 +117,13 @@ public:
 
 	bool bool_aux;
 	bool bool_aux2;
+	bool bool_aux3;
 	bool tiempoEspera;
+	float vidaTotal;
+	float relVida;
 
 	CocosDenshion::SimpleAudioEngine* musicaWebster;
+	unsigned int scanEffect;
 
 	Sequence* secuenciaEscaneo;
 

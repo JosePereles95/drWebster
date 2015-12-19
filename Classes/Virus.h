@@ -48,6 +48,7 @@ public:
 	float velocidad;
 
 	void aturdir(Ref* pSender);
+	void cambiaColor(void);
 	void movimiento(void);
 	void cambiar(void);
 

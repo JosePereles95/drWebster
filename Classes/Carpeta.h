@@ -14,6 +14,7 @@ public:
 	MenuItemImage* imagen;
 	MenuItemImage* pasar;
 	MenuItemImage* escanear;
+	MenuItemImage* cerrar;
 
 	Menu* botones;
 	//Menu* botonNext;
@@ -30,12 +31,10 @@ public:
 	//CCSprite* abierta;
 	//CCSprite* cerrada;
 
-	void abreCierraCarpeta(cocos2d::Ref* pSender);
-
+	void abreCarpeta(cocos2d::Ref* pSender);
+	void cierraCarpeta(cocos2d::Ref* pSender);
 	void eliminaCarpeta(void);
-
 	void pasaSiguiente(Ref* pSender);
-
 	void escanearArchivo(Ref* pSender);
 };
 

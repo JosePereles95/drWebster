@@ -16,6 +16,8 @@ public:
 	Label* Alarma;
 	Sprite* arch1_1;
 	Sprite* arch1_2;
+	Sprite* arch1_3;
+	Sprite* arch1_4;
 	int posXarchs1;
 	int posYarchs1;
 
@@ -116,6 +118,7 @@ public:
 	Sprite* archMail_1;
 	Sprite* archMail_2;
 	Sprite* archMail_3;
+	Sprite* archMail_4;
 	Vector<Sprite*> allMails;
 	int posXarchsMail;
 	int posYarchsMail;
@@ -131,6 +134,7 @@ public:
 	Sprite* estado;
 
 	CocosDenshion::SimpleAudioEngine* musicaWebster;
+	unsigned int scanEffect;
 
 	Sequence* secuenciaEscaneo;
 
