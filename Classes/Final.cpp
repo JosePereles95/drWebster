@@ -32,10 +32,6 @@ bool Final::init()
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-
-
-
-
 	auto background = Sprite::create("GraciasJugar.png");
 	background->setPosition(Point((visibleSize.width / 2),
 		(visibleSize.height / 2)));
@@ -46,7 +42,6 @@ bool Final::init()
 
 	return true;
 }
-
 
 void Final::menuCloseCallback(Ref* pSender)
 {

@@ -3,6 +3,7 @@
 #include "Inicio.h"
 #include "Alice.h"
 #include "Tutorial.h"
+#include "AnimacionScene.h"
 
 
 USING_NS_CC;
@@ -87,7 +88,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-	auto scene = Tutorial::createScene();
+	auto scene = Alice::createScene();
 
     // run
     director->runWithScene(scene);

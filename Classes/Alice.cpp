@@ -44,6 +44,7 @@ bool Alice::init()
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/quemar.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/victory2.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/monitor.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/final_nivel.mp3");
 
 	//Cursor
 	_cursorSprite = Sprite::create("cursor1.png");
@@ -58,11 +59,6 @@ bool Alice::init()
 	papeleraSprite->setPosition(visibleSize.width - papeleraSprite->getContentSize().width / 2 - 15,
 		visibleSize.height - papeleraSprite->getContentSize().height / 2 - 15);
 	addChild(papeleraSprite, 3);
-	/*//barravida
-	Vida = Sprite::create("ChicaInt.png");
-	Vida->setPosition(origin.x + interfazSprite->getContentSize().width / 2,
-		origin.y + visibleSize.height - interfazSprite->getContentSize().height / 2);
-	addChild(interfazSprite, 1);*/
 
 	//Barra de vida
 	barraVida = Sprite::create("BarraVida.png");
@@ -298,28 +294,15 @@ bool Alice::init()
 		CC_CALLBACK_1(Alice::goToPauseScene, this));
 	pause_button->setPosition(165, visibleSize.height - 26);
 
-	musica = MenuItemImage::create("musica.png", "musica.png",
+	musica = MenuItemImage::create("musica.png", "musica1.png",
 		CC_CALLBACK_1(Alice::playMusic, this));
 	musica->setPosition(visibleSize.width / 2 - 287,
 		barra->getContentSize().height / 2);
-	/*
-	pasarNivel = MenuItemImage::create("BotonFicha.png", "BotonFicha2.png",
-		CC_CALLBACK_1(Alice::playMusic, this));
-	pasarNivel->setPosition(posXarchs3, posYarchs3 - 230);
-	pasarNivel->setVisible(false);*/
 
 	//Menu con botones
 	auto menu = Menu::create(pause_button, musica, pasarNivel, NULL);
 	menu->setPosition(Vec2::ZERO);
 	this->addChild(menu, 3);
-
-	/*
-	pensamientos = new Carpeta(archivos2, -1, 55);
-	pensamientos->imagen->setPosition(310, 45);
-	pensamientos->abierta->setPosition(310, 45);
-	addChild(pensamientos->botones, 1);
-	addChild(pensamientos->abierta, 1);
-	*/
 
 	//Virus
 	allCarpetas.insert(0, carpeta1);
@@ -362,10 +345,12 @@ bool Alice::init()
 	addChild(virus3->spritebatch, 5);
 	addChild(virus3->imagenAturdido, 5);
 
+	//chapuzas booleanas
 	bool_aux2 = true;
 	bool_aux3 = true;
 	bool_aux4 = true;
 	tiempoEspera = true;
+	diagnostico = true;
 
 	//Animacion escaneando
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create("Escanear_sheet.png");
@@ -594,6 +579,8 @@ void Alice::changeColor(void)
 
 void Alice::update(float dt)
 {
+	Size visibleSize = Director::getInstance()->getVisibleSize();
+
 	bool todosvisibles = true;
 	bool todosmuertos = true;
 	for (const auto& virus : allVirus)
@@ -608,10 +595,46 @@ void Alice::update(float dt)
 		}
 	}
 
-	if(todosmuertos)
+	if(todosmuertos && diagnostico)
 	{
 		auto secuencia = Sequence::create(DelayTime::create(10.0f), CallFunc::create(CC_CALLBACK_0(Alice::tiempoFinal, this)), NULL);
 		this->runAction(secuencia);
+
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/final_nivel.mp3");
+		diag = Sprite::create("FichaAlice2.png");
+		diag->setPosition(Point((visibleSize.width / 2),
+			(visibleSize.height / 2)));
+		addChild(diag, 3);
+
+		BarraDiag = Sprite::create("BarraDiag.png");
+		BarraDiag->setPosition(Point((visibleSize.width / 2),
+			(visibleSize.height / 4)));
+		addChild(BarraDiag, 4);
+
+		texto = Label::createWithSystemFont("hello", "Impact.ttf", 20);
+		Ntexto = 10;
+		std::string letra2 = std::to_string(Ntexto);
+		texto->setString("ENVIANDO DIAGNOSTICO  " + letra2 + "s");
+		texto->setColor(Color3B(255, 0, 0));
+		texto->setPosition(Point((visibleSize.width / 2.27),
+			(visibleSize.height / 3.60)));
+		addChild(texto, 5);
+
+		for (int i = 0; i < 10; i++)
+		{
+			float delay = (i);
+			auto action = Sequence::create(DelayTime::create(delay), CallFunc::create(CC_CALLBACK_0(Alice::Cargar, this)), NULL);
+			this->runAction(action);
+		}
+
+		for (int i = 0; i <35; i++)
+		{
+			float delay = (0.3*i);
+			auto action = Sequence::create(DelayTime::create(delay), CallFunc::create(CC_CALLBACK_0(Alice::Mover, this)), NULL);
+			this->runAction(action);
+		}
+
+		diagnostico = false;
 	}
 
 	if (todosvisibles && Alarma->isVisible()) { 
@@ -709,6 +732,27 @@ void Alice::escaneando(void)
 		CocosDenshion::SimpleAudioEngine::getInstance()->stopEffect(scanEffect);
 		cargando1->setVisible(false);
 	}
+}
+
+void Alice::Mover(void)
+{
+
+	auto action = FadeOut::create(2);
+	auto flecha = Sprite::create("flechaDiag.png");
+	flecha->setPosition(BarraDiag->getPosition().x - BarraDiag->getContentSize().width / 2 + 30, BarraDiag->getPosition().y - 15);
+	auto vect = flecha->getPosition();
+	vect.x += 350;
+	auto moverse = MoveTo::create(2, vect);
+	flecha->runAction(moverse);
+	flecha->runAction(action);
+	addChild(flecha, 5);
+}
+
+void Alice::Cargar(void)
+{
+	Ntexto--;
+	std::string letra3 = std::to_string(Ntexto);
+	texto->setString("ENVIANDO DIAGNOSTICO  " + letra3 + "s");
 }
 
 void Alice::tiempoFinal(void) {

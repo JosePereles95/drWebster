@@ -10,7 +10,6 @@ public:
 	Label* cargando;
 	int carga;
 
-
 	Sprite* V1;
 	Sprite* V1Final;
 	Sprite* cargando01;
@@ -22,7 +21,6 @@ public:
 	void resumeGameScreen(Ref *pSender);
 
 	static cocos2d::Scene* createScene();
-
 
 	void Mover(void);
 	void Cambio(void);

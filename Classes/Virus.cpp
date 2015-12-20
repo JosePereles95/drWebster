@@ -126,7 +126,7 @@ Virus::Virus(Vector<Carpeta*> folders, int id, int tipo)
 void Virus::aturdir(Ref* pSender)
 {
 	if (!aturdido) {
-		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/aturde.mp3");
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/aturde2.mp3");
 		imagen->stopAction(moverse);
 		aturdido = true;
 		animVirus->setVisible(false);

@@ -3,12 +3,10 @@
 #include "Tutorial.h"
 #include "Alice.h"
 
-
 USING_NS_CC;
 
 Carpeta::Carpeta(void)
 {
-
 }
 
 Carpeta::Carpeta(Vector<Sprite*> archivos, int valido, int t)

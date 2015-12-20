@@ -136,6 +136,16 @@ public:
 
 	static cocos2d::Scene* createScene();
 
+	//Diagnos
+	Sprite* diag;
+	Sprite* BarraDiag;
+	Label* texto;
+	int Ntexto;
+	Sprite* Flecha;
+	void Cargar(void);
+	void Mover(void);
+	bool diagnostico;
+
 	virtual bool init();
 
 	void victoria(void);
@@ -147,8 +157,6 @@ public:
 	void changeColor(void);
 	void goToGameOver(Ref *pSender);
 	void playMusic(Ref *pSender);
-
-	//void menuCloseCallback(cocos2d::Ref* pSender);
 
 	void update(float dt);
 

@@ -175,8 +175,6 @@ public:
 	void wait8(void);
 	void changeTutorial9(void);
 
-	//void menuCloseCallback(cocos2d::Ref* pSender);
-
 	void update(float dt);
 
 	// implement the "static create()" method manually

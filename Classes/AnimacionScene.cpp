@@ -29,8 +29,6 @@ bool AnimacionScene::init()
 		return false;
 	}
 
-
-
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -54,8 +52,6 @@ bool AnimacionScene::init()
 	cargando02->setPosition(Point((visibleSize.width / 4),
 		(visibleSize.height / 4)));
 	addChild(cargando02, 4);
-
-
 
 	//Enchufes
 	V1 = Sprite::create("V1.png");
@@ -91,7 +87,6 @@ bool AnimacionScene::init()
 		this->runAction(action);
 	}
 
-
 	auto background = Sprite::create("PausaNina.png");
 	background->setPosition(Point((visibleSize.width / 2),
 		(visibleSize.height / 2)));
@@ -107,11 +102,10 @@ bool AnimacionScene::init()
 	this->runAction(secuencia1);
 	auto secuencia2 = Sequence::create(DelayTime::create(4.0f), CallFunc::create(CC_CALLBACK_0(AnimacionScene::Cambio, this)), NULL);
 	this->runAction(secuencia2);
-	auto secuencia3 = Sequence::create(DelayTime::create(13.0f), CallFunc::create(CC_CALLBACK_0(AnimacionScene::Imagen1, this)), NULL);
+	auto secuencia3 = Sequence::create(DelayTime::create(11.5f), CallFunc::create(CC_CALLBACK_0(AnimacionScene::Imagen1, this)), NULL);
 	this->runAction(secuencia3);
-	auto secuencia5 = Sequence::create(DelayTime::create(18.0f), CallFunc::create(CC_CALLBACK_0(AnimacionScene::Pasar, this)), NULL);
+	auto secuencia5 = Sequence::create(DelayTime::create(16.5f), CallFunc::create(CC_CALLBACK_0(AnimacionScene::Pasar, this)), NULL);
 	this->runAction(secuencia5);
-
 
 	return true;
 }
@@ -128,16 +122,19 @@ void AnimacionScene::Mover()
 	V1->runAction(moverse);
 
 }
+
 void AnimacionScene::Cambio()
 {
 	V1Final->setPosition(V1->getPosition());
 	V1->setVisible(false);
 	V1Final->setVisible(true);
 }
+
 void AnimacionScene::Pasar()
 {
 	resumeGameScreen(this);
 }
+
 void AnimacionScene::Cargar()
 {
 	carga++;
@@ -152,13 +149,13 @@ void AnimacionScene::Mover2(void)
 	auto moverse = MoveTo::create(8, vect);
 	cargandomover->runAction(moverse);
 }
+
 void AnimacionScene::Imagen1(void)
 {
 	auto action = FadeIn::create(3);
 	Tran->runAction(action);
 	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/inicio2.mp3");
 }
-
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 exit(0);

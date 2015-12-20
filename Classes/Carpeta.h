@@ -17,7 +17,6 @@ public:
 	MenuItemImage* cerrar;
 
 	Menu* botones;
-	//Menu* botonNext;
 
 	int elegido;
 	int archivoValido;
@@ -27,9 +26,6 @@ public:
 	int vida;
 	int tipo;
 	bool tiempoEscanear;
-
-	//CCSprite* abierta;
-	//CCSprite* cerrada;
 
 	void abreCarpeta(cocos2d::Ref* pSender);
 	void cierraCarpeta(cocos2d::Ref* pSender);
