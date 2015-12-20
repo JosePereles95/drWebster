@@ -142,6 +142,7 @@ public:
 	void quitaMensaje(void);
 	void escaneando(void);
 	void goToPauseScene(Ref *pSender);
+	void tiempoFinal(void);
 	void goToFinal(Ref *pSender);
 	void changeColor(void);
 	void goToGameOver(Ref *pSender);

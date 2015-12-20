@@ -52,7 +52,6 @@ Carpeta::Carpeta(Vector<Sprite*> archivos, int valido, int t)
 	botones = Menu::create(imagen, pasar, escanear, cerrar, NULL);
 	botones->setPosition(Vec2::ZERO);
 	
-	
 	for (int i = 0; i < contenido.size(); i++)
 		contenido.at(i)->setVisible(false);
 

@@ -43,6 +43,7 @@ bool Alice::init()
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/aturde.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/quemar.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/victory2.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/monitor.mp3");
 
 	//Cursor
 	_cursorSprite = Sprite::create("cursor1.png");
@@ -609,7 +610,8 @@ void Alice::update(float dt)
 
 	if(todosmuertos)
 	{
-		goToFinal(this);
+		auto secuencia = Sequence::create(DelayTime::create(10.0f), CallFunc::create(CC_CALLBACK_0(Alice::tiempoFinal, this)), NULL);
+		this->runAction(secuencia);
 	}
 
 	if (todosvisibles && Alarma->isVisible()) { 
@@ -708,6 +710,11 @@ void Alice::escaneando(void)
 		cargando1->setVisible(false);
 	}
 }
+
+void Alice::tiempoFinal(void) {
+	goToFinal(this);
+}
+
 void Alice::goToFinal(Ref *pSender) {
 	PauseScene::AlicePantalla = 1;
 	auto scene2 = Final::createScene();
