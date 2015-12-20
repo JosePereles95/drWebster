@@ -5,7 +5,7 @@
 #include "GameOver.h"
 #include "Alice.h"
 #include "AnimacionScene.h"
-#include "PauseScene.h"
+#include "PreAlice.h"
 
 USING_NS_CC;
 
@@ -161,7 +161,7 @@ bool Tutorial::init()
 	posXarchs3 = 1100;
 	posYarchs3 = 440;
 
-	arch3_1 = Sprite::create("FichaAlice.png");
+	arch3_1 = Sprite::create("PlantillaPacientes.png");
 	arch3_1->setPosition(posXarchs3, posYarchs3);
 	archivos3.insert(0, arch3_1);
 	addChild(arch3_1, 3);
@@ -363,7 +363,7 @@ bool Tutorial::init()
 		barra->getContentSize().height / 2);
 	musica->setVisible(false);
 
-	pasarNivel = MenuItemImage::create("BotonFicha.png", "BotonFicha2.png",
+	pasarNivel = MenuItemImage::create("BotonPacientes.png", "BotonPacientes1.png",
 		CC_CALLBACK_1(Tutorial::terminarNivel, this));
 	pasarNivel->setPosition(posXarchs3, posYarchs3 - 230);
 	pasarNivel->setVisible(false);
@@ -890,8 +890,6 @@ void Tutorial::escaneando(void)
 
 void Tutorial::terminarNivel(Ref *pSender) {
 	PauseScene::TutorialPantalla = 1;
-	auto scene = Alice::createScene();
+	auto scene = PreAlice::createScene();
 	Director::getInstance()->pushScene(scene);
-	auto scene2 = AnimacionScene::createScene();
-	Director::getInstance()->pushScene(scene2);
 }

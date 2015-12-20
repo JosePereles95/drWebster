@@ -75,6 +75,7 @@ public:
 	Sprite* interfazSprite;
 	Sprite* barraVida;
 	Sprite* victorySprite;
+	Sprite* sanoSprite;
 
 	Sprite* cargando1;
 	Sprite* animFuego;
@@ -150,6 +151,8 @@ public:
 
 	void victoria(void);
 	void quitaMensaje(void);
+	void sano(void);
+	void quitaMensaje2(void);
 	void escaneando(void);
 	void goToPauseScene(Ref *pSender);
 	void tiempoFinal(void);

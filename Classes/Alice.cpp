@@ -71,12 +71,19 @@ bool Alice::init()
 		origin.y + visibleSize.height - interfazSprite->getContentSize().height / 2);
 	addChild(interfazSprite, 1);
 
-	//Mensaje
+	//Mensaje1
 	victorySprite = Sprite::create("mensaje_scan.png");
 	victorySprite->setPosition(interfazSprite->getPosition().x - 15,
 		interfazSprite->getPosition().y - 140);
 	addChild(victorySprite, 4);
 	victorySprite->setVisible(false);
+
+	//Mensaje2
+	sanoSprite = Sprite::create("mensaje_vida.png");
+	sanoSprite->setPosition(interfazSprite->getPosition().x - 15,
+		interfazSprite->getPosition().y - 225);
+	addChild(sanoSprite, 4);
+	sanoSprite->setVisible(false);
 
 	//Labels
 	NDosis = 1;
@@ -595,10 +602,39 @@ void Alice::update(float dt)
 		}
 	}
 
-	if(todosmuertos && diagnostico)
+	if (todosvisibles && Alarma->isVisible()) { 
+		Alarma->setVisible(false); 
+	}
+	
+	if (estado->contenido.at(0)->isVisible() && bool_aux) {
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/notificacion_estado.mp3");
+		bool_aux = false;
+	}
+	else if (!estado->contenido.at(0)->isVisible()){
+		bool_aux = true;
+	}
+
+	bool hayVivas = false;
+	auto vidaPaciente = 0.0f;
+
+	for (const auto& carpeta : allCarpetas)
+	{
+		vidaPaciente += (float) carpeta->vida;
+		if (carpeta->vida > 0)
+			hayVivas = true;
+	}
+
+	barraVida->setPositionX((float) (302.0f - (vidaTotal - vidaPaciente)*relVida));
+
+	if (todosmuertos && diagnostico)
 	{
 		auto secuencia = Sequence::create(DelayTime::create(10.0f), CallFunc::create(CC_CALLBACK_0(Alice::tiempoFinal, this)), NULL);
 		this->runAction(secuencia);
+
+		if (barraVida->getPosition().x > 225.0f) { //El rango A va de 225 a 302
+			auto secuencia2 = Sequence::create(DelayTime::create(1.0f), CallFunc::create(CC_CALLBACK_0(Alice::sano, this)), NULL);
+			this->runAction(secuencia2);
+		}
 
 		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/final_nivel.mp3");
 		diag = Sprite::create("FichaAlice2.png");
@@ -636,30 +672,6 @@ void Alice::update(float dt)
 
 		diagnostico = false;
 	}
-
-	if (todosvisibles && Alarma->isVisible()) { 
-		Alarma->setVisible(false); 
-	}
-	
-	if (estado->contenido.at(0)->isVisible() && bool_aux) {
-		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/notificacion_estado.mp3");
-		bool_aux = false;
-	}
-	else if (!estado->contenido.at(0)->isVisible()){
-		bool_aux = true;
-	}
-
-	bool hayVivas = false;
-	auto vidaPaciente = 0.0f;
-
-	for (const auto& carpeta : allCarpetas)
-	{
-		vidaPaciente += (float) carpeta->vida;
-		if (carpeta->vida > 0)
-			hayVivas = true;
-	}
-
-	barraVida->setPositionX((float) (302.0f - (vidaTotal - vidaPaciente)*relVida));
 
 	if (!hayVivas)
 	{
@@ -720,8 +732,19 @@ void Alice::victoria(void) {
 	victorySprite->runAction(secuencia);
 }
 
+void Alice::sano(void) {
+	sanoSprite->setVisible(true);
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/victory2.mp3");
+	auto secuencia = Sequence::create(DelayTime::create(4.0f), CallFunc::create(CC_CALLBACK_0(Alice::quitaMensaje2, this)), NULL);
+	sanoSprite->runAction(secuencia);
+}
+
 void Alice::quitaMensaje(void) {
 	victorySprite->setVisible(false);
+}
+
+void Alice::quitaMensaje2(void) {
+	sanoSprite->setVisible(false);
 }
 
 void Alice::escaneando(void)

@@ -2,6 +2,7 @@
 #include "Mechanics.h"
 #include "Inicio.h"
 #include "Alice.h"
+#include "PreAlice.h"
 #include "Tutorial.h"
 #include "AnimacionScene.h"
 
