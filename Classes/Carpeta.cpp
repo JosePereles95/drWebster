@@ -58,7 +58,7 @@ Carpeta::Carpeta(Vector<Sprite*> archivos, int valido, int t)
 	if (tipo == 1)
 		abierta = Sprite::create("carpeta2.png");
 	else if (tipo == 2)
-		abierta = Sprite::create("musica.png");
+		abierta = Sprite::create("musica1.png");
 	else if (tipo == 3)
 		abierta = Sprite::create("mail1.png");
 	else if (tipo == 4)

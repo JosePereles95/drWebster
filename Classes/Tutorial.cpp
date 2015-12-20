@@ -357,7 +357,7 @@ bool Tutorial::init()
 		CC_CALLBACK_1(Tutorial::goToPauseScene, this));
 	pause_button->setPosition(164, visibleSize.height - 25);
 
-	musica = MenuItemImage::create("musica.png", "musica.png",
+	musica = MenuItemImage::create("musica.png", "musica1.png",
 		CC_CALLBACK_1(Tutorial::playMusic, this));
 	musica->setPosition(visibleSize.width / 2 - 287,
 		barra->getContentSize().height / 2);
