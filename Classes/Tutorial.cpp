@@ -43,6 +43,7 @@ bool Tutorial::init()
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/aturde.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/quemar.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/victory2.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/ventosa.mp3");
 
 	//Cursor
 	_cursorSprite = Sprite::create("cursor1.png");
@@ -255,12 +256,18 @@ bool Tutorial::init()
 		visibleSize.height / 2 - tuto9->getContentSize().height / 2 - 35);
 	addChild(tuto9, 4);
 	tuto9->setVisible(false);
-
+	
+	//chapuzas booleanas;
 	bool_aux = true;
 	bool_aux2 = true;
 	bool_aux3 = true;
 	bool_aux4 = true;
 	bool_aux5 = true;
+	bool_auxshake = false;
+
+	//Shake
+	punto = this->getPosition();
+
 	auto secuencia2 = Sequence::create(DelayTime::create(2.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::changeTutorial1, this)), NULL);
 	this->runAction(secuencia2);
 
@@ -632,6 +639,7 @@ void Tutorial::playMusic(Ref *pSender) {
 //Pausa
 void Tutorial::goToPauseScene(Ref *pSender) {
 	auto scene = PauseScene::createScene();
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/abre1.mp3");
 	Director::getInstance()->pushScene(scene);
 }
 
@@ -650,8 +658,49 @@ void  Tutorial::onMouseDown(Event *event)
 		virusRect = virus->imagen->getBoundingBox();
 		if (virusRect.intersectsRect(cursorRect))
 		{
+			//Shake
+			bool_auxshake = true;
+			this->schedule(schedule_selector(Tutorial::shakeScreen));
 			if (virus->aturdido)
 				virusElegido = virus;
+			else {
+				//Particula1
+				auto sprite = Sprite::create("Textura.png");
+				auto particula = ParticleSun::create();
+				particula->setTexture(sprite->getTexture());
+				particula->setStartColor(Color4F(255, 255, 255, 1));
+				particula->setEndColor(Color4F(255, 0, 0, 0.5));
+				particula->setSpeed(60);
+				particula->setEmitterMode(kCCParticleModeRadius);
+				particula->setStartRadius(20);
+				particula->setEndRadius(30);
+
+				particula->setStartSize(1);
+				particula->setEndSize(5);
+				particula->setLife(0.5);
+
+				particula->setDuration(0.5);
+				particula->setPosition(_cursorSprite->getPosition());
+				addChild(particula, 6);
+
+				//Particula2
+				auto particula2 = ParticleSun::create();
+				particula2->setTexture(sprite->getTexture());
+				particula2->setStartColor(Color4F(255, 255, 255, 1));
+				particula2->setEndColor(Color4F(255, 0, 0, 0.5));
+				particula2->setSpeed(60);
+				particula2->setEmitterMode(kCCParticleModeRadius);
+				particula2->setStartRadius(1);
+				particula2->setEndRadius(10);
+
+				particula2->setStartSize(1);
+				particula2->setEndSize(5);
+				particula2->setLife(0.2);
+
+				particula2->setDuration(0.5);
+				particula2->setPosition(_cursorSprite->getPosition());
+				addChild(particula2, 6);
+			}
 		}
 	}
 
@@ -702,8 +751,10 @@ void Tutorial::onMouseUp(Event *event)
 			{
 				if (virus->identificador == virusElegido->identificador && virus->aturdido)
 				{
-					if (virus->tipoVirus == 1 || virus->tipoVirus == 3)
+					if (virus->tipoVirus == 1 || virus->tipoVirus == 3) {
 						virus->reciclar();
+						CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/ventosa.mp3");
+					}
 
 					else if (virus->tipoVirus == 2)
 					{
@@ -716,8 +767,10 @@ void Tutorial::onMouseUp(Event *event)
 								cuernosValido = false;
 							}
 						}
-						if (cuernosValido)
+						if (cuernosValido) {
 							virus->reciclar();
+							CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/ventosa.mp3");
+						}
 					}
 				}
 			}
@@ -848,6 +901,24 @@ void Tutorial::update(float dt)
 		auto secuencia17 = Sequence::create(DelayTime::create(5.0f), CallFunc::create(CC_CALLBACK_0(Tutorial::wait8, this)), NULL);
 		this->runAction(secuencia17);
 		bool_aux4 = false;
+		//Particula3
+		auto sprite = Sprite::create("Textura2.png");
+		auto particula = ParticleSun::create();
+		particula->setTexture(sprite->getTexture());
+		particula->setStartColor(Color4F(255, 255, 255, 1));
+		particula->setEndColor(Color4F(255, 255, 255, 0.5));
+		particula->setSpeed(60);
+		particula->setEmitterMode(kCCParticleModeRadius);
+		particula->setStartRadius(1);
+		particula->setEndRadius(80);
+
+		particula->setStartSize(5);
+		particula->setEndSize(20);
+		particula->setLife(0.5);
+
+		particula->setDuration(0.5);
+		particula->setPosition(Checked1->getPosition());
+		addChild(particula, 6);
 	}
 
 	if (Checked1->isVisible() && bool_aux5) {
@@ -887,7 +958,38 @@ void Tutorial::escaneando(void)
 		cargando1->setVisible(false);
 	}
 }
+//Shake Metodos
+void Tutorial::shakeScreen(float dt)
+{
+	float randx = rangeRandom(-1.5f, 1.5);
+	float randy = rangeRandom(-1.5f, 1.5);
 
+	this->setPosition(Point(randx, randy));
+	this->setPosition(Point(punto.x + randx, punto.y + randy));
+
+
+	if (!bool_auxshake) {
+		//bool_auxshake = false;
+		this->setPosition(Point(punto.x, punto.y));
+		this->unschedule(schedule_selector(Tutorial::shakeScreen));
+	}
+	else {
+		auto detenershake = Sequence::create(DelayTime::create(0.5f), CallFunc::create(CC_CALLBACK_0(Tutorial::Detenershake, this)), NULL);
+		this->runAction(detenershake);
+	}
+
+}
+void Tutorial::Detenershake(void)
+{
+	bool_auxshake = false;
+	this->schedule(schedule_selector(Tutorial::shakeScreen));
+
+}
+float Tutorial::rangeRandom(float min, float max)
+{
+	float rnd = ((float)rand() / (float)RAND_MAX);
+	return rnd*(max - min) + min;
+}
 void Tutorial::terminarNivel(Ref *pSender) {
 	PauseScene::TutorialPantalla = 1;
 	auto scene = PreAlice::createScene();

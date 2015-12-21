@@ -137,6 +137,14 @@ public:
 
 	static cocos2d::Scene* createScene();
 
+	//Shake
+	bool bool_auxshake;
+	void Detenershake(void);
+	void shakeScreen(float dt);
+	float rangeRandom(float, float);
+	Vec2 punto;
+	
+
 	//Diagnos
 	Sprite* diag;
 	Sprite* BarraDiag;

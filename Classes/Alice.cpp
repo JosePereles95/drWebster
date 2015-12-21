@@ -4,7 +4,6 @@
 #include "PauseScene.h"
 #include "GameOver.h"
 #include "Final.h"
-#include "PauseScene.h"
 
 USING_NS_CC;
 
@@ -45,6 +44,8 @@ bool Alice::init()
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/victory2.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/monitor.mp3");
 	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/final_nivel.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/error_papelera.mp3");
+	CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect("/music/ventosa.mp3");
 
 	//Cursor
 	_cursorSprite = Sprite::create("cursor1.png");
@@ -358,6 +359,10 @@ bool Alice::init()
 	bool_aux4 = true;
 	tiempoEspera = true;
 	diagnostico = true;
+	bool_auxshake = false;
+
+	//Shake
+	punto = this->getPosition();
 
 	//Animacion escaneando
 	SpriteBatchNode* spritebatch = SpriteBatchNode::create("Escanear_sheet.png");
@@ -448,6 +453,7 @@ void Alice::playMusic(Ref *pSender) {
 //Pausa
 void Alice::goToPauseScene(Ref *pSender) {
 	auto scene = PauseScene::createScene();
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/abre1.mp3");
 	Director::getInstance()->pushScene(scene);
 }
 
@@ -466,8 +472,49 @@ void  Alice::onMouseDown(Event *event)
 		virusRect = virus->imagen->getBoundingBox();
 		if (virusRect.intersectsRect(cursorRect))
 		{
+			//Shake
+			bool_auxshake = true;
+			this->schedule(schedule_selector(Alice::shakeScreen));
 			if (virus->aturdido)
 				virusElegido = virus;
+			else {
+				//Particula1
+				auto sprite = Sprite::create("Textura.png");
+				auto particula = ParticleSun::create();
+				particula->setTexture(sprite->getTexture());
+				particula->setStartColor(Color4F(255, 255, 255, 1));
+				particula->setEndColor(Color4F(255, 0, 0, 0.5));
+				particula->setSpeed(60);
+				particula->setEmitterMode(kCCParticleModeRadius);
+				particula->setStartRadius(20);
+				particula->setEndRadius(30);
+
+				particula->setStartSize(1);
+				particula->setEndSize(5);
+				particula->setLife(0.5);
+
+				particula->setDuration(0.5);
+				particula->setPosition(_cursorSprite->getPosition());
+				addChild(particula, 6);
+
+				//Particula2
+				auto particula2 = ParticleSun::create();
+				particula2->setTexture(sprite->getTexture());
+				particula2->setStartColor(Color4F(255, 255, 255, 1));
+				particula2->setEndColor(Color4F(255, 0, 0, 0.5));
+				particula2->setSpeed(60);
+				particula2->setEmitterMode(kCCParticleModeRadius);
+				particula2->setStartRadius(1);
+				particula2->setEndRadius(10);
+
+				particula2->setStartSize(1);
+				particula2->setEndSize(5);
+				particula2->setLife(0.2);
+
+				particula2->setDuration(0.5);
+				particula2->setPosition(_cursorSprite->getPosition());
+				addChild(particula2, 6);
+			}
 		}
 	}
 
@@ -518,9 +565,10 @@ void Alice::onMouseUp(Event *event)
 			{
 				if (virus->identificador == virusElegido->identificador && virus->aturdido)
 				{
-					if (virus->tipoVirus == 1 || virus->tipoVirus == 3)
+					if (virus->tipoVirus == 1 || virus->tipoVirus == 3) {
 						virus->reciclar();
-
+						CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/ventosa.mp3");
+					}
 					else if (virus->tipoVirus == 2)
 					{
 						bool cuernosValido = true;
@@ -532,8 +580,12 @@ void Alice::onMouseUp(Event *event)
 								cuernosValido = false;
 							}
 						}
-						if (cuernosValido)
+						if (cuernosValido) {
 							virus->reciclar();
+							CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/ventosa.mp3");
+						}
+						else
+							CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/error_papelera.mp3");
 					}
 				}
 			}
@@ -694,6 +746,24 @@ void Alice::update(float dt)
 		std::string letra = std::to_string(NDosis);
 		Dosis->setString(letra);
 		bool_aux2 = false;
+		//Particula3
+		auto sprite = Sprite::create("Textura2.png");
+		auto particula = ParticleSun::create();
+		particula->setTexture(sprite->getTexture());
+		particula->setStartColor(Color4F(255, 255, 255, 1));
+		particula->setEndColor(Color4F(255, 255, 255, 0.5));
+		particula->setSpeed(60);
+		particula->setEmitterMode(kCCParticleModeRadius);
+		particula->setStartRadius(1);
+		particula->setEndRadius(80);
+
+		particula->setStartSize(5);
+		particula->setEndSize(20);
+		particula->setLife(0.5);
+
+		particula->setDuration(0.5);
+		particula->setPosition(Checked1->getPosition());
+		addChild(particula, 6);
 	}
 
 	if (mail->validoEscaneado == 1 && bool_aux3) {
@@ -702,6 +772,24 @@ void Alice::update(float dt)
 		std::string letra = std::to_string(NDosis);
 		Dosis->setString(letra);
 		bool_aux3 = false;
+		//Particula4
+		auto sprite = Sprite::create("Textura2.png");
+		auto particula = ParticleSun::create();
+		particula->setTexture(sprite->getTexture());
+		particula->setStartColor(Color4F(255, 255, 255, 1));
+		particula->setEndColor(Color4F(255, 255, 255, 0.5));
+		particula->setSpeed(60);
+		particula->setEmitterMode(kCCParticleModeRadius);
+		particula->setStartRadius(1);
+		particula->setEndRadius(80);
+
+		particula->setStartSize(5);
+		particula->setEndSize(20);
+		particula->setLife(0.5);
+
+		particula->setDuration(0.5);
+		particula->setPosition(Checked2->getPosition());
+		addChild(particula, 6);
 	}
 
 	if (Checked1->isVisible() && Checked2->isVisible() && bool_aux4) {
@@ -786,4 +874,36 @@ void Alice::goToFinal(Ref *pSender) {
 	PauseScene::AlicePantalla = 1;
 	auto scene2 = Final::createScene();
 	Director::getInstance()->pushScene(scene2);
+}
+//Shake Metodos
+void Alice::shakeScreen(float dt)
+{
+	float randx = rangeRandom(-1.5f, 1.5);
+	float randy = rangeRandom(-1.5f, 1.5);
+
+	this->setPosition(Point(randx, randy));
+	this->setPosition(Point(punto.x + randx, punto.y + randy));
+
+
+	if (!bool_auxshake) {
+		//bool_auxshake = false;
+		this->setPosition(Point(punto.x, punto.y));
+		this->unschedule(schedule_selector(Alice::shakeScreen));
+	}
+	else {
+		auto detenershake = Sequence::create(DelayTime::create(0.5f), CallFunc::create(CC_CALLBACK_0(Alice::Detenershake, this)), NULL);
+		this->runAction(detenershake);
+	}
+
+}
+void Alice::Detenershake(void)
+{
+	bool_auxshake = false;
+	this->schedule(schedule_selector(Alice::shakeScreen));
+
+}
+float Alice::rangeRandom(float min, float max)
+{
+	float rnd = ((float)rand() / (float)RAND_MAX);
+	return rnd*(max - min) + min;
 }

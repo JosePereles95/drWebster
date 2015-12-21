@@ -175,6 +175,14 @@ public:
 	void wait8(void);
 	void changeTutorial9(void);
 
+
+	//Shake
+	bool bool_auxshake;
+	void Detenershake(void);
+	void shakeScreen(float dt);
+	float rangeRandom(float, float);
+	Vec2 punto;
+
 	void update(float dt);
 
 	// implement the "static create()" method manually

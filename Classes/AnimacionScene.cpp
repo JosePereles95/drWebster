@@ -117,7 +117,7 @@ void AnimacionScene::resumeGameScreen(Ref *pSender) {
 void AnimacionScene::Mover()
 {
 	auto vect = V1->getPosition();
-	vect.y -= 370;
+	vect.y -= 355;
 	auto moverse = MoveTo::create(4, vect);
 	V1->runAction(moverse);
 
@@ -125,7 +125,7 @@ void AnimacionScene::Mover()
 
 void AnimacionScene::Cambio()
 {
-	V1Final->setPosition(V1->getPosition());
+	V1Final->setPosition(V1->getPosition().x, V1->getPosition().y-45);
 	V1->setVisible(false);
 	V1Final->setVisible(true);
 }

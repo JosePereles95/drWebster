@@ -1,5 +1,6 @@
 #include "PauseScene.h"
 #include "Tutorial.h"
+#include "Alice.h"
 
 USING_NS_CC;
 
@@ -96,6 +97,7 @@ void PauseScene::onMouseMove(Event *event)
 }
 
 void PauseScene::resumeGameScreen(Ref *pSender) {
+	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/cierra1.mp3");
 	Director::getInstance()->popScene();
 }
 
