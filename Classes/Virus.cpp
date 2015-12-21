@@ -223,7 +223,9 @@ void Virus::reciclar(void)
 
 void Virus::reanimar(void)
 {
-	continua = true;
-	this->enPapelera = false;
-	aturdido = false;
+	if (!muerto){
+		continua = true;
+		this->enPapelera = false;
+		aturdido = false;
+	}
 }

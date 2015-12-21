@@ -13,6 +13,8 @@ public:
 	Sprite* _cursorSprite2;
 	static cocos2d::Scene* createScene();
 
+	unsigned int dead;
+
 	void onMouseMove(Event *event);
 
 	void menuCloseCallback(cocos2d::Ref* pSender);

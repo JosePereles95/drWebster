@@ -51,7 +51,10 @@ bool PreAlice::init()
 	auto menu = Menu::create(pasarNivel, NULL);
 	addChild(menu, 3);
 
-	auto background = Sprite::create("GraciasJugar.png");
+	ficha->setOpacity(200);
+	pasarNivel->setOpacity(200);
+
+	auto background = Sprite::create("Prepaciente.png");
 	background->setPosition(Point((visibleSize.width / 2),
 		(visibleSize.height / 2)));
 	addChild(background, 0);

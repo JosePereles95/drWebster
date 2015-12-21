@@ -40,7 +40,7 @@ bool GameOver::init()
 	_cursorSprite2 = Sprite::create("cursor2.png");
 	addChild(_cursorSprite2, 6);
 
-	CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/monitor.mp3");
+	dead = CocosDenshion::SimpleAudioEngine::getInstance()->playEffect("/music/monitor.mp3");
 
 	auto resumeItem = MenuItemImage::create("reanudar.png", "reanudar.png",
 		CC_CALLBACK_1(GameOver::resumeGameScreen,
@@ -87,6 +87,7 @@ void GameOver::onMouseMove(Event *event)
 
 void GameOver::resumeGameScreen(Ref *pSender) {
 	auto scene = Alice::createScene();
+	CocosDenshion::SimpleAudioEngine::getInstance()->stopEffect(dead);
 	Director::getInstance()->popScene();
 	Director::getInstance()->replaceScene(scene);
 }

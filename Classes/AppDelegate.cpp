@@ -89,7 +89,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     register_all_packages();
 
     // create a scene. it's an autorelease object
-	auto scene = Inicio::createScene();
+	auto scene = PreAlice::createScene();
 
     // run
     director->runWithScene(scene);
