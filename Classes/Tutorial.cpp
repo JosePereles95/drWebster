@@ -656,7 +656,7 @@ void  Tutorial::onMouseDown(Event *event)
 	for (const auto& virus : allVirus)
 	{
 		virusRect = virus->imagen->getBoundingBox();
-		if (virusRect.intersectsRect(cursorRect))
+		if (virusRect.intersectsRect(cursorRect) && virus->imagen->isVisible())
 		{
 			//Shake
 			bool_auxshake = true;
