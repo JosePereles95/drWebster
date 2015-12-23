@@ -194,8 +194,8 @@ bool Tutorial::init()
 
 	carpeta4 = new Carpeta(archivos4, -1, 1);
 	carpeta4->imagen->setPosition(posXCarpeta4, posYCarpeta4);
-	//carpeta4->pasar->setPosition(posXarchs4 + 110, posYarchs4 + 260);
-	//carpeta4->escanear->setPosition(posXarchs4 + 160, posYarchs4 + 260);
+	carpeta4->pasar->setPosition(-100, -100);
+	carpeta4->escanear->setPosition(-100, -100);
 	carpeta4->cerrar->setPosition(posXarchs4 + 210, posYarchs4 + 260);
 	carpeta4->abierta->setPosition(posXCarpeta4, posYCarpeta4);
 	addChild(carpeta4->botones, 2);
