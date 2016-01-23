@@ -178,7 +178,7 @@ bool Tutorial::init()
 	carpeta3->cerrar->setPosition(posXarchs3 + 206, posYarchs3 + 212);
 	addChild(carpeta3->botones, 3);
 	carpeta3->imagen->setVisible(false);
-	addChild(carpeta3->abierta, 2);
+	addChild(carpeta3->abierta, 3);
 
 	//Carpeta4
 	posXarchs4 = 1050;
