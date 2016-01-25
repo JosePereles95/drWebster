@@ -727,6 +727,7 @@ void Alice::update(float dt)
 
 	if (!hayVivas)
 	{
+		musicaAlice->pauseBackgroundMusic();
 		goToGameOver(this);
 	}
 	else
